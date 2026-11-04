@@ -1,0 +1,403 @@
+<title>Mindmap Đơn hàng</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: cây ngang trái → phải (vòng đời đơn hàng), nhánh thu gọn được, cuộn ngang trong khung riêng */
+:root {
+  --bg: #f4f6f8; --surface: #ffffff; --fg: #1b2330; --muted: #5a6577; --line: #c2c9d3; --focus: #1f5fbf;
+  --on-br: #ffffff;
+  --b1: #3a64c8; --b2: #c2410c; --b3: #0f7f58; --b4: #7c3aed; --b5: #0e7490;
+  --b6: #b42318; --b7: #9a6408; --b8: #b0185a; --b9: #4d7c0f; --b10: #475569;
+  --hit: #ffe27a;
+  --font-body: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #10141a; --surface: #19202a; --fg: #e5e9ef; --muted: #9ba6b5; --line: #3b4553; --focus: #7aa7ff;
+    --on-br: #0f131a;
+    --b1: #7ea2ff; --b2: #fb8f55; --b3: #3fcf97; --b4: #b197fc; --b5: #3cc4de;
+    --b6: #f47b70; --b7: #e5b748; --b8: #f47bb4; --b9: #a3d65a; --b10: #a5b2c4;
+    --hit: #6b5a12;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #10141a; --surface: #19202a; --fg: #e5e9ef; --muted: #9ba6b5; --line: #3b4553; --focus: #7aa7ff;
+  --on-br: #0f131a;
+  --b1: #7ea2ff; --b2: #fb8f55; --b3: #3fcf97; --b4: #b197fc; --b5: #3cc4de;
+  --b6: #f47b70; --b7: #e5b748; --b8: #f47bb4; --b9: #a3d65a; --b10: #a5b2c4;
+  --hit: #6b5a12;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 14px; line-height: 1.45; }
+.wrap { padding-inline: 16px; padding-block: 20px 32px; display: flex; flex-direction: column; gap: 14px; }
+header { display: flex; flex-direction: column; gap: 6px; max-width: 900px; }
+h1 { margin: 0; font-size: 1.6rem; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
+.sub { margin: 0; color: var(--muted); max-width: 70ch; }
+.src { font-family: var(--font-mono); font-size: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px; }
+
+.toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.search { flex: 1 1 260px; max-width: 420px; display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 0 10px; }
+.search input { flex: 1; min-width: 0; border: 0; background: transparent; color: var(--fg); font: inherit; padding-block: 8px; outline: none; }
+.search:focus-within { border-color: var(--focus); }
+.count-hit { color: var(--muted); font-size: 12px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.btn { font: inherit; font-size: 13px; font-weight: 500; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 7px 12px; cursor: pointer; }
+.btn:hover { border-color: var(--muted); }
+.btn:focus-visible, .card:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.canvas { overflow: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 24px 20px; }
+.tree, .children { list-style: none; margin: 0; padding: 0; }
+.tree { width: max-content; }
+.item { display: flex; align-items: center; position: relative; }
+.children { display: flex; flex-direction: column; padding-left: 44px; position: relative; }
+.children::before { content: ''; position: absolute; left: 0; top: 50%; width: 22px; border-top: 1.5px solid var(--line); }
+.children > .item { padding-block: 4px; }
+.children > .item::before { content: ''; position: absolute; left: -22px; top: 0; bottom: 0; border-left: 1.5px solid var(--line); }
+.children > .item:first-child::before { top: 50%; }
+.children > .item:last-child::before { bottom: 50%; }
+.children > .item:only-child::before { display: none; }
+.children > .item::after { content: ''; position: absolute; left: -22px; top: 50%; width: 22px; border-top: 1.5px solid var(--line); }
+.item.collapsed > .children { display: none; }
+
+.card {
+  font: inherit; color: var(--fg); text-align: left; display: flex; flex-direction: column; gap: 4px;
+  min-width: 120px; max-width: 330px; padding: 8px 11px; border-radius: 8px;
+  background: color-mix(in srgb, var(--br, var(--b10)) 7%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--br, var(--b10)) 38%, var(--line));
+}
+button.card { cursor: pointer; }
+button.card:hover { border-color: var(--br, var(--muted)); }
+.card .t { font-weight: 600; display: flex; align-items: baseline; gap: 6px; }
+.card .t .lbl { flex: 1; min-width: 0; }
+.card .n { color: var(--muted); font-size: 12.5px; }
+.card ol { margin: 2px 0 0; padding-left: 20px; font-size: 12.5px; display: flex; flex-direction: column; gap: 2px; }
+.card a { font-family: var(--font-mono); font-size: 11.5px; color: var(--br, var(--focus)); word-break: break-all; }
+.tag { font-family: var(--font-mono); font-size: 10.5px; font-weight: 500; letter-spacing: 0.02em; padding: 1px 5px; border-radius: 4px; border: 1px solid color-mix(in srgb, var(--br, var(--b10)) 45%, transparent); color: var(--br, var(--muted)); white-space: nowrap; }
+.more { font-size: 11px; font-weight: 600; color: var(--br, var(--muted)); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.item:not(.collapsed) > .card .more { display: none; }
+
+.d0 > .card { background: var(--fg); color: var(--bg); border-color: var(--fg); font-size: 17px; padding: 12px 18px; border-radius: 12px; min-width: 0; }
+.d0 > .card .n { color: color-mix(in srgb, var(--bg) 75%, var(--fg)); }
+.d1 > .card { background: var(--br); border-color: var(--br); color: var(--on-br); font-size: 14.5px; }
+.d1 > .card .n, .d1 > .card .more { color: color-mix(in srgb, var(--on-br) 82%, var(--br)); }
+.d1 > .card .tag { color: var(--on-br); border-color: color-mix(in srgb, var(--on-br) 50%, transparent); }
+.card.hit { box-shadow: 0 0 0 3px var(--hit); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .card { transition: border-color .15s, box-shadow .15s; }
+}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Mindmap Đơn hàng</h1>
+    <p class="sub">Vòng đời một đơn hàng từ khai báo chính sách, tạo đơn theo kênh, thanh toán, triển khai, đồng bộ về INVOICE đến xuất hóa đơn, gạch nợ và hậu kỳ. Tổng hợp từ <span class="src">RULE-XHD.md</span> và <span class="src">RULE-CHINH-SACH-KENH-BAN.md</span>.</p>
+  </header>
+
+  <div class="toolbar">
+    <label class="search" for="q">
+      <span aria-hidden="true" style="color:var(--muted)">⌕</span>
+      <input id="q" type="search" placeholder="Tìm: shopee, PĐK, MAC, 18:05…" autocomplete="off">
+      <span class="count-hit" id="hits"></span>
+    </label>
+    <button class="btn" id="expand" type="button">Mở tất cả</button>
+    <button class="btn" id="reset" type="button">Mặc định</button>
+    <button class="btn" id="collapse" type="button">Thu gọn</button>
+  </div>
+
+  <div class="canvas" id="canvas">
+    <ul class="tree" id="tree"></ul>
+  </div>
+</div>
+
+<script>
+const SOP_NEW = ['Chọn + ở bán mới', 'Nhấn icon tìm kiếm ở thông tin địa chỉ', 'Chọn/nhập địa chỉ → Xác nhận', 'Chọn đối tượng KH (nếu muốn đổi)', 'Chọn dịch vụ cần mua', 'Chi tiết giỏ hàng → Xác nhận', 'Cập nhật thông tin KH', 'Tạo báo giá', 'Tạo hợp đồng', 'Cập nhật hợp đồng nếu muốn'];
+const SOP_ADD = ['Chọn + ở bán thêm', 'Tìm hợp đồng → chọn HĐ bán thêm', 'Nhấn icon +', 'Chọn dịch vụ cần mua', 'Chi tiết giỏ hàng → Xác nhận', 'Cập nhật thông tin KH (nếu muốn)', 'Tạo báo giá', 'Tạo hợp đồng', 'Cập nhật hợp đồng nếu muốn'];
+const SPF_RETRY = ['Đăng nhập SPF Web admin', 'Menu Retry Order', 'Tìm đơn theo refcode owner cung cấp', 'Nếu có thông tin: ngắt kết nối đơn hàng', 'Sang tab Cập nhật địa chỉ, SĐT', 'Tìm lại đơn theo refcode', 'Nhấn Load', 'Nhập đầy đủ thông tin', 'Nhấn Submit'];
+const SVC19 = 'Internet, FPT Camera Only, FPT Camera Combo, FPT Play Stands Alone, Sản phẩm khác, FPT Play, Tổng đài Oncall, FPT Smart Home, Ultra Fast Stand Alone, FPro, FSafe Go, VioEdu Stand Alone, VIP 247, SIM data, Pay Wifi, Ultra Fast, FPT Camera B2B, HyperFast, FPT AI Wi-Fi';
+
+const DATA = {
+  t: 'Đơn hàng', n: 'SPF → INVOICE → Billing',
+  c: [
+    { t: 'Chính sách bán hàng', tag: 'Tool BP', c: [
+      { t: 'Tool chính sách STG', n: 'Host 172.20.18.252 bp-stag.fpt.net', url: 'http://bp-stag.fpt.net/' },
+      { t: 'Cách tạo chính sách', steps: ['Tìm chính sách có sẵn của dịch vụ muốn bán', 'Sao chép', 'Sửa → nhập thông tin → Lưu', 'Trở về → Gửi đề xuất', 'Menu Bán hàng › tab Bán hàng', 'Tìm mã vừa đề xuất → tích chọn → Tạo quyết định', 'Nhập thông tin hợp lệ → Lưu'] },
+      { t: 'Chính sách quyết định', c: [
+        { t: 'Giá bán', n: 'Giá bán của SPDV' },
+        { t: 'Gói bán', n: 'Các gói bán của dịch vụ' },
+        { t: 'Khu vực bán', n: 'Bán ở khu vực nào' },
+        { t: 'Thiết bị đi kèm', n: 'Bán kèm thiết bị gì' },
+        { t: 'Đối tượng khách hàng', n: 'Sản phẩm bán cho đối tượng KH nào' },
+        { t: 'Kênh bán', n: 'Bán ở kênh nào' },
+        { t: 'Đơn vị bán hàng', n: 'Đơn vị nào được bán' },
+        { t: 'Phương thức thanh toán', n: 'PTTT áp dụng cho đơn' },
+        { t: 'Loại khách hàng', n: 'Khách hàng mới hay khách hàng cũ' },
+        { t: 'Hình thức triển khai thiết bị', n: 'Không/Quầy/Sale → tool quầy · NCC → M-Vendor · TIN/PNC → phiếu triển khai' }
+      ]}
+    ]},
+    { t: 'Kênh bán & tạo đơn', tag: 'SaleChannel', c: [
+      { t: 'Sau khi tạo đơn', n: 'Đơn tạo xong sẽ có thông tin hợp đồng. Kiểm tra hợp đồng ở tool Tình trạng trên Inside' },
+      { t: 'Desktop', tag: 'ID 2', n: 'Owner KhiemBT · bán mới + bán thêm', c: [
+        { t: 'Web SOP', url: 'https://portal-sop-stg.fpt.vn/user/login/basic-auth' },
+        { t: '19 dịch vụ', n: SVC19 },
+        { t: 'Bắt đầu', steps: ['Thêm khách hàng', 'Nhập đầy đủ thông tin', 'Tạo và lên đơn → Xác nhận', 'Chọn bán mới / bán thêm', 'Menu Đơn hàng → tab bán mới/bán thêm → dấu +'] },
+        { t: 'Tạo đơn bán mới', steps: SOP_NEW },
+        { t: 'Tạo đơn bán thêm', steps: SOP_ADD },
+        { t: 'Phạm vi test', n: '19 nhóm, trừ nhóm 25 Prepaid 3' }
+      ]},
+      { t: 'Mobile', tag: 'ID 1', n: 'Owner KhiemBT · App SOP · bán mới + bán thêm', c: [
+        { t: 'Dịch vụ & triển khai', n: 'Giống Desktop (19 dịch vụ)' },
+        { t: 'Tạo đơn', n: 'Menu Đơn hàng → tab bán mới/bán thêm → dấu +, sau đó các bước giống Desktop' },
+        { t: 'Phạm vi test', n: '19 nhóm, trừ nhóm 25 Prepaid 3' }
+      ]},
+      { t: 'DKOL', tag: 'ID 4', n: 'Owner TaiTT13 · HiFPT và FPT.vn đều SaleChannel DKOL', c: [
+        { t: 'Lên đơn từ HiFPT', n: 'Sale team: Khách hàng bình thường HiFPT', c: [
+          { t: 'Bán mới', n: 'Net, combo Net–Camera, combo Net–PayTV, TripleF Net–PayTV–Cam, Ultra Fast SA, FPT Play SA, Smart Home, Smart TV, thiết bị modem, thiết bị y tế, Camera combo (lẻ)' },
+          { t: 'Bán thêm', n: 'Cloud, Camera, FPT Play (billing)' }
+        ]},
+        { t: 'Lên đơn từ FPT.vn', n: 'Sale team: DKOL (KH vãng lai), AM (sale IBB), CTV_sale (208), ANCS (239), Đối tác (238)', c: [
+          { t: 'KH vãng lai', n: 'Như bán mới HiFPT + HyperFast SA, trừ thiết bị y tế' },
+          { t: 'Sale team còn lại', n: 'Chủ yếu Net và combo của Net. Prepaid là bán mới nhưng ghi nhận cho sale' },
+          { t: 'Bán thêm / nâng cấp', n: 'Camera ưu đãi, FPT Play sub; nâng cấp FPT Play (sub)' }
+        ]},
+        { t: 'Hình thức triển khai', n: 'Camera: Quầy (shipper) hoặc TIN/PNC · TV: Vendor · Ultra Fast SA, FPT Play SA, HyperFast SA: không có phiếu triển khai' },
+        { t: 'Phạm vi test', n: 'Bán mới nhóm {1,4,5,6,7,9,10,21} · bán thêm {1,4,7}' }
+      ]},
+      { t: 'Shopee', tag: 'ID 20', n: 'Owner HaiPV7 · chỉ bán mới', c: [
+        { t: 'Dịch vụ', n: 'Internet, FPT Camera Only, FPT Play Stands Alone, FPT Play, Sản phẩm khác' },
+        { t: 'Chuẩn bị', n: 'Nhờ owner kéo đơn từ PRO (refcode), sao chép chính sách về STG, nhờ owner map SKU' },
+        { t: 'Hạn key 4 giờ', n: 'Chỉ Shopee. Hết 4h thì nhờ owner kéo key về lại' },
+        { t: 'Triển khai', n: 'Quầy (chính sách shipper giao hàng) và TIN/PNC' },
+        { t: 'Tạo đơn trên SPF Web admin', steps: SPF_RETRY, url: 'http://saleplatform-stag.fpt.net/web-admin/Account/Login' },
+        { t: 'Phạm vi test', n: 'Bán mới {1,3,5,6,7} · hồi quy Phase 1' }
+      ]},
+      { t: 'TikTok', tag: 'ID 21', n: 'Owner HaiPV7 · chỉ bán mới', c: [
+        { t: 'Dịch vụ', n: 'Internet, FPT Camera Only, FPT Play Stands Alone, FPT Play, Sản phẩm khác, FPT Camera Combo' },
+        { t: 'Chuẩn bị', n: 'Nhờ owner kéo đơn từ PRO (refcode), sao chép chính sách về STG, nhờ owner map SKU' },
+        { t: 'Triển khai', n: 'Quầy (chính sách shipper giao hàng) và TIN/PNC' },
+        { t: 'Tạo đơn trên SPF Web admin', n: 'Giống Shopee (menu Retry Order)' },
+        { t: 'Phạm vi test', n: 'Bán mới {1,3,4,5,6,7} · hồi quy Phase 1' }
+      ]},
+      { t: 'W-Sale', tag: 'ID 9', n: 'Owner HoangVT11', c: [
+        { t: 'Web W-Sale', n: 'Host 172.20.18.252 wsale-stag.fpt.net', url: 'http://wsale-stag.fpt.net/' },
+        { t: 'Dịch vụ', n: 'Internet, Pay. Đơn Swap: nhờ HaiTN16 cung cấp data rồi tạo đơn' },
+        { t: 'Triển khai', n: 'Chỉ TIN/PNC' },
+        { t: 'Phạm vi test', n: 'Chỉ bán thêm {1,7}' }
+      ]},
+      { t: 'FPL', tag: 'ID 10', n: 'Lên đơn từ web FPL dev.fptplay.vn', c: [
+        { t: 'Phạm vi test', n: 'Chỉ nhóm 5 FPT Play Stands Alone' },
+        { t: 'Thông tin xuất hóa đơn', n: 'Khách chọn có lấy hóa đơn; tự nhập 7 trường trong tối đa 2 giờ. Không lấy / quá 2h → dùng thông tin hợp đồng, ẩn nút Xuất hóa đơn' },
+        { t: 'Rule riêng', n: 'Delay 2h từ lúc tạo đơn · worker 2h/lần + mốc 22:05 · realtime sau 22h' }
+      ]},
+      { t: 'CRM', tag: 'ID 13', n: 'Owner HoangPHD · chỉ bán dịch vụ FPL', c: [
+        { t: 'Web CRM', url: 'https://crm-stag.fpt.net/' },
+        { t: 'Tạo đơn', steps: ['Tạo đơn cơ hội', 'Tạo báo giá', 'Đánh dấu version', 'Chờ 5 phút', 'Tạo đơn hàng'] }
+      ]},
+      { t: 'CRM-APP', tag: 'ID 16', n: 'Owner PhuongTT3 · App FPT Life · chỉ bán cloud trong nhóm FPT Camera Only' },
+      { t: 'Momo', tag: 'ID 17', n: 'Owner HaiPV7 · nhờ owner tạo đơn · đang bán Play và combo Play, Camera đang off' },
+      { t: 'VNTT', tag: 'ID 11', n: 'Owner HaiPV7 · chỉ ghi nhận HĐ, không tạo khoản thu' },
+      { t: 'Chưa dùng được', c: [
+        { t: 'API', n: 'Gồm TGDD và F-Retail, chưa tách' },
+        { t: 'F-Retail, TGDD', n: 'Đang có issue 3-2 cấp' },
+        { t: 'HiFPT', n: 'Đã chuyển sang DKOL' },
+        { t: 'MBBank', n: 'Chưa có trên PRO do vướng chính sách hợp tác' },
+        { t: 'Chưa có thông tin', n: 'App Partner, Shop, SR-KPDV, Ven-vrace, WebSDK, Outside' }
+      ]}
+    ]},
+    { t: 'Hợp đồng', tag: 'Inside', c: [
+      { t: 'Sinh ra khi tạo đơn', n: 'Tạo đơn xong sẽ có thông tin hợp đồng. Bán thêm = đơn trên hợp đồng đang hoạt động' },
+      { t: 'Kiểm tra hợp đồng', n: 'Tool Tình trạng trên Inside (xem cả hợp đồng cha nếu là hợp đồng con)' },
+      { t: 'Hủy PTC / thi công lại', n: 'Quản lý hợp đồng › HĐ NOT OK V3 › PTC NOT OK' },
+      { t: 'Dùng cho xuất hóa đơn', c: [
+        { t: 'Thông tin khách trên hóa đơn', n: 'Lấy theo hợp đồng lúc phát hành (trừ FPL khách tự nhập)' },
+        { t: 'Hợp đồng phải còn hiệu lực', n: 'Tạm ngưng, đã chấm dứt, ngưng vì thanh toán → không xuất' },
+        { t: 'Chi nhánh xuất hóa đơn', n: 'Chi nhánh quản lý hợp đồng' },
+        { t: 'Mã tỉnh trên ID hóa đơn', n: 'Theo địa chỉ hợp đồng' }
+      ]},
+      { t: 'Loại hợp đồng đặc biệt', c: [
+        { t: 'Hợp đồng tổ chức', n: 'KH cấp 1 = Tổ chức. Phải duyệt PĐK mới tự xuất (trừ 2 ngày cuối tháng)' },
+        { t: 'Hợp đồng con', n: 'Có gắn hợp đồng cha (dự án) → không xuất DV lẫn TB' },
+        { t: 'Hợp đồng SST / nghiệp vụ', n: 'Không tự động xuất hóa đơn' }
+      ]},
+      { t: 'Tiền trả trước', n: 'Add vào hợp đồng, mỗi đơn 1 lần' }
+    ]},
+    { t: 'Thanh toán', tag: 'PTTT', c: [
+      { t: 'Thanh toán khi triển khai', n: 'Gen đồng thời khoản thu, phiếu thi công, biên bản điện tử; đơn = Chưa thanh toán' },
+      { t: 'PTTT khác', c: [
+        { t: 'DKOL', n: 'KH thanh toán xong mới tạo đơn → đơn và khoản thu Đã thanh toán → gen phiếu thi công, biên bản điện tử' },
+        { t: 'Desktop / Mobile', n: 'Tạo đơn và khoản thu Chưa thanh toán → KH thanh toán → gen phiếu thi công, biên bản điện tử' }
+      ]},
+      { t: 'Sau khi thanh toán khoản thu', n: 'Khoản thu chuyển Đã thanh toán và đẩy vào cọc' },
+      { t: 'Kiểm tra khoản thu', tag: 'Inside', n: 'Foxpay › Thanh toán online › Đối soát khoản thu online' },
+      { t: 'Shopee / TikTok', n: 'Không có khoản thu', c: [
+        { t: 'Lần 1 · KH đã trả cho sàn', steps: ['Sàn gửi đơn', 'SPF tạo đơn Chưa thanh toán', 'Order Transaction = Thanh toán tạm', 'Đơn SPF → Đã thanh toán', 'Phiếu thi công hoàn tất', 'Xuất hóa đơn theo rule + gạch nợ hóa đơn tạm'] },
+        { t: 'Lần 2 · Sàn quyết toán về FTEL', steps: ['Sàn gửi thông tin quyết toán', 'SPF không cập nhật đơn', 'Order Transaction = Đã thanh toán; Order Paid ghi phí sàn, số tiền FTEL thực lãnh', 'IIA gạch nợ hóa đơn thật'] }
+      ]}
+    ]},
+    { t: 'Triển khai & giao hàng', tag: 'Tín hiệu TB', c: [
+      { t: 'Hình thức → nguồn tín hiệu', c: [
+        { t: 'TIN/PNC', n: 'Triển khai, kích hoạt tại địa chỉ đăng ký → phiếu thi công loại Triển khai' },
+        { t: 'TIN/PNC giao hàng', n: 'Chỉ Camera Offnet, thiết bị lẻ → phiếu thi công loại Giao hàng' },
+        { t: 'FTI', n: 'OnCall, Camera B2B, ListLine… → phiếu thi công' },
+        { t: 'Quầy', n: 'Camera Offnet, thiết bị lẻ → tool quầy' },
+        { t: 'Sale', n: 'Thiết bị lẻ quản lý MAC → tool quầy' },
+        { t: 'NCC Samsung / Sony / Casper', n: 'Thiết bị lẻ mua từ NCC → M-Vendor' },
+        { t: 'Không / None', n: 'Vd Code SA (gửi SMS). Chỉ xuất hóa đơn nếu quầy gửi tín hiệu' }
+      ]},
+      { t: 'Quy tắc gộp luồng', n: '≥1 SPDV mix TIN/PNC với Quầy/Sale → cả đơn đi TIN/PNC · mix Không + TIN/PNC → theo phiếu thi công' },
+      { t: 'Hoàn tất phiếu thi công', tag: 'TIN/PNC', steps: ['Inside new v5 › Thông tin chung › Triển khai', 'Nhập hợp đồng', 'Phân tuyến', 'Mở partner portal bypass', 'Bypass → tích tất cả → nhập HĐ, thời hạn (≤24h), nguyên nhân → Cập nhật', 'Quay lại phiếu → Đã xử lý hoàn tất'], url: 'http://partner-stag.fpt.net/pt-portal/bypass' },
+      { t: 'Hủy PTC / chuyển thi công lại', tag: 'Inside', n: 'Quản lý hợp đồng › HĐ NOT OK V3 › PTC NOT OK' },
+      { t: 'Phân công quota PTC', tag: 'Fox ERP', n: 'Quản lý đối tác › Quản lý Block › Quota PTC - TUT' },
+      { t: 'Hoàn tất quầy có shipper', steps: ['Quản lý chuỗi cung ứng › Giao dịch thiết bị → tìm HĐ', 'Nhận xử lý phiếu', 'Chọn kho xuất KTN test', 'Đề nghị xuất vật tư', 'SCM: Quản lý kho › Nhập kho › Tạo phiếu nhập hàng cần giao, kho KTN test MAC', 'SCM: Xác nhận tạm ứng từ Inside', 'Phiếu giao dịch thiết bị → Lưu và đóng hàng', 'GHTK: Thông tin tài khoản › Cấu hình API', 'Webhook → Test → nhập mã vận đơn', 'Cập nhật trạng thái 5'] },
+      { t: 'Hoàn tất quầy không shipper', c: [
+        { t: 'Đã có MAC', steps: ['Giao dịch thiết bị → tìm HĐ', 'Đối tác Bến Thành, Tổ 300', 'Chỉnh sửa → chọn danh sách MAC → Lưu', 'Kết quả xử lý Hoàn tất', 'Xác nhận'] },
+        { t: 'Chưa có MAC', n: 'Tạo MAC xong thì làm nhánh "Đã có MAC"', steps: ['Quản lý vật tư quầy', 'Tạm ứng vật tư → Đề nghị tạm ứng', 'Chọn đối tác, tổ, vật tư', 'Tạo phiếu → nhập số lượng → Xác nhận', 'SCM: Tạo phiếu nhập hàng cần giao, kho KTN test MAC', 'SCM: Xác nhận tạm ứng từ Inside', 'Kho KTN test MAC, tích Bảo hành V2', 'Chọn phiếu tạm ứng → nhập MAC vừa tạo', 'Xác nhận V2'] }
+      ]}
+    ]},
+    { t: 'Đồng bộ đơn về INVOICE', tag: 'BR-DB', c: [
+      { t: 'Sự kiện từ SPF', tag: 'BR-DB-01', n: 'Chỉ 2 sự kiện: thanh toán, hủy đơn' },
+      { t: 'Tín hiệu giao hàng', tag: 'BR-DB-02', n: 'Đi thẳng về INVOICE từ 3 nguồn: phiếu thi công, Vendor, phiếu giao tại quầy. Gồm mã đơn, ServiceCode, SubserviceType, phương thức, nguồn, thời gian hoàn tất' },
+      { t: 'Đơn TMĐT', tag: 'BR-DB-02', n: 'SPF đánh dấu đã thanh toán = tín hiệu thanh toán; đồng thời ghi Paid gạch nợ tạm' },
+      { t: 'Thông tin khách', tag: 'BR-DB-03', n: 'Mặc định theo hợp đồng lúc phát hành. Cập nhật thông tin không kích hoạt phát hành; lần sau dùng thông tin mới nhất. Ngoại lệ FPL' },
+      { t: 'ProductType DV/TB', tag: 'BR-DB-04', n: 'SPF gắn sẵn trên từng dòng; INVOICE không tự suy diễn' },
+      { t: 'Đồng bộ nhiều lần', tag: 'BR-DB-05', n: 'Lần đẩy cuối là mới nhất. Chỉ xuất phần chưa có hóa đơn; phần đã xuất không bị ghi đè' },
+      { t: 'Map tín hiệu vào thiết bị', tag: 'BR-DB-07', n: 'Khóa: mã đơn + ServiceCode + SubserviceType + phương thức. TB đã có hóa đơn hoặc không khớp → không ghi nhận' }
+    ]},
+    { t: 'Điều kiện xuất hóa đơn', tag: 'BR-XHD-03, 10', c: [
+      { t: 'Dịch vụ', n: 'Có tín hiệu "đã thanh toán" từ SPF' },
+      { t: 'Thiết bị', n: 'Có tín hiệu giao hàng hoàn tất của phương thức tương ứng; chỉ TB có trong tín hiệu' },
+      { t: 'DV và TB xét độc lập', n: 'Dùng chung mọi kênh' },
+      { t: 'Kênh FPL', n: 'Delay 2 giờ từ lúc tạo đơn, áp cả DV và TB' },
+      { t: 'Hợp đồng tổ chức', n: 'Phải duyệt PĐK (trừ 2 ngày lịch cuối tháng). Chưa duyệt → chặn, xuất tay. Bán thêm phải duyệt PĐK mới' },
+      { t: 'Không tự xuất', n: 'Hợp đồng con (gắn HĐ cha) · hợp đồng SST · hợp đồng nghiệp vụ' },
+      { t: 'Đơn hợp lệ', tag: 'BR-XHD-10', c: [
+        { t: 'Trạng thái', n: 'Không bị hủy, không đang cập nhật; hợp đồng còn hiệu lực' },
+        { t: 'Thông tin chung', n: 'Sale team, kênh bán, tên KH, loại hình KH, địa chỉ xuất hóa đơn, LocationID' },
+        { t: 'Thông tin dịch vụ', n: 'Dịch vụ, nhóm, gói, chính sách, câu lệnh giá, CTKM > 0' },
+        { t: 'Không hợp lệ', n: 'Không xuất hóa đơn, ghi log, không giữ lại để xuất sau' }
+      ]}
+    ]},
+    { t: 'Lịch xuất & gộp hóa đơn', tag: 'BR-XHD-01, 02, 05, 06', c: [
+      { t: 'Kênh thường', n: 'Đợt 1 chốt 12:00 chạy 12:05 · đợt 2 chốt 18:00 chạy 18:05 (tham số)' },
+      { t: 'Kênh FPL', n: 'Worker 2h/lần (0h–2h, 2h–4h…) + mốc 22:05 chốt 0h–22h' },
+      { t: 'Phạm vi quét', n: 'Dòng chưa xuất, mốc nghiệp vụ trong ngày, trước giờ chốt' },
+      { t: 'Cuối tháng', n: 'Đủ điều kiện sau giờ chốt cuối ngày cuối tháng → phát hành tháng sau' },
+      { t: 'Worker', n: 'Tín hiệu trước giờ chốt. Gộp DV/TB đủ điều kiện của cùng đơn trong đợt vào 1 hóa đơn' },
+      { t: 'Realtime', n: 'Tín hiệu sau giờ chốt cuối (FPL sau 22h). Không gộp: mỗi tín hiệu 1 hóa đơn đúng thành phần' }
+    ]},
+    { t: 'Phát hành hóa đơn', tag: 'BR-XHD-12, 13, 14', c: [
+      { t: 'Billing System', n: 'Ghi BillNumber và BillDate (= ngày phát hành thực tế)' },
+      { t: 'Chi nhánh', n: 'Chi nhánh quản lý hợp đồng' },
+      { t: 'Nội dung', n: 'Tên dịch vụ + số tháng sử dụng' },
+      { t: 'Một đơn nhiều hóa đơn', n: 'DV và TB xuất ở các đợt khác nhau' },
+      { t: 'Invoice Event', n: 'Gửi sau phát hành → gạch nợ và hậu kỳ' }
+    ]},
+    { t: 'Gạch nợ & hậu kỳ', tag: 'GN · BR-HK', c: [
+      { t: 'Gạch nợ TMĐT', n: 'Lần 1: gạch nợ hóa đơn tạm khi đơn đã thanh toán cho sàn · Lần 2: gạch nợ hóa đơn thật sau quyết toán' },
+      { t: 'Nguyên tắc hậu kỳ', tag: 'BR-HK-01', n: 'Đẩy đúng phần đã xuất; mỗi lần phát hành chỉ đẩy phần vừa xuất, tách theo đơn' },
+      { t: 'Hóa đơn điện tử', c: [
+        { t: 'Đủ thông tin mới đẩy', n: 'Chưa đủ thì chưa đẩy' },
+        { t: 'Ký hiệu', n: 'Theo quy định thuế, vùng miền. Sai = sai kê khai' },
+        { t: 'ID hóa đơn', n: 'Loại đầu + năm + mã tỉnh + số hóa đơn' },
+        { t: 'Nội dung', n: 'Tên dịch vụ + số tháng, không ghi từ ngày – đến ngày' },
+        { t: 'Tổng tiền', n: 'Gom theo KCT, 0%, 5%, 8%, 10% + dòng tổng cộng' }
+      ]},
+      { t: 'Tiền trả trước', tag: 'BR-HK-09', n: 'Add vào hợp đồng, mỗi đơn 1 lần. Hóa đơn chỉ thiết bị không add. Áp cả bán mới, bán thêm' }
+    ]},
+    { t: 'Hệ thống STG', tag: 'URL', c: [
+      { t: 'Tool BP', url: 'http://bp-stag.fpt.net/' },
+      { t: 'SOP (Desktop)', url: 'https://portal-sop-stg.fpt.vn/user/login/basic-auth' },
+      { t: 'SPF Web admin', url: 'http://saleplatform-stag.fpt.net/web-admin/Account/Login' },
+      { t: 'CRM', url: 'https://crm-stag.fpt.net/' },
+      { t: 'W-Sale', url: 'http://wsale-stag.fpt.net/' },
+      { t: 'Partner portal (bypass)', url: 'http://partner-stag.fpt.net/pt-portal/bypass' },
+      { t: 'SCM', url: 'https://ftelscm-uat.fpt.net' },
+      { t: 'GHTK staging', url: 'https://khachhang-staging.ghtklab.com/web/' },
+      { t: 'Host file', n: '172.20.18.252 → bp-stag.fpt.net, wsale-stag.fpt.net, ftelscm-uat.fpt.net' }
+    ]}
+  ]
+};
+
+const DEFAULT_DEPTH = 1;
+const tree = document.getElementById('tree');
+const norm = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'd').toLowerCase();
+
+function el(tag, cls, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text != null) e.textContent = text;
+  return e;
+}
+
+function build(node, depth, branch) {
+  const li = el('li', 'item d' + Math.min(depth, 2));
+  if (depth === 1) li.style.setProperty('--br', 'var(--b' + branch + ')');
+  const has = node.c && node.c.length;
+  const card = el(has ? 'button' : 'div', 'card');
+  if (has) card.type = 'button';
+  const t = el('div', 't');
+  t.append(el('span', 'lbl', node.t));
+  if (node.tag) t.append(el('span', 'tag', node.tag));
+  if (has) t.append(el('span', 'more', '+' + node.c.length));
+  card.append(t);
+  if (node.n) card.append(el('div', 'n', node.n));
+  if (node.steps) {
+    const ol = el('ol');
+    node.steps.forEach(s => ol.append(el('li', null, s)));
+    card.append(ol);
+  }
+  if (node.url) {
+    const a = el('a', null, node.url);
+    a.href = node.url; a.target = '_blank'; a.rel = 'noopener';
+    a.addEventListener('click', e => e.stopPropagation());
+    card.append(a);
+  }
+  card.dataset.text = norm([node.t, node.tag, node.n, (node.steps || []).join(' '), node.url].filter(Boolean).join(' '));
+  li.append(card);
+  if (has) {
+    li.dataset.depth = depth;
+    const ul = el('ul', 'children');
+    node.c.forEach((ch, i) => ul.append(build(ch, depth + 1, depth === 0 ? (i % 10) + 1 : branch)));
+    li.append(ul);
+    card.addEventListener('click', () => setCollapsed(li, !li.classList.contains('collapsed')));
+  }
+  return li;
+}
+
+function setCollapsed(li, v) {
+  li.classList.toggle('collapsed', v);
+  const card = li.querySelector(':scope > .card');
+  if (card.tagName === 'BUTTON') card.setAttribute('aria-expanded', String(!v));
+}
+function applyDepth(max) {
+  tree.querySelectorAll('li[data-depth]').forEach(li => setCollapsed(li, +li.dataset.depth >= max));
+}
+
+tree.append(build(DATA, 0, 0));
+applyDepth(DEFAULT_DEPTH);
+
+document.getElementById('expand').onclick = () => applyDepth(99);
+document.getElementById('collapse').onclick = () => applyDepth(0);
+document.getElementById('reset').onclick = () => { q.value = ''; search(); applyDepth(DEFAULT_DEPTH); };
+
+const q = document.getElementById('q');
+const hits = document.getElementById('hits');
+function search() {
+  const term = norm(q.value.trim());
+  tree.querySelectorAll('.card.hit').forEach(c => c.classList.remove('hit'));
+  if (!term) { hits.textContent = ''; return; }
+  applyDepth(0);
+  const found = [...tree.querySelectorAll('.card')].filter(c => c.dataset.text.includes(term));
+  found.forEach(c => {
+    c.classList.add('hit');
+    let p = c.parentElement.parentElement.closest('li');
+    while (p) { setCollapsed(p, false); p = p.parentElement.closest('li'); }
+  });
+  hits.textContent = found.length ? found.length + ' kết quả' : 'Không có kết quả';
+  if (found[0]) found[0].scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+}
+q.addEventListener('input', search);
+</script>
