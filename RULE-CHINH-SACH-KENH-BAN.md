@@ -4,7 +4,7 @@
 > Nội dung đã tách theo từng kênh vào thư mục [`kenh-ban/`](kenh-ban/).
 
 ## Rule chung
-[kenh-ban/00-CHUNG.md](kenh-ban/00-CHUNG.md): tool chính sách BP, hình thức triển khai thiết bị, sau khi tạo đơn, thanh toán & khoản thu, cách hoàn tất phiếu, URL/host STG.
+[kenh-ban/00-CHUNG.md](kenh-ban/00-CHUNG.md): tool chính sách BP, hình thức triển khai thiết bị, sau khi tạo đơn, thanh toán & khoản thu, cách hoàn tất phiếu, hủy đơn hàng, URL/host STG.
 
 ## Kênh đang tạo được đơn (11)
 

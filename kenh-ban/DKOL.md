@@ -31,13 +31,13 @@
 ## Hình thức triển khai
 - **Camera:** **Quầy** (có chính sách shipper giao hàng) hoặc **TIN/PNC**.
 - **TV:** đang đẩy qua **Vendor**.
-- **Ultra Fast SA, FPT Play SA, HyperFast SA:** **không có phiếu triển khai**.
+- **Ultra Fast SA, FPT Play SA, HyperFast SA:** **không có phiếu triển khai**, **BBĐT auto ký**.
 
 Cách hoàn tất phiếu: [00-CHUNG.md §5](00-CHUNG.md#5-cách-hoàn-tất-phiếu-giao-hàng--triển-khai-stg).
 
 ## Thanh toán & khoản thu
 - **PTTT = Thanh toán khi triển khai:** gen đồng thời khoản thu, phiếu thi công, biên bản điện tử; đơn = **Chưa thanh toán**.
-- **PTTT khác:** khách hàng **phải thanh toán xong** mới tạo đơn ⇒ đơn tạo ra với tình trạng **Đã thanh toán**, khoản thu **Đã thanh toán** ⇒ sau đó mới gen **phiếu thi công** và **biên bản điện tử**.
+- **PTTT Online:** khách hàng **phải thanh toán xong** mới tạo đơn ⇒ đơn tạo ra với tình trạng **Đã thanh toán**, khoản thu **Đã thanh toán** ⇒ sau đó mới gen **phiếu thi công** và **biên bản điện tử**.
 - Sau khi thanh toán: tiền **đẩy vào cọc**. Kiểm tra: Inside › Foxpay › Thanh toán online › Đối soát khoản thu online.
 
 ## Phạm vi test XHD

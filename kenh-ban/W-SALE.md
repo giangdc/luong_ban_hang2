@@ -8,7 +8,7 @@
 |---|---|
 | Owner | HoangVT11 |
 | Nơi tạo đơn | Web W-Sale — http://wsale-stag.fpt.net/ |
-| Host | `172.20.18.252  wsale-stag.fpt.net` |
+| Host | **Cần host** |
 
 ## Dịch vụ
 Internet, Pay.

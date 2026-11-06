@@ -50,7 +50,7 @@ Theo chính sách khai báo trên tool BP — xem bảng [00-CHUNG.md §2](00-CH
 
 ## Thanh toán & khoản thu
 - **PTTT = Thanh toán khi triển khai:** gen đồng thời khoản thu, phiếu thi công, biên bản điện tử; đơn = **Chưa thanh toán**.
-- **PTTT khác:** tạo đơn **Chưa thanh toán** + khoản thu **Chưa thanh toán** ⇒ khách thanh toán xong ⇒ mới gen **phiếu thi công** và **biên bản điện tử**.
+- **PTTT Online:** tạo đơn **Chưa thanh toán** + khoản thu **Chưa thanh toán** ⇒ khách thanh toán xong ⇒ mới gen **phiếu thi công** và **biên bản điện tử**.
 - Sau khi thanh toán: khoản thu **Đã thanh toán**, tiền **đẩy vào cọc**. Kiểm tra: Inside › Foxpay › Thanh toán online › Đối soát khoản thu online.
 
 ## Phạm vi test XHD

@@ -8,6 +8,7 @@
 |---|---|
 | Owner | Chưa có thông tin |
 | Nơi tạo đơn | Web FPL: **dev.fptplay.vn** |
+| Host | Không cần host |
 
 ## Rule xuất hóa đơn riêng (theo `RULE-XHD.md`)
 - **Thông tin khách (BR-DB-03):** khách chọn có lấy hóa đơn không; nếu có thì tự nhập 7 trường (tên, email, SĐT, MST, mã định danh, mã quan hệ ngân sách, số hộ chiếu) trong **tối đa 2 giờ**. Không lấy / quá 2 giờ ⇒ phát hành theo thông tin hợp đồng; quá 2 giờ thì ẩn nút Xuất hóa đơn.
@@ -18,5 +19,8 @@
 ## Phạm vi test XHD
 Chỉ nhóm 5 — FPT Play Stands Alone — `RULE-XHD.md` §1.1.
 
+## Hình thức triển khai
+Kênh FPL **không có hình thức triển khai** ⇒ không có phiếu triển khai; **BBĐT auto ký** (nguồn: user cung cấp 04/11/2026).
+
 ## Chưa có thông tin
-Cách tạo đơn chi tiết, hình thức triển khai, luồng khoản thu.
+Cách tạo đơn chi tiết, luồng khoản thu.

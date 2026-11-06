@@ -8,6 +8,7 @@
 |---|---|
 | Owner | HoangPHD |
 | Nơi tạo đơn | Web CRM — https://crm-stag.fpt.net/ |
+| Host | **Cần host** |
 | Dịch vụ | Chỉ bán dịch vụ **FPL** |
 
 ## Cách tạo đơn
