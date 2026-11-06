@@ -12,7 +12,7 @@
   --bg: #f4f6f8; --surface: #ffffff; --fg: #1b2330; --muted: #5a6577; --line: #c2c9d3; --focus: #1f5fbf;
   --on-br: #ffffff;
   --b1: #3a64c8; --b2: #c2410c; --b3: #0f7f58; --b4: #7c3aed; --b5: #0e7490;
-  --b6: #b42318; --b7: #9a6408; --b8: #b0185a; --b9: #4d7c0f; --b10: #475569;
+  --b6: #b42318; --b7: #9a6408; --b8: #b0185a; --b9: #4d7c0f; --b10: #475569; --b11: #8a4b16; --b12: #a21caf; --b13: #0369a1;
   --hit: #ffe27a;
   --font-body: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
@@ -22,7 +22,7 @@
     --bg: #10141a; --surface: #19202a; --fg: #e5e9ef; --muted: #9ba6b5; --line: #3b4553; --focus: #7aa7ff;
     --on-br: #0f131a;
     --b1: #7ea2ff; --b2: #fb8f55; --b3: #3fcf97; --b4: #b197fc; --b5: #3cc4de;
-    --b6: #f47b70; --b7: #e5b748; --b8: #f47bb4; --b9: #a3d65a; --b10: #a5b2c4;
+    --b6: #f47b70; --b7: #e5b748; --b8: #f47bb4; --b9: #a3d65a; --b10: #a5b2c4; --b11: #e0a46b; --b12: #e879f9; --b13: #7cc4f5;
     --hit: #6b5a12;
     color-scheme: dark;
   }
@@ -31,7 +31,7 @@
   --bg: #10141a; --surface: #19202a; --fg: #e5e9ef; --muted: #9ba6b5; --line: #3b4553; --focus: #7aa7ff;
   --on-br: #0f131a;
   --b1: #7ea2ff; --b2: #fb8f55; --b3: #3fcf97; --b4: #b197fc; --b5: #3cc4de;
-  --b6: #f47b70; --b7: #e5b748; --b8: #f47bb4; --b9: #a3d65a; --b10: #a5b2c4;
+  --b6: #f47b70; --b7: #e5b748; --b8: #f47bb4; --b9: #a3d65a; --b10: #a5b2c4; --b11: #e0a46b; --b12: #e879f9; --b13: #7cc4f5;
   --hit: #6b5a12;
   color-scheme: dark;
 }
@@ -59,12 +59,17 @@ h2 { margin: 10px 0 0; font-size: 1.05rem; font-weight: 600; }
 .fn:hover rect, .fn:focus-visible rect { stroke-width: 3; }
 .fn .ft { font-size: 14.5px; font-weight: 600; fill: var(--fg); }
 .fn .fs { font-size: 12px; fill: var(--muted); }
+.fn.small .ft { font-size: 13px; }
+.fn.small .fs { font-size: 11px; }
 .fn.root .ft, .fn.root .fs { fill: var(--bg); }
 .fe path { fill: none; stroke: var(--line); stroke-width: 1.6; transition: stroke .15s; }
 .fe.back path { stroke-dasharray: 5 4; }
-.fe text { font-size: 11.5px; fill: var(--muted); paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
+.fe text { opacity: 0; transition: opacity .15s; font-size: 11.5px; fill: var(--muted); paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
 .fe.on path { stroke: var(--fg); stroke-width: 2.2; }
-.fe.on text { fill: var(--fg); }
+.fe.on text { fill: var(--fg); opacity: 1; }
+.fn .fl { font-size: 12px; font-weight: 500; fill: var(--fg); }
+.fn.minor { opacity: .7; }
+.fn.minor:hover, .fn.minor:focus-visible { opacity: 1; }
 .hint { color: var(--muted); font-size: 12.5px; margin: 0; }
 
 /* Ma trận */
@@ -76,6 +81,7 @@ h2 { margin: 10px 0 0; font-size: 1.05rem; font-weight: 600; }
 .matrix .grp td { font-weight: 600; color: var(--muted); font-size: 12px; background: color-mix(in srgb, var(--fg) 3%, var(--surface)); padding-block: 4px; }
 .matrix .na { color: var(--muted); }
 .matrix .no { color: var(--b6); font-weight: 500; }
+.matrix .jump { text-align: left; }
 
 /* Toolbar */
 .toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
@@ -92,6 +98,7 @@ h2 { margin: 10px 0 0; font-size: 1.05rem; font-weight: 600; }
 .tree, .children { list-style: none; margin: 0; padding: 0; }
 .tree { width: max-content; }
 .item { display: flex; align-items: center; position: relative; }
+.tree > .item { padding-block: 5px; }
 .node { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
 .children { display: flex; flex-direction: column; padding-left: 44px; position: relative; }
 .children::before { content: ''; position: absolute; left: 0; top: 50%; width: 22px; border-top: 1.5px solid var(--line); }
@@ -114,6 +121,8 @@ button.card:hover { border-color: var(--br, var(--muted)); }
 .card .t { font-weight: 600; display: flex; align-items: baseline; gap: 6px; }
 .card .t .lbl { flex: 1; min-width: 0; }
 .card .n { color: var(--muted); font-size: 12.5px; }
+.card details.steps summary { cursor: pointer; font-size: 12.5px; font-weight: 600; color: var(--br, var(--focus)); width: fit-content; }
+.card details.steps summary:hover { text-decoration: underline; }
 .card ol { margin: 2px 0 0; padding-left: 20px; font-size: 12.5px; display: flex; flex-direction: column; gap: 2px; }
 .card a { font-family: var(--font-mono); font-size: 11.5px; color: var(--br, var(--focus)); word-break: break-all; }
 .tag { font-family: var(--font-mono); font-size: 10.5px; font-weight: 500; letter-spacing: 0.02em; padding: 1px 5px; border-radius: 4px; border: 1px solid color-mix(in srgb, var(--br, var(--b10)) 45%, transparent); color: var(--br, var(--muted)); white-space: nowrap; }
@@ -148,6 +157,79 @@ button.card:hover { border-color: var(--br, var(--muted)); }
 .card.hit { box-shadow: 0 0 0 3px var(--hit); }
 .card.flash { box-shadow: 0 0 0 3px var(--focus); }
 
+/* Kiểu xem Danh sách: cây đổ dọc như mục lục, mỗi cấp thụt vào, không cuộn ngang */
+
+.canvas.outline { padding: 18px 20px; }
+.outline .tree { width: auto; max-width: 860px; display: flex; flex-direction: column; gap: 6px; }
+.outline .item { flex-direction: column; align-items: stretch; }
+.outline .tree > .item { padding-block: 0; }
+.outline .node { align-items: stretch; }
+.outline .card { max-width: none; width: 100%; }
+.outline .card .t .lbl { flex: 1; }
+.outline .links { max-width: none; padding-left: 2px; }
+.outline .children { padding-left: 26px; margin-left: 12px; margin-top: 6px; gap: 6px; }
+.outline .children::before { display: none; }
+.outline .children > .item { padding-block: 0; }
+.outline .children > .item::before { left: -26px; top: -6px; bottom: 0; }
+.outline .children > .item:first-child::before { top: -6px; }
+.outline .children > .item:last-child::before { bottom: auto; height: 26px; }
+.outline .children > .item:only-child::before { display: block; }
+.outline .children > .item::after { left: -26px; top: 20px; width: 20px; }
+.outline .d1 > .node > .card { font-size: 15px; color: var(--fg); background: color-mix(in srgb, var(--br) 13%, var(--surface)); border-color: color-mix(in srgb, var(--br) 45%, var(--line)); border-left: 5px solid var(--br); }
+.outline .d1 > .node > .card .n, .outline .d1 > .node > .card .crumb { color: var(--muted); }
+.outline .d1 > .node > .card .more { color: var(--br); }
+.outline .d1 > .node > .card .tag { color: var(--br); border-color: color-mix(in srgb, var(--br) 45%, transparent); }
+.outline .tree > .d1 + .d1 { margin-top: 4px; }
+
+/* Các kiểu xem khác */
+.alt { padding: 16px; }
+.alt .note { color: var(--muted); font-size: 12.5px; margin: 0 0 10px; }
+.alt .tree, .alt .children { list-style: none; margin: 0; padding: 0; }
+.alt .card { max-width: none; }
+
+/* Cột lồng nhau */
+.mcols { display: flex; align-items: stretch; overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; min-height: 420px; }
+.mcol { flex: 0 0 250px; border-right: 1px solid var(--line); overflow-y: auto; max-height: 70vh; padding: 6px; display: flex; flex-direction: column; gap: 2px; }
+.mcol h3 { margin: 4px 6px 6px; font-size: 11.5px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.mitem { font: inherit; font-size: 13px; text-align: left; color: var(--fg); background: none; border: 0; border-left: 3px solid var(--br, var(--line)); border-radius: 6px; padding: 6px 8px; cursor: pointer; display: flex; gap: 6px; align-items: baseline; }
+.mitem:hover { background: color-mix(in srgb, var(--br, var(--fg)) 8%, var(--surface)); }
+.mitem[aria-current="true"] { background: color-mix(in srgb, var(--br, var(--fg)) 16%, var(--surface)); font-weight: 600; }
+.mitem .l { flex: 1; min-width: 0; }
+.mitem .c { color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+.mdetail { flex: 1 0 340px; padding: 12px; overflow-y: auto; max-height: 70vh; }
+.mdetail .node { align-items: stretch; }
+
+/* Bảng tra cứu */
+.tfilter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; align-items: center; }
+.tfilter select, .tfilter input { font: inherit; font-size: 13px; color: var(--fg); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 7px 10px; }
+.tfilter input { flex: 1 1 220px; max-width: 360px; }
+.twrap { overflow: auto; max-height: 72vh; border: 1px solid var(--line); border-radius: 10px; }
+.ttable { border-collapse: collapse; width: 100%; min-width: 900px; font-size: 13px; }
+.ttable th, .ttable td { text-align: left; vertical-align: top; padding: 7px 10px; border-bottom: 1px solid var(--line); }
+.ttable th { position: sticky; top: 0; background: color-mix(in srgb, var(--fg) 6%, var(--surface)); font-weight: 600; z-index: 1; }
+.ttable td.path { color: var(--muted); font-size: 12px; border-left: 4px solid var(--br, var(--line)); width: 18%; min-width: 140px; }
+.ttable td.tit { font-weight: 600; min-width: 160px; }
+.ttable td ol { margin: 4px 0 0; padding-left: 18px; }
+.ttable td a { font-family: var(--font-mono); font-size: 11.5px; word-break: break-all; }
+.ttable .links { max-width: 260px; }
+
+/* Bảng thẻ */
+.board { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; align-items: start; }
+.bcard { border: 1px solid color-mix(in srgb, var(--br, var(--line)) 45%, var(--line)); border-top: 5px solid var(--br, var(--line)); border-radius: 10px; padding: 10px 12px; background: color-mix(in srgb, var(--br, var(--fg)) 5%, var(--surface)); }
+.bcard > h3 { margin: 0 0 2px; font-size: 15px; display: flex; gap: 6px; align-items: baseline; }
+.bcard > h3 .lbl { flex: 1; }
+.bcard > .n { color: var(--muted); font-size: 12.5px; margin-bottom: 6px; }
+.bcard details { border-top: 1px solid color-mix(in srgb, var(--line) 70%, transparent); }
+.bcard details details { border-top: 0; margin-left: 14px; }
+.bcard summary { cursor: pointer; padding: 5px 0; font-size: 13px; display: flex; gap: 6px; align-items: baseline; list-style: none; }
+.bcard summary::before { content: '▸'; color: var(--muted); font-size: 11px; width: 10px; }
+.bcard details[open] > summary::before { content: '▾'; }
+.bcard summary .lbl { flex: 1; }
+.bcard summary .cnt { color: var(--muted); font-size: 11px; }
+.bcard .body { font-size: 12.5px; color: var(--muted); padding: 0 0 6px 16px; display: flex; flex-direction: column; gap: 4px; }
+.bcard .body ol { margin: 0; padding-left: 18px; color: var(--fg); }
+.bcard .body a { font-family: var(--font-mono); font-size: 11.5px; word-break: break-all; }
+
 @media (prefers-reduced-motion: no-preference) {
   .card { transition: border-color .15s, box-shadow .15s; }
 }
@@ -162,20 +244,24 @@ button.card:hover { border-color: var(--br, var(--muted)); }
   <div class="stats" id="stats"></div>
 
   <h2>Sơ đồ liên kết</h2>
-  <p class="hint">Bấm một ô để xem cây chi tiết bắt đầu từ chủ thể đó. Rê chuột lên ô để làm nổi các đường nối. Nét đứt là luồng quay ngược (tiền trả trước add vào hợp đồng).</p>
-  <div class="panel flow"><svg id="flow" viewBox="0 0 1400 470" role="img" aria-label="Sơ đồ liên kết: Kênh bán tạo Đơn hàng; Đơn hàng sinh Hợp đồng, Khoản thu, Phiếu triển khai; khoản thu và phiếu triển khai gửi tín hiệu về INVOICE; INVOICE xuất hóa đơn; hóa đơn sang gạch nợ và hậu kỳ"></svg></div>
-
-  <h2>Ma trận kênh × đầu ra của đơn hàng</h2>
-  <p class="hint">11 kênh đang tạo được đơn. Dấu "—" là chưa có thông tin trong tài liệu. Bấm tên kênh để xem cây từ kênh đó.</p>
-  <div class="panel matrix"><table id="matrix"></table></div>
+  <p class="hint">Luồng chính đi từ trái sang phải. Rê chuột lên một ô để làm nổi các đường nối và xem chữ trên đường. Bấm một ô để xem cây chi tiết của chủ thể đó (bấm ô kênh để xem rule riêng của kênh; ô SOP, TMĐT mở cả nhóm). Ô nhạt màu là chủ thể phụ. Nét đứt: QLCS lấy dữ liệu từ Quản lý vật tư, trả ra SPF rồi load dịch vụ, thiết bị lên hóa đơn.</p>
+  <div class="panel flow"><svg id="flow" viewBox="0 0 1400 600" role="img" aria-label="Sơ đồ liên kết: 11 kênh bán (Desktop, Mobile, DKOL, FPL, Shopee, TikTok, W-Sale, CRM, CRM-APP, Momo, VNTT) tạo Đơn hàng; Đơn hàng sinh Hợp đồng, Khoản thu, Phiếu triển khai; khoản thu và phiếu triển khai gửi tín hiệu về INVOICE; INVOICE xuất hóa đơn; hóa đơn sang gạch nợ và hậu kỳ; Hủy đơn hàng hủy phiếu thi công và khoản thu"></svg></div>
 
   <h2 id="treeTitle">Cây chi tiết</h2>
-  <p class="hint">Chọn một chủ thể để xem cây bắt đầu từ chủ thể đó. Cây gồm thông tin của chủ thể, nhánh <b>Liên kết tới</b> (chủ thể nó liên quan) và nhánh <b>Được nhắc tới từ</b> (nơi khác nhắc đến nó). Nút <b>⌖ Xem từ đây</b> trên mỗi ô cũng đổi gốc cây.</p>
+  <p class="hint">Chọn một chủ thể để xem cây bắt đầu từ chủ thể đó. Cây gồm thông tin của chủ thể và nhánh <b>Liên kết</b>: các thực thể liên quan, mỗi thực thể chỉ hiện phần liên quan tới chủ thể đang xem. Bấm <b>⌖ Xem chi tiết</b> để xem đầy đủ thực thể đó. Nút <b>⌖ Xem từ đây</b> trên mỗi ô cũng đổi gốc cây.</p>
   <div class="focusbar">
     <label for="focus">Xem từ chủ thể</label>
     <select id="focus"></select>
     <button class="btn" id="up" type="button">↑ Lên cấp trên</button>
-    <button class="btn" id="home" type="button">⌂ Toàn bộ từ Đơn hàng</button>
+    <button class="btn" id="home" type="button">⌂ Toàn bộ chủ đề</button>
+    <label for="view">Kiểu xem</label>
+    <select id="view">
+      <option value="outline">☰ Danh sách dọc</option>
+      <option value="tree">⇢ Cây ngang</option>
+      <option value="columns">▥ Cột lồng nhau</option>
+      <option value="table">▤ Bảng tra cứu</option>
+      <option value="cards">▦ Bảng thẻ</option>
+    </select>
   </div>
   <nav class="crumbbar" id="crumbs" aria-label="Vị trí chủ thể"></nav>
   <div class="toolbar">
@@ -189,6 +275,7 @@ button.card:hover { border-color: var(--br, var(--muted)); }
     <button class="btn" id="collapse" type="button">Thu gọn</button>
   </div>
 
+  <div class="panel alt" id="alt" hidden></div>
   <div class="panel canvas" id="canvas">
     <ul class="tree" id="tree"></ul>
   </div>
@@ -198,7 +285,24 @@ button.card:hover { border-color: var(--br, var(--muted)); }
 const SOP_NEW = ['Chọn + ở bán mới', 'Nhấn icon tìm kiếm ở thông tin địa chỉ', 'Chọn/nhập địa chỉ → Xác nhận', 'Chọn đối tượng KH (nếu muốn đổi)', 'Chọn dịch vụ cần mua', 'Chi tiết giỏ hàng → Xác nhận', 'Cập nhật thông tin KH', 'Tạo báo giá', 'Tạo hợp đồng', 'Cập nhật hợp đồng nếu muốn'];
 const SOP_ADD = ['Chọn + ở bán thêm', 'Tìm hợp đồng → chọn HĐ bán thêm', 'Nhấn icon +', 'Chọn dịch vụ cần mua', 'Chi tiết giỏ hàng → Xác nhận', 'Cập nhật thông tin KH (nếu muốn)', 'Tạo báo giá', 'Tạo hợp đồng', 'Cập nhật hợp đồng nếu muốn'];
 const SPF_RETRY = ['Đăng nhập SPF Web admin', 'Menu Retry Order', 'Tìm đơn theo refcode owner cung cấp', 'Nếu có thông tin: ngắt kết nối đơn hàng', 'Sang tab Cập nhật địa chỉ, SĐT', 'Tìm lại đơn theo refcode', 'Nhấn Load', 'Nhập đầy đủ thông tin', 'Nhấn Submit'];
+// Danh sách dịch vụ "a, b, c" → mỗi dịch vụ 1 ô
+const svc = list => list.split(', ').map(t => ({ t }));
 const SVC19 = 'Internet, FPT Camera Only, FPT Camera Combo, FPT Play Stands Alone, Sản phẩm khác, FPT Play, Tổng đài Oncall, FPT Smart Home, Ultra Fast Stand Alone, FPro, FSafe Go, VioEdu Stand Alone, VIP 247, SIM data, Pay Wifi, Ultra Fast, FPT Camera B2B, HyperFast, FPT AI Wi-Fi';
+
+/* Thời điểm sinh khoản thu, phiếu, BBĐT: các trường hợp, gắn vào từng kênh qua GEN_BY_CH */
+const GEN_CASES = [
+  { t: '1. Cả 3 cùng lúc', tag: 'PTTT = TT khi triển khai', n: 'Áp dụng mọi kênh có khoản thu. Chỉ phiếu thi công gen ngay; phiếu tại quầy và Vendor vẫn chờ thanh toán (xem trường hợp 7)', steps: ['Tạo đơn', 'Ngay sau khi tạo đơn: gen đồng thời khoản thu + phiếu thi công + BBĐT (không chờ thanh toán)', 'Đơn và khoản thu = Chưa thanh toán', 'KH thanh toán khi triển khai'], see: ['receipt', 'ptc', 'minutes'] },
+  { t: '2. Khoản thu trước, phiếu + BBĐT sau', tag: 'Desktop / Mobile', n: 'PTTT Online', steps: ['Tạo đơn → gen khoản thu (Chưa thanh toán)', 'KH thanh toán khoản thu', 'Khoản thu → Đã thanh toán, tiền đẩy vào cọc', 'Gen phiếu thi công + BBĐT'], see: ['ch-desktop', 'ch-mobile'] },
+  { t: '3. KH trả trước, rồi gen tất cả', tag: 'DKOL', n: 'PTTT Online', steps: ['KH thanh toán xong mới tạo đơn', 'Đơn + khoản thu tạo ra ở trạng thái Đã thanh toán', 'Gen phiếu thi công + BBĐT'], see: ['ch-dkol'] },
+  { t: '4. Không có khoản thu', tag: 'Shopee / TikTok', n: 'Thay khoản thu bằng Order Transaction. PTC và BBĐT gen sau khi tạo đơn hàng thành công. PTC phải hoàn tất trước khi xuất hóa đơn', steps: ['Sàn gửi đơn → SPF tạo đơn Chưa thanh toán', 'Tạo đơn thành công → gen PTC + BBĐT', 'Order Transaction = Thanh toán tạm', 'Đơn SPF → Đã thanh toán', 'PTC hoàn tất'], see: ['tmdt'] },
+  { t: '5. Không tạo khoản thu', tag: 'VNTT', n: 'Chỉ ghi nhận hợp đồng. Chưa có thông tin về phiếu và BBĐT', see: ['ch-vntt'] },
+  { t: '6. Không có phiếu, BBĐT auto ký', tag: 'Không có HT triển khai', n: 'Không gen phiếu triển khai. Có BBĐT nhưng hệ thống tự động ký. Khoản thu theo PTTT', see: ['nophieu', 'minutes'], c: [
+    { t: 'Kênh', tag: 'cả kênh', n: 'FPL: mọi đơn của kênh đều không có hình thức triển khai', see: ['ch-fpl'] },
+    { t: 'Dịch vụ', tag: 'theo dịch vụ', n: 'Ultra Fast SA, FPT Play SA, HyperFast SA: không có phiếu dù bán ở kênh nào (vd DKOL)', see: ['ch-dkol'] }
+  ]},
+  { t: '7. Phiếu tại quầy / Vendor', tag: 'Mọi PTTT', n: 'Phiếu giao dịch tại quầy và đơn Vendor chỉ gen sau khi đơn đã thanh toán, kể cả PTTT Thanh toán khi triển khai. BBĐT: quầy tùy sản phẩm (Camera Combo phải ký; Sản phẩm khác, Camera Only tự động ký) · Vendor tự động ký', see: ['counter', 'vendor', 'bbdt-sign'] },
+  { t: 'Cần xác nhận', n: 'VNTT có phiếu, BBĐT không?' }
+];
 
 /* ---------- Cây chi tiết ----------
    id: đích để nhảy tới · col: màu nhánh cấp 1 · see: chip liên kết chéo sang nhánh khác */
@@ -206,7 +310,8 @@ const DATA = {
   id: 'order', t: 'Đơn hàng', n: 'Bán mới · bán thêm · SPF → INVOICE → Billing',
   c: [
     { id: 'policy', col: 1, t: 'Chính sách bán hàng', tag: 'Tool BP', c: [
-      { t: 'Tool chính sách STG', n: 'Host 172.20.18.252 bp-stag.fpt.net', url: 'http://bp-stag.fpt.net/' },
+      { t: 'Tool chính sách STG', tag: 'Cần host', url: 'http://bp-stag.fpt.net/' },
+      { t: 'Luồng dữ liệu QLCS', tag: 'Vật tư → QLCS → SPF → hóa đơn', n: 'Quản lý chính sách (QLCS) lấy dữ liệu từ Quản lý vật tư, trả ra SPF, rồi thông tin dịch vụ, thiết bị được load lên hóa đơn', steps: ['QLCS lấy dữ liệu từ Quản lý vật tư', 'QLCS trả dữ liệu ra SPF (Web admin)', 'Load thông tin dịch vụ, thiết bị lên hóa đơn'], see: ['material', 'order-info', 'invoice'] },
       { t: 'Cách tạo chính sách', steps: ['Tìm chính sách có sẵn của dịch vụ muốn bán', 'Sao chép', 'Sửa → nhập thông tin → Lưu', 'Trở về → Gửi đề xuất', 'Menu Bán hàng › tab Bán hàng', 'Tìm mã vừa đề xuất → tích chọn → Tạo quyết định', 'Nhập thông tin hợp lệ → Lưu'] },
       { t: 'Chính sách quyết định', c: [
         { t: 'Giá bán · Gói bán', n: 'Giá bán của SPDV và các gói bán của dịch vụ' },
@@ -215,80 +320,88 @@ const DATA = {
         { t: 'Đối tượng / loại khách hàng', n: 'Bán cho đối tượng nào · KH mới hay KH cũ' },
         { t: 'Kênh bán · Đơn vị bán hàng', n: 'Bán ở kênh nào, đơn vị nào được bán', see: ['channel'] },
         { t: 'Phương thức thanh toán', n: 'Quyết định khi nào sinh khoản thu và phiếu', see: ['receipt'] },
-        { t: 'Hình thức triển khai thiết bị', n: 'Quyết định đơn đi loại phiếu triển khai nào', see: ['deploy'] }
+        { t: 'Hình thức triển khai thiết bị', n: 'Quyết định đơn đi loại phiếu triển khai nào', see: ['deploy'] },
+        { id: 'voucher', t: 'Phiếu mua hàng / Voucher', n: 'Chính sách quản lý phiếu mua hàng, voucher. Khách hàng hoặc nhân viên add vào lúc tạo đơn', see: ['channel'] }
       ]}
     ]},
 
     { id: 'channel', col: 2, t: 'Kênh bán', tag: '22 kênh', n: '11 kênh đang tạo được đơn · 11 kênh chưa dùng được', c: [
       { t: 'Sau khi tạo đơn (mọi kênh)', n: 'Đơn tạo xong sẽ có thông tin hợp đồng. Tùy PTTT mà sinh khoản thu và phiếu triển khai', see: ['contract', 'receipt', 'deploy'] },
-      { t: 'Nhóm SOP', tag: '2 kênh', c: [
+      { id: 'grp-sop', t: 'Nhóm SOP', tag: '2 kênh', n: 'Desktop (Web SOP) và Mobile (App SOP)', c: [
         { id: 'ch-desktop', t: 'Desktop', tag: 'ID 2', n: 'Owner KhiemBT · Web SOP · bán mới + bán thêm', see: ['receipt', 'deploy'], c: [
           { t: 'Web SOP', url: 'https://portal-sop-stg.fpt.vn/user/login/basic-auth' },
-          { t: '19 dịch vụ', n: SVC19 },
-          { t: 'Bắt đầu', steps: ['Thêm khách hàng', 'Nhập đầy đủ thông tin', 'Tạo và lên đơn → Xác nhận', 'Chọn bán mới / bán thêm', 'Menu Đơn hàng → tab bán mới/bán thêm → dấu +'] },
-          { t: 'Tạo đơn bán mới', steps: SOP_NEW, see: ['contract'] },
-          { t: 'Tạo đơn bán thêm', steps: SOP_ADD, see: ['contract'] },
-          { t: 'Khoản thu', n: 'Đơn và khoản thu Chưa thanh toán → KH thanh toán → mới gen phiếu thi công, biên bản điện tử', see: ['receipt'] },
-          { t: 'Phiếu triển khai', n: 'Theo chính sách khai báo, có thể đi cả 3 loại phiếu', see: ['deploy'] },
-          { t: 'Phạm vi test', n: '19 nhóm, trừ nhóm 25 Prepaid 3' }
+          { t: 'Dịch vụ đang bán', tag: '19 dịch vụ', n: 'Bán mới + bán thêm. Không bán Prepaid 3', c: svc(SVC19) },
+          { t: 'Cách tạo đơn', tag: 'Web SOP', c: [
+            { t: 'Bắt đầu', steps: ['Thêm khách hàng', 'Nhập đầy đủ thông tin', 'Tạo và lên đơn → Xác nhận', 'Chọn bán mới / bán thêm', 'Menu Đơn hàng → tab bán mới/bán thêm → dấu +'] },
+            { t: 'Tạo đơn bán mới', steps: SOP_NEW, see: ['contract'] },
+            { t: 'Tạo đơn bán thêm', steps: SOP_ADD, see: ['contract'] }
+          ]},
+          { t: 'Khoản thu', n: 'Đơn và khoản thu Chưa thanh toán → KH thanh toán → mới gen phiếu thi công, biên bản điện tử', see: ['receipt'] }
         ]},
         { id: 'ch-mobile', t: 'Mobile', tag: 'ID 1', n: 'Owner KhiemBT · App SOP · bán mới + bán thêm', see: ['ch-desktop'], c: [
-          { t: 'Dịch vụ, khoản thu, triển khai', n: 'Giống Desktop (19 dịch vụ)' },
-          { t: 'Tạo đơn', n: 'Menu Đơn hàng → tab bán mới/bán thêm → dấu +, sau đó các bước giống Desktop' },
-          { t: 'Phạm vi test', n: '19 nhóm, trừ nhóm 25 Prepaid 3' }
+          { t: 'Dịch vụ đang bán', tag: '19 dịch vụ', n: 'Giống Desktop. Bán mới + bán thêm. Không bán Prepaid 3', c: svc(SVC19) },
+          { t: 'Khoản thu, triển khai', n: 'Giống Desktop', see: ['ch-desktop'] },
+          { t: 'Cách tạo đơn', tag: 'App SOP', n: 'Menu Đơn hàng → tab bán mới/bán thêm → dấu +, sau đó các bước giống Desktop', c: [
+            { t: 'Tạo đơn bán mới', steps: ['Menu Đơn hàng → tab bán mới', ...SOP_NEW], see: ['contract'] },
+            { t: 'Tạo đơn bán thêm', steps: ['Menu Đơn hàng → tab bán thêm', ...SOP_ADD], see: ['contract'] }
+          ]}
         ]}
       ]},
       { t: 'Nhóm Online', tag: '2 kênh', c: [
         { id: 'ch-dkol', t: 'DKOL', tag: 'ID 4', n: 'Owner TaiTT13 · HiFPT và FPT.vn đều SaleChannel DKOL', see: ['receipt', 'ptc', 'counter', 'vendor', 'nophieu'], c: [
-          { t: 'Lên đơn từ HiFPT', n: 'Sale team: Khách hàng bình thường HiFPT', c: [
-            { t: 'Bán mới', n: 'Net, combo Net–Camera, combo Net–PayTV, TripleF Net–PayTV–Cam, Ultra Fast SA, FPT Play SA, Smart Home, Smart TV, thiết bị modem, thiết bị y tế, Camera combo (lẻ)' },
-            { t: 'Bán thêm', n: 'Cloud, Camera, FPT Play (billing)' }
+          { t: 'Dịch vụ đang bán', tag: 'HiFPT · FPT.vn', n: 'Tùy nơi lên đơn và sale team', c: [
+            { t: 'Lên đơn từ HiFPT', n: 'Sale team: Khách hàng bình thường HiFPT', c: [
+              { t: 'Bán mới', tag: '11 dịch vụ', c: svc('Net, combo Net–Camera, combo Net–PayTV, TripleF Net–PayTV–Cam, Ultra Fast SA, FPT Play SA, Smart Home, Smart TV, thiết bị modem, thiết bị y tế, Camera combo (lẻ)') },
+              { t: 'Bán thêm', tag: '3 dịch vụ', c: svc('Cloud, Camera, FPT Play (billing)') }
+            ]},
+            { t: 'Lên đơn từ FPT.vn', n: 'Sale team: DKOL (KH vãng lai), AM (sale IBB), CTV_sale (208), ANCS (239), Đối tác (238)', c: [
+              { t: 'KH vãng lai · bán mới', tag: '11 dịch vụ', n: 'Như bán mới HiFPT, thêm HyperFast SA, bỏ thiết bị y tế', c: svc('Net, combo Net–Camera, combo Net–PayTV, TripleF Net–PayTV–Cam, Ultra Fast SA, FPT Play SA, HyperFast SA, Smart Home, Smart TV, thiết bị modem, Camera combo (lẻ)') },
+              { t: 'Sale team còn lại · bán mới', n: 'Chủ yếu Net và combo của Net. Prepaid là bán mới nhưng ghi nhận cho sale', c: svc('Net, combo của Net, Prepaid') },
+              { t: 'Bán thêm / nâng cấp', tag: '3 dịch vụ', c: svc('Camera ưu đãi, FPT Play sub, nâng cấp FPT Play (sub)') }
+            ]}
           ]},
-          { t: 'Lên đơn từ FPT.vn', n: 'Sale team: DKOL (KH vãng lai), AM (sale IBB), CTV_sale (208), ANCS (239), Đối tác (238)', c: [
-            { t: 'KH vãng lai', n: 'Như bán mới HiFPT + HyperFast SA, trừ thiết bị y tế' },
-            { t: 'Sale team còn lại', n: 'Chủ yếu Net và combo của Net. Prepaid là bán mới nhưng ghi nhận cho sale' },
-            { t: 'Bán thêm / nâng cấp', n: 'Camera ưu đãi, FPT Play sub; nâng cấp FPT Play (sub)' }
-          ]},
-          { t: 'Khoản thu', n: 'KH thanh toán xong mới tạo đơn → đơn và khoản thu Đã thanh toán ngay → gen phiếu thi công, biên bản điện tử', see: ['receipt'] },
-          { t: 'Phiếu triển khai', n: 'Camera: Quầy (shipper) hoặc TIN/PNC · TV: Vendor · Ultra Fast SA, FPT Play SA, HyperFast SA: không có phiếu', see: ['ptc', 'counter', 'vendor', 'nophieu'] },
-          { t: 'Phạm vi test', n: 'Bán mới nhóm {1,4,5,6,7,9,10,21} · bán thêm {1,4,7}' }
+          { t: 'Khoản thu', n: 'KH thanh toán xong mới tạo đơn → đơn và khoản thu Đã thanh toán ngay → gen phiếu thi công, biên bản điện tử', see: ['receipt'] }
         ]},
-        { id: 'ch-fpl', t: 'FPL', tag: 'ID 10', n: 'Lên đơn từ web FPL dev.fptplay.vn', see: ['invoice'], c: [
-          { t: 'Phạm vi test', n: 'Chỉ nhóm 5 FPT Play Stands Alone' },
+        { id: 'ch-fpl', t: 'FPL', tag: 'ID 10', n: 'Lên đơn từ web FPL dev.fptplay.vn', see: ['invoice', 'nophieu'], c: [
+          { t: 'Dịch vụ đang bán', tag: '1 dịch vụ', c: svc('FPT Play Stands Alone') },
           { t: 'Thông tin xuất hóa đơn', n: 'Khách chọn có lấy hóa đơn; tự nhập 7 trường trong tối đa 2 giờ. Không lấy / quá 2h → dùng thông tin hợp đồng, ẩn nút Xuất hóa đơn', see: ['contract'] },
           { t: 'Rule riêng', n: 'Delay 2h từ lúc tạo đơn · worker 2h/lần + mốc 22:05 · realtime sau 22h', see: ['invoice'] }
         ]}
       ]},
-      { t: 'Nhóm TMĐT', tag: '2 kênh', n: 'Không có khoản thu, dùng Order Transaction', c: [
+      { id: 'grp-tmdt', t: 'Nhóm TMĐT', tag: '2 kênh', n: 'Đơn sàn thương mại điện tử: Shopee, TikTok. Không có khoản thu, dùng Order Transaction', c: [
         { id: 'ch-shopee', t: 'Shopee', tag: 'ID 20', n: 'Owner HaiPV7 · chỉ bán mới', see: ['tmdt', 'ptc', 'counter'], c: [
-          { t: 'Dịch vụ', n: 'Internet, FPT Camera Only, FPT Play Stands Alone, FPT Play, Sản phẩm khác' },
-          { t: 'Chuẩn bị', n: 'Nhờ owner kéo đơn từ PRO (refcode), sao chép chính sách về STG, nhờ owner map SKU' },
-          { t: 'Hạn key 4 giờ', n: 'Chỉ Shopee. Hết 4h thì nhờ owner kéo key về lại' },
-          { t: 'Phiếu triển khai', n: 'Quầy (chính sách shipper giao hàng) và TIN/PNC', see: ['ptc', 'counter'] },
-          { t: 'Tạo đơn trên SPF Web admin', steps: SPF_RETRY, url: 'http://saleplatform-stag.fpt.net/web-admin/Account/Login' },
-          { t: 'Phạm vi test', n: 'Bán mới {1,3,5,6,7} · hồi quy Phase 1' }
+          { t: 'Dịch vụ đang bán', tag: '5 dịch vụ', n: 'Chỉ bán mới', c: svc('Internet, FPT Camera Only, FPT Play Stands Alone, FPT Play, Sản phẩm khác') },
+          { t: 'Cách tạo đơn', tag: 'SPF Retry Order', c: [
+            { t: 'Chuẩn bị', n: 'Nhờ owner kéo đơn từ PRO (refcode), sao chép chính sách về STG, nhờ owner map SKU' },
+            { t: 'Hạn key 4 giờ', n: 'Chỉ Shopee. Hết 4h thì nhờ owner kéo key về lại' },
+            { t: 'Tạo đơn trên SPF Web admin', steps: SPF_RETRY, url: 'http://saleplatform-stag.fpt.net/web-admin/Account/Login' }
+          ]}
         ]},
         { id: 'ch-tiktok', t: 'TikTok', tag: 'ID 21', n: 'Owner HaiPV7 · chỉ bán mới', see: ['tmdt', 'ptc', 'counter'], c: [
-          { t: 'Dịch vụ', n: 'Internet, FPT Camera Only, FPT Play Stands Alone, FPT Play, Sản phẩm khác, FPT Camera Combo' },
-          { t: 'Chuẩn bị', n: 'Nhờ owner kéo đơn từ PRO (refcode), sao chép chính sách về STG, nhờ owner map SKU' },
-          { t: 'Phiếu triển khai', n: 'Quầy (chính sách shipper giao hàng) và TIN/PNC', see: ['ptc', 'counter'] },
-          { t: 'Tạo đơn trên SPF Web admin', n: 'Giống Shopee (menu Retry Order)', see: ['ch-shopee'] },
-          { t: 'Phạm vi test', n: 'Bán mới {1,3,4,5,6,7} · hồi quy Phase 1' }
+          { t: 'Dịch vụ đang bán', tag: '6 dịch vụ', n: 'Chỉ bán mới', c: svc('Internet, FPT Camera Only, FPT Camera Combo, FPT Play Stands Alone, FPT Play, Sản phẩm khác') },
+          { t: 'Cách tạo đơn', tag: 'SPF Retry Order', c: [
+            { t: 'Chuẩn bị', n: 'Nhờ owner kéo đơn từ PRO (refcode), sao chép chính sách về STG, nhờ owner map SKU' },
+            { t: 'Tạo đơn trên SPF Web admin', n: 'Giống Shopee (menu Retry Order)', steps: SPF_RETRY, url: 'http://saleplatform-stag.fpt.net/web-admin/Account/Login', see: ['ch-shopee'] }
+          ]}
         ]}
       ]},
       { t: 'Nhóm Đối tác & khác', tag: '5 kênh', c: [
         { id: 'ch-wsale', t: 'W-Sale', tag: 'ID 9', n: 'Owner HoangVT11', see: ['ptc'], c: [
-          { t: 'Web W-Sale', n: 'Host 172.20.18.252 wsale-stag.fpt.net', url: 'http://wsale-stag.fpt.net/' },
-          { t: 'Dịch vụ', n: 'Internet, Pay. Đơn Swap: nhờ HaiTN16 cung cấp data rồi tạo đơn' },
-          { t: 'Phiếu triển khai', n: 'Chỉ TIN/PNC → phiếu thi công', see: ['ptc'] },
-          { t: 'Phạm vi test', n: 'Chỉ bán thêm {1,7}' }
+          { t: 'Web W-Sale', tag: 'Cần host', url: 'http://wsale-stag.fpt.net/' },
+          { t: 'Dịch vụ đang bán', tag: '2 dịch vụ', n: 'Chỉ bán thêm', c: svc('Internet, Pay') },
+          { t: 'Đơn Swap', n: 'Nhờ HaiTN16 cung cấp data rồi tạo đơn' }
         ]},
         { id: 'ch-crm', t: 'CRM', tag: 'ID 13', n: 'Owner HoangPHD · chỉ bán dịch vụ FPL', c: [
-          { t: 'Web CRM', url: 'https://crm-stag.fpt.net/' },
-          { t: 'Tạo đơn', steps: ['Tạo đơn cơ hội', 'Tạo báo giá', 'Đánh dấu version', 'Chờ 5 phút', 'Tạo đơn hàng'] }
+          { t: 'Web CRM', tag: 'Cần host', url: 'https://crm-stag.fpt.net/' },
+          { t: 'Dịch vụ đang bán', tag: '1 nhóm', c: svc('Dịch vụ FPL') },
+          { t: 'Cách tạo đơn', tag: 'Web CRM', steps: ['Tạo đơn cơ hội', 'Tạo báo giá', 'Đánh dấu version', 'Chờ 5 phút', 'Tạo đơn hàng'] }
         ]},
-        { id: 'ch-crmapp', t: 'CRM-APP', tag: 'ID 16', n: 'Owner PhuongTT3 · App FPT Life · chỉ bán cloud trong nhóm FPT Camera Only' },
-        { id: 'ch-momo', t: 'Momo', tag: 'ID 17', n: 'Owner HaiPV7 · nhờ owner tạo đơn · đang bán Play và combo Play, Camera đang off' },
+        { id: 'ch-crmapp', t: 'CRM-APP', tag: 'ID 16', n: 'Owner PhuongTT3 · App FPT Life · chỉ bán cloud trong nhóm FPT Camera Only', c: [
+          { t: 'Dịch vụ đang bán', tag: '1 dịch vụ', c: [{ t: 'Cloud', n: 'Thuộc nhóm FPT Camera Only' }] }
+        ]},
+        { id: 'ch-momo', t: 'Momo', tag: 'ID 17', n: 'Owner HaiPV7 · nhờ owner tạo đơn · đang bán Play và combo Play, Camera đang off', c: [
+          { t: 'Dịch vụ đang bán', tag: '2 dịch vụ', n: 'Chỉ bán mới. Camera đang off', c: svc('FPT Play, combo FPT Play') }
+        ]},
         { id: 'ch-vntt', t: 'VNTT', tag: 'ID 11', n: 'Owner HaiPV7 · chỉ ghi nhận HĐ, không tạo khoản thu', see: ['contract', 'receipt'] }
       ]},
       { t: 'Chưa dùng được', tag: '11 kênh', c: [
@@ -300,45 +413,72 @@ const DATA = {
       ]}
     ]},
 
+    { id: 'order-entity', col: 12, t: 'Đơn hàng', tag: 'Thực thể', n: 'Thông tin của đơn hàng. Thời điểm sinh khoản thu / phiếu / BBĐT và đầu ra của đơn xem ở từng kênh', c: [
+      { id: 'order-info', t: 'Xem thông tin đơn hàng', tag: 'SPF Web admin', n: 'Vào SPF Web admin để xem thông tin đơn hàng (vd thời gian tạo đơn, Receipt)', url: 'http://saleplatform-stag.fpt.net/web-admin/Account/Login', see: ['receipt'] }
+    ]},
+
     { id: 'contract', col: 3, t: 'Hợp đồng', tag: 'Inside', n: 'Sinh ra khi tạo đơn', c: [
-      { t: 'Sinh ra khi tạo đơn', n: 'Bán mới → tạo hợp đồng mới (bước Tạo hợp đồng). Bán thêm → đơn gắn vào hợp đồng đang hoạt động' },
-      { t: 'Kiểm tra hợp đồng', n: 'Tool Tình trạng trên Inside (xem cả hợp đồng cha nếu là hợp đồng con)' },
-      { t: 'Hủy PTC / thi công lại', n: 'Quản lý hợp đồng › HĐ NOT OK V3 › PTC NOT OK', see: ['ptc'] },
-      { t: 'Cung cấp cho xuất hóa đơn', see: ['invoice'], c: [
-        { t: 'Thông tin khách trên hóa đơn', n: 'Lấy theo hợp đồng lúc phát hành (trừ FPL khách tự nhập)', see: ['ch-fpl'] },
-        { t: 'Hợp đồng phải còn hiệu lực', n: 'Tạm ngưng, đã chấm dứt, ngưng vì thanh toán → không xuất' },
-        { t: 'Chi nhánh xuất hóa đơn', n: 'Chi nhánh quản lý hợp đồng' },
-        { t: 'Mã tỉnh trên ID hóa đơn', n: 'Theo địa chỉ hợp đồng', see: ['postproc'] }
+      { id: 'contract-customer', t: 'Thông tin khách hàng', see: ['invoice'], c: [
+        { t: 'SR thay đổi thông tin khách hàng', tag: 'Fox ERP · Inside', n: 'Thay đổi các thông tin của khách hàng. Lần phát hành hóa đơn sau dùng thông tin mới nhất, cập nhật không kích hoạt phát hành (BR-DB-03)', menus: ['Fox ERP › Service Request', 'Inside › Quản lý hợp đồng › Cập nhật hợp đồng (New)'], url: 'https://fox-erp-stag.fpt.net/', see: ['invoice'] },
+        { t: 'Thông tin khách trên hóa đơn', n: 'Lấy theo hợp đồng lúc phát hành (trừ FPL khách tự nhập)', see: ['invoice', 'ch-fpl'] },
+        { t: 'Chi nhánh xuất hóa đơn', n: 'Chi nhánh quản lý hợp đồng', see: ['invoice'] },
+        { t: 'Mã tỉnh trên ID hóa đơn', n: 'Theo địa chỉ hợp đồng', see: ['invoice', 'postproc'] }
       ]},
-      { t: 'Loại hợp đồng đặc biệt', c: [
-        { t: 'Hợp đồng tổ chức', n: 'KH cấp 1 = Tổ chức. Phải duyệt PĐK mới tự xuất (trừ 2 ngày cuối tháng)', see: ['invoice'] },
-        { t: 'Hợp đồng con', n: 'Có gắn hợp đồng cha (dự án) → không xuất DV lẫn TB' },
-        { t: 'Hợp đồng SST / nghiệp vụ', n: 'Không tự động xuất hóa đơn' }
+      { id: 'contract-service', t: 'Thông tin dịch vụ', c: [
+        { t: 'Sinh ra khi tạo đơn', n: 'Bán mới → tạo hợp đồng mới (bước Tạo hợp đồng). Bán thêm → đơn gắn vào hợp đồng đang hoạt động' },
+        { t: 'Kích hoạt dịch vụ', n: 'Thanh toán xong → hệ thống active dịch vụ của đơn hàng trong hợp đồng', see: ['receipt', 'minutes'], c: [
+          { t: 'Tài khoản FPT Play', n: 'Kích hoạt sau khi ký biên bản điện tử', see: ['minutes'] },
+          { id: 'fptplay-sa', t: 'FPT Play SA (BBĐT auto ký)', tag: '2 hình thức', steps: ['Gửi code qua SMS → khách hàng nhập code để kích hoạt', 'Hoặc auto kích hoạt'], see: ['nophieu'] }
+        ]},
+        { t: 'SR chuyển dịch vụ', tag: 'Fox ERP · Inside', n: 'Chuyển các gói dịch vụ trong cùng 1 nhóm', menus: ['Fox ERP › Service Request', 'Inside › Quản lý hợp đồng › Cập nhật hợp đồng (New)'], url: 'https://fox-erp-stag.fpt.net/' },
+        { t: 'Nhận tiền trả trước', n: 'Hậu kỳ add tiền gói trả trước vào hợp đồng, mỗi đơn 1 lần', see: ['postproc'] }
       ]},
-      { t: 'Nhận tiền trả trước', n: 'Hậu kỳ add tiền gói trả trước vào hợp đồng, mỗi đơn 1 lần', see: ['postproc'] }
+      { id: 'contract-status', t: 'Trạng thái hợp đồng', n: 'Bình thường · Tạm ngưng · Đã chấm dứt · Ngưng vì thanh toán', see: ['invoice'], c: [
+        { t: 'Kiểm tra hợp đồng', tag: 'Inside', n: 'Tool Tình trạng trên Inside (xem cả hợp đồng cha nếu là hợp đồng con)' },
+        { t: 'SR thanh lý / tạm ngưng', tag: 'Fox ERP · Inside', n: 'Cập nhật hợp đồng sang trạng thái Đã chấm dứt / Tạm ngưng → hợp đồng hết hiệu lực, không xuất hóa đơn', menus: ['Fox ERP › Service Request', 'Inside › Quản lý hợp đồng › Cập nhật hợp đồng (New)'], url: 'https://fox-erp-stag.fpt.net/', see: ['invoice'] },
+        { t: 'SR khôi phục dịch vụ', tag: 'Fox ERP · Inside', n: 'Đưa hợp đồng từ Đã chấm dứt / Tạm ngưng về Bình thường', menus: ['Fox ERP › Service Request', 'Inside › Quản lý hợp đồng › Cập nhật hợp đồng (New)'], url: 'https://fox-erp-stag.fpt.net/' },
+        { t: 'Hợp đồng phải còn hiệu lực', n: 'Tạm ngưng, đã chấm dứt, ngưng vì thanh toán → không xuất hóa đơn', see: ['invoice'] }
+      ]}
     ]},
 
     { id: 'receipt', col: 4, t: 'Khoản thu', tag: 'PTTT', n: 'Sinh ra theo phương thức thanh toán', c: [
       { t: 'PTTT = Thanh toán khi triển khai', n: 'Gen đồng thời: khoản thu, phiếu thi công, biên bản điện tử; đơn = Chưa thanh toán', see: ['ptc', 'minutes'] },
-      { t: 'PTTT khác', c: [
+      { t: 'PTTT Online', c: [
         { t: 'DKOL', n: 'KH thanh toán xong mới tạo đơn → đơn và khoản thu Đã thanh toán → gen phiếu thi công, biên bản điện tử', see: ['ch-dkol', 'deploy'] },
         { t: 'Desktop / Mobile', n: 'Tạo đơn và khoản thu Chưa thanh toán → KH thanh toán → gen phiếu thi công, biên bản điện tử', see: ['ch-desktop', 'deploy'] }
       ]},
+      { t: 'Cách thanh toán (STG)', tag: '3 cách', c: [
+        { t: 'App HiFPT', n: 'Menu Thanh toán › Trả hộ ngay' },
+        { t: 'Web FPT.vn', url: 'https://staging.fpt.vn/pay' },
+        { t: 'SPF Web admin', n: 'Chi tiết đơn hàng › Receipt › Thanh toán online', see: ['order-info'], url: 'http://saleplatform-stag.fpt.net/web-admin/Account/Login' },
+        { t: 'Thẻ test thanh toán (STG)', tag: '2 loại thẻ', c: [
+          { t: 'Thẻ tín dụng', tag: 'VISA · Mastercard', steps: ['VISA: 4000000000001091', 'Mastercard: 5200000000001096', 'Tên chủ thẻ: NGUYEN VAN A', 'Hiệu lực thẻ: 12/26', 'CVV: 111', 'Pass: 1234'] },
+          { t: 'Thẻ nội địa', steps: ['Số thẻ: 9704 0000 0000 0018', 'Tên chủ thẻ: NGUYEN VAN A', 'Ngày phát hành: 03/07', 'OTP: otp'] }
+        ]}
+      ]},
+      { id: 'receipt-info', t: 'Thông tin khoản thu', tag: '4 trường', n: 'Khoản thu của đơn hàng: số tiền khoản thu phải bằng số tiền của đơn hàng', see: ['contract'], c: [
+        { t: 'Hợp đồng', n: 'Số hợp đồng mà khoản thu thuộc về', see: ['contract'] },
+        { t: 'Nội dung', n: 'Nội dung khoản thu' },
+        { t: 'Số tiền', n: 'Số tiền khoản thu. Khoản thu của đơn hàng → bằng số tiền đơn hàng' },
+        { t: 'Trạng thái', n: 'Chưa thanh toán / Đã thanh toán' }
+      ]},
       { t: 'Trạng thái', steps: ['Chưa thanh toán', 'Đã thanh toán', 'Tiền đẩy vào cọc'] },
-      { t: 'Đã thanh toán → tín hiệu', n: 'SPF gửi sự kiện thanh toán về INVOICE → điều kiện xuất hóa đơn dịch vụ', see: ['signal', 'invoice'] },
+      { t: 'Đã thanh toán → active dịch vụ', n: 'Hệ thống active dịch vụ của đơn hàng trong hợp đồng (tài khoản FPT Play chờ ký biên bản)', see: ['contract', 'minutes'] },
+      { t: 'Đã thanh toán → tín hiệu', n: 'SPF gửi sự kiện thanh toán về INVOICE → điều kiện xuất hóa đơn dịch vụ', see: ['invoice'] },
       { t: 'Kiểm tra khoản thu', tag: 'Inside', n: 'Foxpay › Thanh toán online › Đối soát khoản thu online' },
+      { t: 'Hủy khoản thu / hoàn tiền', n: 'Hủy đơn chưa thanh toán → hệ thống hủy khoản thu · đơn đã thanh toán → có thể tạo đề nghị hoàn tiền', see: ['cancel'] },
       { t: 'Kênh không có khoản thu', c: [
         { t: 'VNTT', n: 'Chỉ ghi nhận hợp đồng', see: ['ch-vntt'] },
         { id: 'tmdt', t: 'Shopee / TikTok', n: 'Thay bằng Order Transaction, 2 lần', see: ['ch-shopee', 'ch-tiktok'], c: [
-          { t: 'Lần 1 · KH đã trả cho sàn', steps: ['Sàn gửi đơn', 'SPF tạo đơn Chưa thanh toán', 'Order Transaction = Thanh toán tạm', 'Đơn SPF → Đã thanh toán', 'Phiếu thi công hoàn tất', 'Xuất hóa đơn theo rule + gạch nợ hóa đơn tạm'], see: ['ptc', 'postproc'] },
+          { t: 'Lần 1 · KH đã trả cho sàn', steps: ['Sàn gửi đơn', 'SPF tạo đơn Chưa thanh toán → gen PTC + BBĐT', 'Order Transaction = Thanh toán tạm', 'Đơn SPF → Đã thanh toán', 'Phiếu thi công hoàn tất', 'Xuất hóa đơn theo rule + gạch nợ hóa đơn tạm'], see: ['ptc', 'postproc'] },
           { t: 'Lần 2 · Sàn quyết toán về FTEL', steps: ['Sàn gửi thông tin quyết toán', 'SPF không cập nhật đơn', 'Order Transaction = Đã thanh toán; Order Paid ghi phí sàn, số tiền FTEL thực lãnh', 'IIA gạch nợ hóa đơn thật'], see: ['postproc'] }
         ]}
       ]}
     ]},
 
-    { id: 'deploy', col: 5, t: 'Phiếu triển khai', tag: '3 loại phiếu', n: '7 hình thức triển khai → 3 loại phiếu (+ trường hợp không phiếu)', c: [
-      { t: 'Khi nào được gen', n: 'Thanh toán khi triển khai: gen cùng khoản thu. PTTT khác: gen sau khi khoản thu Đã thanh toán', see: ['receipt'] },
-      { id: 'ptc', t: '1. Phiếu thi công (PTC)', tag: 'TIN/PNC · FTI', n: 'Có 2 loại: Triển khai và Giao hàng', see: ['signal'], c: [
+    { id: 'deploy', col: 5, t: 'Phiếu triển khai', tag: '3 loại phiếu', n: '7 hình thức triển khai → 3 loại: Phiếu thi công (PTC), Phiếu giao dịch thiết bị tại quầy, Đơn đặt hàng Vendor (+ trường hợp không phiếu)', c: [
+      { t: 'Khi nào được gen', n: 'Thanh toán khi triển khai: gen ngay sau khi tạo đơn, cùng khoản thu. PTTT Online: gen sau khi khoản thu Đã thanh toán', see: ['receipt'] },
+      { id: 'ptc', t: '1. Phiếu thi công (PTC)', tag: 'TIN/PNC · FTI', n: 'Có 2 loại: Triển khai và Giao hàng', see: ['invoice', 'mat-ptc'], c: [
         { t: 'Loại Triển khai', c: [
           { t: 'TIN/PNC', n: 'Thiết bị cần triển khai, kích hoạt tại địa chỉ đăng ký (vd Internet kèm modem)' },
           { t: 'FTI', n: 'SPDV đặc thù, dự án: OnCall, Camera B2B, ListLine… (HN, HCM, CNx)' }
@@ -346,31 +486,63 @@ const DATA = {
         { t: 'Loại Giao hàng', c: [
           { t: 'TIN/PNC giao hàng', n: 'Chỉ Camera Offnet, thiết bị lẻ; giao hàng, không kích hoạt' }
         ]},
-        { t: 'Hoàn tất PTC', tag: 'STG', steps: ['Inside new v5 › Thông tin chung › Triển khai', 'Nhập hợp đồng', 'Phân tuyến', 'Mở partner portal bypass', 'Bypass → tích tất cả → nhập HĐ, thời hạn (≤24h), nguyên nhân → Cập nhật', 'Quay lại phiếu → Đã xử lý hoàn tất'], url: 'http://partner-stag.fpt.net/pt-portal/bypass' },
-        { t: 'Hủy PTC / chuyển thi công lại', tag: 'Inside', n: 'Quản lý hợp đồng › HĐ NOT OK V3 › PTC NOT OK', see: ['contract'] },
-        { t: 'Phân công quota PTC', tag: 'Fox ERP', n: 'Quản lý đối tác › Quản lý Block › Quota PTC - TUT' }
+        { t: 'Thông tin trên PTC', tag: '6 nhóm', c: [
+          { t: 'Phân tuyến', n: 'Lấy từ tool Quản lý đối tác, dùng để phân công nhân sự TIN/PNC đi thi công' },
+          { t: 'Thông tin hợp đồng', see: ['contract'] },
+          { t: 'Thông tin đơn hàng', see: ['order-info'] },
+          { t: 'Vật tư triển khai', n: 'Thiết bị khách hàng mua', see: ['mat-ptc'] },
+          { t: 'Vật tư thu hồi', see: ['mat-ptc'] },
+          { t: 'Khoản thu', see: ['receipt-info'] }
+        ]},
+        { t: 'Xử lý PTC', steps: ['Phân tuyến (từ tool Quản lý đối tác)', 'Phân công nhân sự TIN/PNC', 'Nhân sự TIN/PNC vào app MobiX thao tác xử lý phiếu thi công'] },
+        { t: 'Hoàn tất PTC', tag: '2 cách', n: 'Điều kiện theo rule: đã ký BBĐT và khoản thu đã thanh toán thì mới được hoàn tất PTC', see: ['minutes', 'receipt-info'], c: [
+          { t: 'Cách 1 · Inside + partner portal', tag: 'STG', steps: ['Inside new v5 › Thông tin chung › Triển khai', 'Nhập hợp đồng', 'Phân tuyến', 'Mở partner portal bypass', 'Bypass → tích tất cả → nhập HĐ, thời hạn (≤24h), nguyên nhân → Cập nhật', 'Quay lại phiếu → Đã xử lý hoàn tất'], url: 'http://partner-stag.fpt.net/pt-portal/bypass' },
+          { t: 'Cách 2 · SPF Web admin', tag: 'PTC của đơn hàng', steps: ['SPF Web admin › Chi tiết đơn hàng', 'Chọn PTC', 'Nhấn Hoàn tất PTC'], url: 'http://saleplatform-stag.fpt.net/web-admin/Account/Login', see: ['order-info'] }
+        ]},
+        { t: 'Hủy PTC / chuyển thi công lại', tag: 'Inside', n: 'Tool Quản lý hợp đồng › HĐ NOT OK V3 › PTC NOT OK' },
+        { t: 'Hủy PTC khi hủy đơn', n: 'Đơn chưa thanh toán: hủy PTC ngay · đơn đã thanh toán: sau khi TPKD duyệt, PTC chưa hoàn tất thì hủy; PTC đã hoàn tất thì không chuyển trạng thái hủy', see: ['cancel'] },
+        { t: 'Phân công quota PTC', tag: 'Fox ERP', n: 'Quản lý đối tác › Quản lý Block › Quota PTC - TUT', url: 'https://fox-erp-stag.fpt.net/' }
       ]},
-      { id: 'counter', t: '2. Phiếu giao dịch thiết bị tại quầy', tag: 'Tool quầy', n: 'Hình thức Quầy (Camera Offnet, thiết bị lẻ) và Sale (thiết bị lẻ quản lý MAC)', see: ['signal'], c: [
+      { id: 'counter', t: '2. Phiếu giao dịch thiết bị tại quầy', tag: 'Tool quầy', n: 'Hình thức Quầy (Camera Offnet, thiết bị lẻ) và Sale (thiết bị lẻ quản lý MAC). Chỉ gen sau khi đơn đã thanh toán', see: ['invoice', 'mat-counter'], c: [
         { t: 'Có shipper giao hàng', steps: ['Quản lý chuỗi cung ứng › Giao dịch thiết bị → tìm HĐ', 'Nhận xử lý phiếu', 'Chọn kho xuất KTN test', 'Đề nghị xuất vật tư', 'SCM: Quản lý kho › Nhập kho › Tạo phiếu nhập hàng cần giao, kho KTN test MAC', 'SCM: Xác nhận tạm ứng từ Inside', 'Phiếu giao dịch thiết bị → Lưu và đóng hàng', 'GHTK: Thông tin tài khoản › Cấu hình API', 'Webhook → Test → nhập mã vận đơn', 'Cập nhật trạng thái 5'] },
         { t: 'Không có shipper', c: [
           { t: 'Đã có MAC', steps: ['Giao dịch thiết bị → tìm HĐ', 'Đối tác Bến Thành, Tổ 300', 'Chỉnh sửa → chọn danh sách MAC → Lưu', 'Kết quả xử lý Hoàn tất', 'Xác nhận'] },
           { t: 'Chưa có MAC', n: 'Tạo MAC xong thì làm nhánh "Đã có MAC"', steps: ['Quản lý vật tư quầy', 'Tạm ứng vật tư → Đề nghị tạm ứng', 'Chọn đối tác, tổ, vật tư', 'Tạo phiếu → nhập số lượng → Xác nhận', 'SCM: Tạo phiếu nhập hàng cần giao, kho KTN test MAC', 'SCM: Xác nhận tạm ứng từ Inside', 'Kho KTN test MAC, tích Bảo hành V2', 'Chọn phiếu tạm ứng → nhập MAC vừa tạo', 'Xác nhận V2'] }
         ]}
       ]},
-      { id: 'vendor', t: '3. Đơn đặt hàng Vendor', tag: 'M-Vendor', n: 'NCC Samsung / Sony / Casper: thiết bị lẻ mua từ NCC bán lại (TV…). Đầu ra: đơn đặt hàng + mã vận đơn', see: ['signal'] },
-      { id: 'nophieu', t: 'Không có phiếu', tag: 'Không / None', n: 'Dịch vụ không cần triển khai, vd Code SA (gửi SMS). DKOL: Ultra Fast SA, FPT Play SA, HyperFast SA. Thiết bị "Không" chỉ xuất hóa đơn nếu quầy gửi tín hiệu', see: ['counter', 'invoice'] },
-      { t: 'Quy tắc gộp luồng', n: '≥1 SPDV mix TIN/PNC với Quầy/Sale → cả đơn đi TIN/PNC (chờ PTC) · mix Không + TIN/PNC → theo PTC · chỉ có Không → không đẩy triển khai' },
-      { id: 'minutes', t: 'Biên bản điện tử', n: 'Gen cùng lúc với phiếu thi công', see: ['receipt'] }
+      { id: 'vendor', t: '3. Đơn đặt hàng Vendor', tag: 'M-Vendor', n: 'NCC Samsung / Sony / Casper: thiết bị lẻ mua từ NCC bán lại (TV…). Đầu ra: đơn đặt hàng + mã vận đơn. Chỉ gen sau khi đơn đã thanh toán', see: ['invoice'] },
+      { id: 'nophieu', t: 'Không có phiếu', tag: 'Không / None', n: 'Không có phiếu triển khai, BBĐT auto ký. Thiết bị "Không" chỉ xuất hóa đơn nếu quầy gửi tín hiệu', see: ['counter', 'invoice'], c: [
+        { t: 'Kênh', tag: 'cả kênh', n: 'FPL: cả kênh không có hình thức triển khai', see: ['ch-fpl'] },
+        { t: 'Dịch vụ', tag: 'theo dịch vụ', n: 'Ultra Fast SA, FPT Play SA, HyperFast SA. FPT Play SA kích hoạt bằng code SMS hoặc auto', see: ['ch-dkol', 'fptplay-sa'] }
+      ]},
+      { t: 'Quy tắc gộp luồng', n: '≥1 SPDV mix TIN/PNC với Quầy/Sale → cả đơn đi TIN/PNC (chờ PTC) · mix Không + TIN/PNC → theo PTC · chỉ có Không → không đẩy triển khai' }
     ]},
 
-    { id: 'signal', col: 6, t: 'Đồng bộ đơn về INVOICE', tag: 'BR-DB', c: [
-      { t: 'Sự kiện từ SPF', tag: 'BR-DB-01', n: 'Chỉ 2 sự kiện: thanh toán, hủy đơn', see: ['receipt'] },
-      { t: 'Tín hiệu giao hàng', tag: 'BR-DB-02', n: 'Đi thẳng về INVOICE từ 3 nguồn = 3 loại phiếu: phiếu thi công, Vendor, phiếu giao tại quầy. Gồm mã đơn, ServiceCode, SubserviceType, phương thức, nguồn, thời gian hoàn tất', see: ['ptc', 'counter', 'vendor'] },
-      { t: 'Đơn TMĐT', tag: 'BR-DB-02', n: 'SPF đánh dấu đã thanh toán = tín hiệu thanh toán; đồng thời ghi Paid gạch nợ tạm', see: ['tmdt'] },
-      { t: 'Thông tin khách', tag: 'BR-DB-03', n: 'Mặc định theo hợp đồng lúc phát hành. Cập nhật thông tin không kích hoạt phát hành; lần sau dùng thông tin mới nhất. Ngoại lệ FPL', see: ['contract', 'ch-fpl'] },
-      { t: 'ProductType DV/TB', tag: 'BR-DB-04', n: 'SPF gắn sẵn trên từng dòng; INVOICE không tự suy diễn' },
-      { t: 'Đồng bộ nhiều lần', tag: 'BR-DB-05', n: 'Lần đẩy cuối là mới nhất. Chỉ xuất phần chưa có hóa đơn; phần đã xuất không bị ghi đè' },
-      { t: 'Map tín hiệu vào thiết bị', tag: 'BR-DB-07', n: 'Khóa: mã đơn + ServiceCode + SubserviceType + phương thức. TB đã có hóa đơn hoặc không khớp → không ghi nhận' }
+    { id: 'minutes', col: 13, t: 'Biên bản điện tử', tag: 'BBĐT', n: 'Thực thể riêng, không phụ thuộc phiếu thi công. Phải ký BBĐT thì PTC mới được hoàn tất. Ký xong → kích hoạt tài khoản FPT Play. Ký tùy loại đơn', see: ['receipt', 'contract', 'order-info', 'nophieu'], c: [
+      { id: 'bbdt-sign', t: 'Ký BBĐT theo loại đơn', tag: '4 trường hợp', c: [
+        { t: 'Shopee/TikTok', n: 'Có BBĐT, gen sau khi tạo đơn hàng thành công', see: ['tmdt'] },
+        { t: 'Đơn tại quầy', n: 'Tùy sản phẩm: FPT Camera Combo → có BBĐT, phải ký · Sản phẩm khác, FPT Camera Only → BBĐT tự động ký', see: ['counter'] },
+        { t: 'Đơn Vendor', n: 'Có BBĐT, tự động ký', see: ['vendor'] },
+        { t: 'Kênh FPL · Ultra Fast SA, FPT Play SA, HyperFast SA', n: 'Có BBĐT, auto ký', see: ['nophieu'] }
+      ]},
+      { t: 'Cách ký BBĐT', tag: 'SPF Web admin', steps: ['Vào SPF Web admin', 'Chi tiết đơn hàng', 'Thông tin khác', 'Ký BBĐT'], url: 'http://saleplatform-stag.fpt.net/web-admin/Account/Login' }
+    ]},
+
+    { id: 'cancel', col: 9, t: 'Hủy đơn hàng', tag: 'HĐ NOT OK V3', n: 'Xử lý khác nhau theo đơn đã hay chưa thanh toán', c: [
+      { t: 'Nơi hủy', tag: 'Inside', n: 'Tool Quản lý hợp đồng › Hợp đồng NOT OK V3 › tab Trước sử dụng' },
+      { t: 'Đơn chưa thanh toán', n: 'Hủy là hệ thống tự xử lý ngay', steps: ['Hủy phiếu thi công (PTC)', 'Hủy khoản thu', 'Đơn hàng cập nhật trạng thái Đã hủy'], see: ['ptc', 'receipt'] },
+      { t: 'Đơn đã thanh toán', n: 'Phải qua bước duyệt mới ghi nhận hủy', steps: ['Thao tác hủy đơn', 'TPKD duyệt (hiện chỉ thấy cấp này; BGĐCN, CUSX chưa thấy)', 'Đơn hàng ghi nhận hủy', 'PTC chưa hoàn tất → hủy PTC · PTC đã hoàn tất → không chuyển trạng thái hủy'], see: ['ptc', 'receipt'], c: [
+        { t: 'Đề nghị hoàn tiền', n: 'Đơn đã thanh toán có thể tạo đề nghị hoàn tiền', see: ['receipt'] }
+      ]},
+      { t: 'Ảnh hưởng xuất hóa đơn', n: 'Hủy đơn là 1 trong 2 sự kiện SPF gửi về INVOICE (BR-DB-01). Đơn bị hủy không được xuất hóa đơn (BR-XHD-10)', see: ['invoice'] },
+    ]},
+
+    { id: 'material', col: 11, t: 'Vật tư & kho SCM', tag: 'Tạm ứng vật tư', n: 'Kho SCM tạm ứng vật tư cho tool vật tư → phiếu triển khai load vật tư từ tool vật tư', c: [
+      { t: 'Cung cấp dữ liệu cho QLCS', n: 'Quản lý chính sách lấy dữ liệu từ Quản lý vật tư → trả ra SPF (Web admin) → load thông tin dịch vụ, thiết bị lên hóa đơn', see: ['policy', 'invoice'] },
+      { t: 'Luồng vật tư', steps: ['Tool vật tư đề nghị tạm ứng', 'Kho SCM tạo phiếu nhập hàng hóa và xác nhận tạm ứng', 'Vật tư được tạm ứng về tool vật tư', 'Phiếu triển khai load vật tư từ tool vật tư'] },
+      { id: 'mat-counter', t: 'Tool Quản lý vật tư quầy', tag: 'Inside', n: 'Vật tư ở quầy. Phiếu giao dịch thiết bị tại quầy load vật tư từ tool này', see: ['counter', 'scm'], steps: ['Tạm ứng vật tư', 'Đề nghị tạm ứng', 'Chọn đối tác, tổ, vật tư', 'Tạo phiếu → nhập số lượng → Xác nhận'] },
+      { id: 'mat-ptc', t: 'Tool Quản lý vật tư', tag: 'Inside', n: 'Vật tư cho phiếu thi công TIN/PNC. PTC load vật tư từ tool này. Tạm ứng từ kho SCM (chưa có các bước chi tiết)', see: ['ptc', 'scm'] },
+      { id: 'scm', t: 'Kho SCM', tag: 'Cần host', n: 'Nguồn tạm ứng vật tư cho cả 2 tool vật tư', steps: ['Quản lý kho › Nhập kho › Tạo phiếu nhập hàng hóa (kho KTN test MAC)', 'Quản lý kho › Xác nhận tạm ứng từ Inside'], url: 'https://ftelscm-uat.fpt.net', see: ['mat-counter', 'mat-ptc'] }
     ]},
 
     { id: 'invoice', col: 7, t: 'Xuất hóa đơn', tag: 'BR-XHD', c: [
@@ -383,7 +555,7 @@ const DATA = {
         { t: 'Không tự xuất', n: 'Hợp đồng con (gắn HĐ cha) · hợp đồng SST · hợp đồng nghiệp vụ', see: ['contract'] }
       ]},
       { t: 'Đơn hợp lệ', tag: 'BR-XHD-10', c: [
-        { t: 'Trạng thái', n: 'Không bị hủy, không đang cập nhật; hợp đồng còn hiệu lực' },
+        { t: 'Trạng thái', n: 'Không bị hủy, không đang cập nhật; hợp đồng còn hiệu lực', see: ['cancel'] },
         { t: 'Thông tin chung', n: 'Sale team, kênh bán, tên KH, loại hình KH, địa chỉ xuất hóa đơn, LocationID' },
         { t: 'Thông tin dịch vụ', n: 'Dịch vụ, nhóm, gói, chính sách, câu lệnh giá, CTKM > 0', see: ['policy'] },
         { t: 'Không hợp lệ', n: 'Không xuất hóa đơn, ghi log, không giữ lại để xuất sau' }
@@ -400,6 +572,7 @@ const DATA = {
         { t: 'Billing System', n: 'Ghi BillNumber và BillDate (= ngày phát hành thực tế)' },
         { t: 'Chi nhánh', n: 'Chi nhánh quản lý hợp đồng', see: ['contract'] },
         { t: 'Nội dung', n: 'Tên dịch vụ + số tháng sử dụng' },
+        { t: 'Thông tin dịch vụ, thiết bị trên hóa đơn', n: 'Load từ SPF (Web admin). SPF nhận dữ liệu từ QLCS, QLCS lấy dữ liệu từ Quản lý vật tư', see: ['policy', 'order-info', 'material'] },
         { t: 'Một đơn nhiều hóa đơn', n: 'DV và TB xuất ở các đợt khác nhau' },
         { t: 'Invoice Event', n: 'Gửi sau phát hành → gạch nợ và hậu kỳ', see: ['postproc'] }
       ]}
@@ -419,15 +592,18 @@ const DATA = {
     ]},
 
     { id: 'systems', col: 10, t: 'Hệ thống STG', tag: 'URL', c: [
-      { t: 'Tool BP', url: 'http://bp-stag.fpt.net/' },
+      { t: 'Tool BP', tag: 'Cần host', url: 'http://bp-stag.fpt.net/' },
       { t: 'SOP (Desktop)', url: 'https://portal-sop-stg.fpt.vn/user/login/basic-auth' },
-      { t: 'SPF Web admin', url: 'http://saleplatform-stag.fpt.net/web-admin/Account/Login' },
-      { t: 'CRM', url: 'https://crm-stag.fpt.net/' },
-      { t: 'W-Sale', url: 'http://wsale-stag.fpt.net/' },
+      { t: 'SPF Web admin', n: 'Xem thông tin đơn hàng · tạo đơn Shopee/TikTok (Retry Order) · thanh toán Receipt · ký BBĐT', url: 'http://saleplatform-stag.fpt.net/web-admin/Account/Login' },
+      { t: 'Thanh toán FPT.vn', url: 'https://staging.fpt.vn/pay' },
+      { t: 'CRM', tag: 'Cần host', url: 'https://crm-stag.fpt.net/' },
+      { t: 'W-Sale', tag: 'Cần host', url: 'http://wsale-stag.fpt.net/' },
       { t: 'Partner portal (bypass)', url: 'http://partner-stag.fpt.net/pt-portal/bypass' },
-      { t: 'SCM', url: 'https://ftelscm-uat.fpt.net' },
+      { t: 'Fox ERP', n: 'Service Request (SR hợp đồng) · quota PTC', url: 'https://fox-erp-stag.fpt.net/' },
+      { t: 'SCM', tag: 'Cần host', url: 'https://ftelscm-uat.fpt.net' },
       { t: 'GHTK staging', url: 'https://khachhang-staging.ghtklab.com/web/' },
-      { t: 'Host file', n: '172.20.18.252 → bp-stag.fpt.net, wsale-stag.fpt.net, ftelscm-uat.fpt.net' }
+      { t: 'FPL', n: 'Không cần host', url: 'https://dev.fptplay.vn' },
+      { t: 'Tool cần host', n: 'Tool BP, W-Sale, CRM, SCM: cần khai báo host mới truy cập được. FPL không cần host' }
     ]}
   ]
 };
@@ -442,54 +618,98 @@ const STATS = [
 
 /* ---------- Sơ đồ liên kết ---------- */
 const W = 210, H = 64;
+// Sơ đồ rút gọn: kênh (SOP, TMĐT gom thành 1 ô nhóm) → Đơn hàng → 4 đầu ra → Xuất hóa đơn → Gạch nợ; ô phụ (chính sách, hủy, vật tư) chỉ 1 đường nối
+// Chữ trên đường nối chỉ hiện khi rê chuột vào ô. Mỗi ô kênh ghi rule chính của kênh
+const FCH = [
+  ['grp-sop',    'SOP · Desktop, Mobile', 'Web/App SOP · thu trước, phiếu sau'],
+  ['ch-dkol',    'DKOL',    'HiFPT, FPT.vn · KH trả trước'],
+  ['ch-fpl',     'FPL',     'Play SA · không phiếu · delay 2h'],
+  ['grp-tmdt',   'TMĐT · Shopee, TikTok', 'Đơn sàn · không có khoản thu'],
+  ['ch-wsale',   'W-Sale',  'Bán thêm · chỉ PTC TIN/PNC'],
+  ['ch-crm',     'CRM',     'Web CRM · chỉ dịch vụ FPL'],
+  ['ch-crmapp',  'CRM-APP', 'App FPT Life · Cloud Camera'],
+  ['ch-momo',    'Momo',    'Nhờ owner · Play, combo Play'],
+  ['ch-vntt',    'VNTT',    'Chỉ ghi nhận HĐ · không khoản thu']
+].map(([id, t, s], i) => ({ id, x: 20, y: 85 + i * 50, w: 220, h: 42, col: 2, t, s, small: 1 }));
 const FN = [
-  { id: 'policy',   x: 20,   y: 70,  col: 1, t: 'Chính sách BP',      s: 'Giá, gói, PTTT, HT triển khai' },
-  { id: 'channel',  x: 20,   y: 220, col: 2, t: 'Kênh bán · 22',      s: '11 đang tạo được đơn' },
-  { id: 'order',    x: 300,  y: 220, root: 1, t: 'Đơn hàng',          s: 'Bán mới · bán thêm' },
-  { id: 'contract', x: 610,  y: 40,  col: 3, t: 'Hợp đồng',           s: 'Kiểm tra: Tình trạng (Inside)' },
-  { id: 'receipt',  x: 610,  y: 160, col: 4, t: 'Khoản thu',          s: 'Theo PTTT · TMĐT/VNTT không có' },
-  { id: 'deploy',   x: 610,  y: 280, col: 5, t: 'Phiếu triển khai · 3', s: 'PTC · quầy · Vendor' },
-  { id: 'minutes',  x: 610,  y: 395, col: 5, t: 'Biên bản điện tử',   s: 'Gen cùng phiếu thi công' },
-  { id: 'signal',   x: 920,  y: 220, col: 6, t: 'Đồng bộ INVOICE',    s: 'Worker 12:05/18:05 · realtime' },
-  { id: 'invoice',  x: 1170, y: 120, col: 7, t: 'Xuất hóa đơn',       s: 'Billing · DV, TB độc lập' },
-  { id: 'postproc', x: 1170, y: 340, col: 8, t: 'Gạch nợ & hậu kỳ',   s: 'HĐĐT · tiền trả trước' }
+  ...FCH,
+  { id: 'policy',   x: 300,  y: 80,  col: 1, t: 'Quản lý chính sách', s: 'Giá, gói, PTTT, voucher, HT TK', minor: 1 },
+  { id: 'order',    x: 300,  y: 270, root: 1, go: 'order-entity', t: 'Đơn hàng', s: 'Xem tại SPF Web admin' },
+  { id: 'contract', x: 610,  y: 80,  col: 3, t: 'Hợp đồng',           s: 'Khách hàng · dịch vụ · trạng thái' },
+  { id: 'receipt',  x: 610,  y: 210, col: 4, t: 'Khoản thu',          s: 'Theo PTTT · TMĐT/VNTT: không' },
+  { id: 'deploy',   x: 610,  y: 340, col: 5, t: 'Phiếu triển khai · 3', s: 'Thi công · tại quầy · Vendor' },
+  { id: 'minutes',  x: 610,  y: 470, col: 13, t: 'Biên bản điện tử',   s: 'Ký xong → kích hoạt FPT Play' },
+  { id: 'invoice',  x: 920,  y: 210, col: 7, t: 'Xuất hóa đơn',       s: 'Billing · DV, TB độc lập' },
+  { id: 'postproc', x: 1170, y: 210, col: 8, t: 'Gạch nợ & hậu kỳ',   s: 'HĐĐT · tiền trả trước' },
+  { id: 'cancel',   x: 300,  y: 470, col: 9, t: 'Hủy đơn hàng',       s: 'Hủy PTC, khoản thu · Đã hủy', minor: 1 },
+  { id: 'material', x: 920,  y: 470, col: 11, t: 'Vật tư & kho SCM',  s: 'Kho SCM → tool vật tư', minor: 1 }
 ];
 const FE = [
-  { a: 'policy', b: 'channel', l: 'Kênh được bán' },
-  { a: 'policy', b: 'order', l: 'Giá · PTTT · HT triển khai', lx: 238, ly: 172, anchor: 'start' },
-  { a: 'channel', b: 'order', l: 'Tạo đơn' },
+  ...FCH.map(c => ({ a: c.id, b: 'order' })),
+  { a: 'policy', b: 'order', l: 'Giá · PTTT · HT TK · DV/TB → SPF' },
+  { a: 'material', b: 'policy', l: 'QLCS lấy dữ liệu từ Quản lý vật tư', back: 1 },
   { a: 'order', b: 'contract' },
   { a: 'order', b: 'receipt' },
   { a: 'order', b: 'deploy' },
-  { a: 'receipt', b: 'deploy', l: 'Thanh toán xong → gen phiếu' },
-  { a: 'deploy', b: 'minutes', l: 'Gen cùng PTC' },
-  { a: 'receipt', b: 'signal', l: 'Đã thanh toán → DV' },
-  { a: 'deploy', b: 'signal', l: 'Giao hàng hoàn tất → TB' },
+  { a: 'order', b: 'minutes', l: 'Sinh BBĐT' },
+  { a: 'order', b: 'cancel', l: 'Hủy ở HĐ NOT OK V3' },
   { a: 'contract', b: 'invoice', l: 'Thông tin KH · chi nhánh · hiệu lực' },
-  { a: 'signal', b: 'invoice' },
+  { a: 'receipt', b: 'invoice', l: 'Đã TT → xuất DV' },
+  { a: 'deploy', b: 'invoice', l: 'Giao xong → xuất TB' },
   { a: 'invoice', b: 'postproc', l: 'Invoice Event' },
-  { a: 'postproc', b: 'contract', l: 'Tiền trả trước add vào HĐ', back: 1 }
+  { a: 'deploy', b: 'material', l: 'Load vật tư từ' }
 ];
 
 /* ---------- Ma trận kênh × đầu ra ---------- */
 const NA = '—';
 const MX = [
   { g: 'SOP' },
-  { id: 'ch-desktop', k: 'Desktop', n: 'Web SOP', o: 'Mới + thêm', h: 'Có', r: 'Có · Chưa TT → KH TT', p: 'Theo chính sách (cả 3 loại)' },
-  { id: 'ch-mobile', k: 'Mobile', n: 'App SOP', o: 'Mới + thêm', h: 'Có', r: 'Như Desktop', p: 'Như Desktop' },
+  { id: 'ch-desktop', k: 'Desktop', n: 'Web SOP', o: 'Mới + thêm', h: 'Có', r: 'Có · Chưa TT → KH TT', p: { n: 'Theo chính sách khai báo, đi được cả 3 loại phiếu', l: [['ptc', 'Hình thức TIN/PNC, FTI'], ['counter', 'Hình thức Quầy, Sale'], ['vendor', 'Hình thức NCC (thiết bị lẻ như TV)']] } },
+  { id: 'ch-mobile', k: 'Mobile', n: 'App SOP', o: 'Mới + thêm', h: 'Có', r: 'Như Desktop', p: { n: 'Giống Desktop: đi được cả 3 loại phiếu', l: [['ptc', 'Hình thức TIN/PNC, FTI'], ['counter', 'Hình thức Quầy, Sale'], ['vendor', 'Hình thức NCC (thiết bị lẻ như TV)']] } },
   { g: 'Online' },
-  { id: 'ch-dkol', k: 'DKOL', n: 'HiFPT, FPT.vn', o: 'Mới + thêm', h: 'Có', r: 'Có · Đã TT ngay khi tạo', p: 'PTC, quầy shipper (Camera) · Vendor (TV) · không phiếu (UF SA, Play SA, HyperFast SA)' },
-  { id: 'ch-fpl', k: 'FPL', n: 'dev.fptplay.vn', o: 'FPT Play SA', h: 'Có', r: NA, p: NA },
+  { id: 'ch-dkol', k: 'DKOL', n: 'HiFPT, FPT.vn', o: 'Mới + thêm', h: 'Có', r: 'Có · Đã TT ngay khi tạo', p: { n: 'Tùy sản phẩm', l: [['ptc', 'Camera: TIN/PNC'], ['counter', 'Camera: Quầy (shipper giao hàng)'], ['vendor', 'TV'], ['nophieu', 'Ultra Fast SA, FPT Play SA, HyperFast SA · BBĐT auto ký']] } },
+  { id: 'ch-fpl', k: 'FPL', n: 'dev.fptplay.vn', o: 'FPT Play SA', h: 'Có', r: NA, p: { n: 'Không có hình thức triển khai', l: [['nophieu', 'Cả kênh · BBĐT auto ký']] } },
   { g: 'TMĐT' },
-  { id: 'ch-shopee', k: 'Shopee', n: 'SPF Retry Order', o: 'Mới', h: 'Có', r: '!Không · Order Transaction', p: 'PTC TIN/PNC · quầy shipper' },
-  { id: 'ch-tiktok', k: 'TikTok', n: 'SPF Retry Order', o: 'Mới', h: 'Có', r: '!Không · Order Transaction', p: 'PTC TIN/PNC · quầy shipper' },
+  { id: 'ch-shopee', k: 'Shopee', n: 'SPF Retry Order', o: 'Mới', h: 'Có', r: '!Không · Order Transaction', p: { n: 'PTC và BBĐT gen sau khi tạo đơn hàng thành công', l: [['ptc', 'TIN/PNC'], ['counter', 'Quầy (chính sách shipper giao hàng)']] } },
+  { id: 'ch-tiktok', k: 'TikTok', n: 'SPF Retry Order', o: 'Mới', h: 'Có', r: '!Không · Order Transaction', p: { n: 'PTC và BBĐT gen sau khi tạo đơn hàng thành công', l: [['ptc', 'TIN/PNC'], ['counter', 'Quầy (chính sách shipper giao hàng)']] } },
   { g: 'Đối tác & khác' },
-  { id: 'ch-wsale', k: 'W-Sale', n: 'Web W-Sale', o: 'Bán thêm (test)', h: 'Có', r: NA, p: 'Chỉ PTC TIN/PNC' },
+  { id: 'ch-wsale', k: 'W-Sale', n: 'Web W-Sale', o: 'Bán thêm (test)', h: 'Có', r: NA, p: { n: 'Chỉ TIN/PNC', l: [['ptc', 'TIN/PNC']] } },
   { id: 'ch-crm', k: 'CRM', n: 'Web CRM', o: 'Dịch vụ FPL', h: 'Có', r: NA, p: NA },
   { id: 'ch-crmapp', k: 'CRM-APP', n: 'App FPT Life', o: 'Cloud Camera', h: 'Có', r: NA, p: NA },
   { id: 'ch-momo', k: 'Momo', n: 'Nhờ owner', o: 'Play, combo Play', h: 'Có', r: NA, p: NA },
   { id: 'ch-vntt', k: 'VNTT', n: NA, o: NA, h: 'Chỉ ghi nhận HĐ', r: '!Không tạo khoản thu', p: NA }
 ];
+
+const TITLES_PHIEU = { ptc: 'Phiếu thi công (PTC)', counter: 'Phiếu giao dịch thiết bị tại quầy', vendor: 'Đơn đặt hàng Vendor', nophieu: 'Không có phiếu' };
+// Chia "Đầu ra của đơn" (MX) và "Thời điểm sinh" (GEN_CASES) vào từng kênh trong cây
+const GEN_BY_CH = {
+  'ch-desktop': [2, 1, 7], 'ch-mobile': [2, 1, 7], 'ch-dkol': [3, 6, 7], 'ch-fpl': [6],
+  'ch-shopee': [4, 7], 'ch-tiktok': [4, 7], 'ch-vntt': [5, 'q']
+};
+(function () {
+  const find = (n, id) => { if (n.id === id) return n; for (const ch of n.c || []) { const r = find(ch, id); if (r) return r; } };
+  const v = x => x.replace(/^!/, '');
+  const noCh = n => ({ ...n, see: (n.see || []).filter(t => !t.startsWith('ch-')), c: n.c && n.c.map(noCh) });
+  MX.forEach(r => {
+    if (r.g) return;
+    const ch = find(DATA, r.id);
+    const out = { t: 'Đầu ra của đơn', tag: 'HĐ · khoản thu · phiếu', c: [
+      { t: 'Nơi tạo đơn', n: v(r.n) },
+      { t: 'Loại đơn / dịch vụ', n: v(r.o) },
+      { t: 'Hợp đồng', n: v(r.h), see: ['contract'] },
+      { t: 'Khoản thu', n: v(r.r), see: ['receipt'] },
+      r.p === NA
+        ? { t: 'Phiếu triển khai', n: 'Chưa có thông tin', see: ['deploy'] }
+        : { t: 'Phiếu triển khai', tag: (k => k ? k + ' loại phiếu' : 'Không có phiếu')(r.p.l.filter(([id]) => id !== 'nophieu').length), n: r.p.n, see: ['deploy'], c: r.p.l.map(([id, x]) => ({ t: TITLES_PHIEU[id], n: x, see: [id] })) }
+    ]};
+    const cases = (GEN_BY_CH[r.id] || []).map(k => GEN_CASES.find(x => k === 'q' ? x.t === 'Cần xác nhận' : x.t.startsWith(k + '.'))).map(noCh);
+    const nCase = cases.filter(x => /^\d/.test(x.t)).length;
+    const gen = cases.length
+      ? { t: 'Thời điểm sinh khoản thu, phiếu, BBĐT', tag: nCase + ' trường hợp', c: cases }
+      : { t: 'Thời điểm sinh khoản thu, phiếu, BBĐT', tag: 'Chưa có thông tin', n: 'Tài liệu chưa nêu thời điểm sinh khoản thu, phiếu, BBĐT của kênh này' };
+    ch.c = [out, gen, ...(ch.c || [])];
+  });
+})();
 
 /* ---------- Dựng giao diện ---------- */
 const SVGNS = 'http://www.w3.org/2000/svg';
@@ -504,8 +724,14 @@ const TITLES = {}, NODES = {}, PARENT = new Map(), ALL = [];
 })(DATA, null);
 const ancestors = n => { const a = []; let p = PARENT.get(n); while (p) { a.unshift(p); p = PARENT.get(p); } return a; };
 const nearestId = n => { while (n && !n.id) n = PARENT.get(n); return n ? n.id : 'order'; };
+// Thực thể = đối tượng nghiệp vụ. Nhánh Liên kết chỉ hiện thực thể (không hiện kênh bán)
+// Bảng thời điểm sinh và ma trận kênh × đầu ra nằm trong thực thể Đơn hàng (order-entity)
+// Phiếu thi công / phiếu quầy / Vendor quy về Phiếu triển khai; các tool vật tư quy về Vật tư & kho SCM
+const ENTITY = new Set(['order-entity', 'policy', 'contract', 'receipt', 'deploy', 'minutes', 'material', 'cancel', 'invoice', 'postproc']);
+const entityOf = n => { while (n && !(n.id && ENTITY.has(n.id))) n = PARENT.get(n); return n ? n.id : null; };
 const topCol = n => { if (n === DATA) return undefined; while (PARENT.get(n) !== DATA) n = PARENT.get(n); return n.col; };
-let focusId = 'order';
+let focusId = 'order', VIEW = null, currentView = 'outline', MPATH = [];
+const ALT_VIEWS = ['columns', 'table', 'cards'];
 const DEFAULT_DEPTH = 1;
 
 function el(tag, cls, text) {
@@ -521,7 +747,7 @@ function sv(tag, attrs, text) {
   return e;
 }
 
-/* primary = nhánh chính của chủ thể đang xem (được gắn id để nhảy tới); nhánh "Liên kết tới / Được nhắc tới từ" là bản xem, không gắn id */
+/* primary = nhánh chính của chủ thể đang xem (được gắn id để nhảy tới); nhánh "Liên kết" là bản xem, không gắn id */
 function build(node, depth, col, primary) {
   const li = el('li', 'item d' + Math.min(depth, 2));
   if (node.id && primary) li.id = 'n-' + node.id;
@@ -539,10 +765,18 @@ function build(node, depth, col, primary) {
   if (has) t.append(el('span', 'more', '+' + node.c.length));
   card.append(t);
   if (node.n) card.append(el('div', 'n', node.n));
+  // Menu thao tác (vd SR: Fox ERP + Inside)
+  (node.menus || []).forEach(m => card.append(el('div', 'n', 'Menu: ' + m)));
+  // Các bước thu gọn sẵn, bấm "N bước" mới mở ra
   if (node.steps) {
+    const det = el('details', 'steps');
+    const sum = el('summary', null, node.steps.length + ' bước');
+    det.append(sum);
     const ol = el('ol');
     node.steps.forEach(s => ol.append(el('li', null, s)));
-    card.append(ol);
+    det.append(ol);
+    det.addEventListener('click', e => e.stopPropagation());
+    card.append(det);
   }
   if (node.url) {
     const a = el('a', null, node.url);
@@ -550,12 +784,27 @@ function build(node, depth, col, primary) {
     a.addEventListener('click', e => e.stopPropagation());
     card.append(a);
   }
-  card.dataset.text = norm([node.t, node.tag, node.n, (node.steps || []).join(' '), node.url].filter(Boolean).join(' '));
+  card.dataset.text = norm([node.t, node.tag, node.n, (node.menus || []).join(' '), (node.steps || []).join(' '), node.url].filter(Boolean).join(' '));
   wrap.append(card);
+  const links = makeLinks(node);
+  if (links) wrap.append(links);
+  li.append(wrap);
+  if (has) {
+    li.dataset.depth = depth;
+    const ul = el('ul', 'children');
+    node.c.forEach(ch => ul.append(build(ch, depth + 1, col, primary && !node.virtual)));
+    li.append(ul);
+    card.addEventListener('click', () => setCollapsed(li, !li.classList.contains('collapsed')));
+  }
+  return li;
+}
+
+// Chip ⌖ Xem từ đây + ↗ liên kết chéo của một mục (dùng chung cho mọi kiểu xem)
+function makeLinks(node) {
   const links = el('div', 'links');
   const viewId = node.go || node.id;
   if (viewId && viewId !== focusId) {
-    const v = el('button', 'link view', node.go ? '⌖ Xem từ ' + TITLES[viewId] : '⌖ Xem từ đây');
+    const v = el('button', 'link view', node.detail ? '⌖ Xem chi tiết ' + TITLES[viewId] : node.go ? '⌖ Xem từ ' + TITLES[viewId] : '⌖ Xem từ đây');
     v.type = 'button';
     v.title = 'Xem cây bắt đầu từ ' + TITLES[viewId];
     v.addEventListener('click', () => setFocus(viewId));
@@ -568,16 +817,7 @@ function build(node, depth, col, primary) {
     b.addEventListener('click', () => goTo(id));
     links.append(b);
   });
-  if (links.childElementCount) wrap.append(links);
-  li.append(wrap);
-  if (has) {
-    li.dataset.depth = depth;
-    const ul = el('ul', 'children');
-    node.c.forEach(ch => ul.append(build(ch, depth + 1, col, primary && !node.virtual)));
-    li.append(ul);
-    card.addEventListener('click', () => setCollapsed(li, !li.classList.contains('collapsed')));
-  }
-  return li;
+  return links.childElementCount ? links : null;
 }
 
 function setCollapsed(li, v) {
@@ -612,25 +852,44 @@ function render(id) {
   (function w(n) { inside.add(n); if (n.id) insideIds.add(n.id); (n.c || []).forEach(w); })(node);
 
   const kids = [...(node.c || [])];
+  let out = [];
   if (node !== DATA) {
-    // Chủ thể này (và các nhánh con) liên kết tới đâu
-    const out = [];
-    inside.forEach(n => (n.see || []).forEach(t => { if (!insideIds.has(t) && !out.includes(t)) out.push(t); }));
-    // Những nơi khác trong mindmap nhắc tới chủ thể này
-    const inc = ALL.filter(n => !inside.has(n) && (n.see || []).some(t => insideIds.has(t)));
-    if (out.length) kids.push({ t: 'Liên kết tới', tag: out.length + ' chủ thể', col: 9, virtual: 1,
-      c: out.map(t => ({ ...NODES[t], crumb: crumbText(NODES[t]) })) });
-    if (inc.length) kids.push({ t: 'Được nhắc tới từ', tag: inc.length + ' mục', col: 6, virtual: 1,
-      c: inc.map(s => ({ t: s.t, tag: s.tag, n: s.n, steps: s.steps, url: s.url, c: s.c, crumb: crumbText(s), go: nearestId(s) })) });
+    // Mọi liên kết đều quy về thực thể chứa nó; kênh bán và bảng tổng hợp không phải thực thể nên bị bỏ
+    const above = new Set(ancestors(node).map(a => a.id).filter(Boolean));
+    const add = (arr, e) => { if (e && !insideIds.has(e) && e !== node.id && !above.has(e) && !arr.includes(e)) arr.push(e); };
+    // Chủ thể này (và các mục con) liên kết tới thực thể nào
+    // Liên kết = gộp 2 chiều: thực thể chủ thể này nhắc tới + thực thể nhắc tới chủ thể này (trùng thì hiện 1 lần)
+    inside.forEach(n => (n.see || []).forEach(t => add(out, entityOf(NODES[t]))));
+    ALL.forEach(n => { if (!inside.has(n) && (n.see || []).some(t => insideIds.has(t))) add(out, entityOf(n)); });
+    // Mỗi thực thể liên kết chỉ hiện các mục liên quan trực tiếp tới chủ thể đang xem; muốn xem đủ thì bấm "Xem chi tiết"
+    const brief = n => ({ t: n === NODES[entityOf(n)] ? 'Tổng quan' : n.t, tag: n.tag, n: n.n, menus: n.menus, steps: n.steps, url: n.url, crumb: n === NODES[entityOf(n)] ? undefined : crumbText(n) });
+    const asEntity = e => {
+      const rel = [];
+      const push = n => { if (!rel.includes(n)) rel.push(n); };
+      // Chủ thể nhắc tới mục nào của thực thể e
+      inside.forEach(n => (n.see || []).forEach(t => { if (entityOf(NODES[t]) === e) push(NODES[t]); }));
+      // Mục nào của thực thể e nhắc tới chủ thể
+      ALL.forEach(n => { if (!inside.has(n) && entityOf(n) === e && (n.see || []).some(t => insideIds.has(t))) push(n); });
+      return { t: NODES[e].t, tag: NODES[e].tag, go: e, detail: 1, c: rel.map(brief) };
+    };
+    if (out.length) kids.push({ t: 'Liên kết', tag: out.length + ' thực thể', col: 10, virtual: 1, c: out.map(asEntity) });
   }
-  const root = { ...node, crumb: node === DATA ? null : crumbText(node), c: kids };
-
-  tree.replaceChildren(build(root, 0, topCol(node), true));
+  // Xem toàn bộ: bỏ ô gốc "Đơn hàng", các chủ đề cấp 1 đứng ngang hàng
+  if (node === DATA) tree.replaceChildren(...DATA.c.map(ch => build(ch, 1, undefined, true)));
+  else tree.replaceChildren(build({ ...node, crumb: crumbText(node), c: kids }, 0, topCol(node), true));
   applyDepth(DEFAULT_DEPTH);
+  // Dữ liệu dùng chung cho các kiểu xem khác (cột, bảng, thẻ, sơ đồ)
+  VIEW = { node, root: node === DATA ? { t: 'Toàn bộ chủ đề', c: DATA.c } : { ...node, crumb: crumbText(node), c: kids }, out, col: topCol(node) };
+  MPATH = [];
+  if (ALT_VIEWS.includes(currentView)) renderAlt();
 
   const cb = document.getElementById('crumbs');
   cb.replaceChildren();
-  ancestors(node).forEach(a => {
+  if (node === DATA) { cb.append(el('b', null, 'Toàn bộ chủ đề')); sel.value = focusId; document.getElementById('up').disabled = true; return; }
+  const all = el('button', 'jump', 'Toàn bộ chủ đề'); all.type = 'button';
+  all.addEventListener('click', () => setFocus('order'));
+  cb.append(all, el('span', null, '›'));
+  ancestors(node).filter(a => a !== DATA).forEach(a => {
     if (a.id) {
       const b = el('button', 'jump', a.t); b.type = 'button';
       b.addEventListener('click', () => setFocus(a.id));
@@ -652,12 +911,12 @@ function setFocus(id, scroll = true) {
 }
 // Chip ↗: nếu đích đang có trong cây thì nhảy tới, không thì đổi gốc cây sang đích
 function goTo(id) {
-  if (document.getElementById('n-' + id)) jumpTo(id); else setFocus(id);
+  if (!ALT_VIEWS.includes(currentView) && document.getElementById('n-' + id)) jumpTo(id); else setFocus(id);
 }
 
 const sel = document.getElementById('focus');
 (function fillSelect() {
-  sel.append(new Option('Đơn hàng (toàn bộ)', 'order'));
+  sel.append(new Option('Toàn bộ chủ đề', 'order'));
   DATA.c.forEach(top => {
     const g = document.createElement('optgroup');
     g.label = top.t;
@@ -697,85 +956,61 @@ function buildFlow() {
   const mk = sv('marker', { id: 'arr', viewBox: '0 0 10 10', refX: 9, refY: 5, markerWidth: 7, markerHeight: 7, orient: 'auto-start-reverse' });
   mk.append(sv('path', { d: 'M0,0 L10,5 L0,10 z', style: 'fill: var(--muted)' }));
   defs.append(mk); svg.append(defs);
+  FN.forEach(n => { n.w = n.w || W; n.h = n.h || H; });
   const pos = Object.fromEntries(FN.map(n => [n.id, n]));
-  const edges = [];
+  const edges = [], labels = [];
 
   FE.forEach(e => {
     const A = pos[e.a], B = pos[e.b];
     const g = sv('g', { class: 'fe' + (e.back ? ' back' : '') });
     let d, lx, ly, anchor = 'middle';
     if (e.back) {
-      const sx = A.x + W, sy = A.y + H / 2, tx = B.x + W / 2;
+      const sx = A.x + A.w, sy = A.y + A.h / 2, tx = B.x + B.w / 2;
       d = `M${sx},${sy} H${sx + 14} V12 H${tx} V${B.y - 2}`;
       lx = (tx + sx) / 2; ly = 28;
     } else if (A.x === B.x) {
-      const x = A.x + W / 2, y1 = A.y + H, y2 = B.y - 2;
+      // Nối dọc cùng cột: đi xuống (đáy A → đỉnh B) hoặc đi lên (đỉnh A → đáy B)
+      const up = B.y < A.y, x = A.x + A.w / 2, y1 = up ? A.y : A.y + A.h, y2 = up ? B.y + B.h + 2 : B.y - 2;
       d = `M${x},${y1} V${y2}`;
       lx = x + 8; ly = (y1 + y2) / 2 + 4; anchor = 'start';
     } else {
-      const x1 = A.x + W, y1 = A.y + H / 2, x2 = B.x - 2, y2 = B.y + H / 2, dx = (x2 - x1) / 2;
+      const x1 = A.x + A.w, y1 = A.y + A.h / 2, x2 = B.x - 2, y2 = B.y + B.h / 2, dx = (x2 - x1) / 2;
       d = `M${x1},${y1} C${x1 + dx},${y1} ${x2 - dx},${y2} ${x2},${y2}`;
       lx = (x1 + x2) / 2; ly = (y1 + y2) / 2 - 6;
     }
-    g.append(sv('path', { d, 'marker-end': 'url(#arr)' }));
-    if (e.l) g.append(sv('text', { x: e.lx ?? lx, y: e.ly ?? ly, 'text-anchor': e.anchor || anchor }, e.l));
+    g.append(sv('path', { d, [e.rev ? 'marker-start' : 'marker-end']: 'url(#arr)' }));
+    if (e.l) { const tx = sv('text', { x: e.lx ?? lx, y: e.ly ?? ly, 'text-anchor': e.anchor || anchor }, e.l); g.append(tx); labels.push([g, tx]); }
     svg.append(g);
     edges.push({ g, a: e.a, b: e.b });
   });
 
   FN.forEach(n => {
-    const g = sv('g', { class: 'fn' + (n.root ? ' root' : ''), tabindex: 0, role: 'button', 'aria-label': n.t + ': ' + n.s });
+    const g = sv('g', { class: 'fn' + (n.root ? ' root' : '') + (n.small ? ' small' : '') + (n.minor ? ' minor' : ''), tabindex: 0, role: 'button', 'aria-label': n.t + ': ' + n.s });
     const c = n.root ? 'var(--fg)' : 'var(--b' + n.col + ')';
     const fill = n.root ? 'var(--fg)' : `color-mix(in srgb, ${c} 12%, var(--surface))`;
-    g.append(sv('rect', { x: n.x, y: n.y, width: W, height: H, rx: 10, style: `fill: ${fill}; stroke: ${c}` }));
-    if (!n.root) g.append(sv('rect', { x: n.x, y: n.y + 10, width: 4, height: H - 20, rx: 2, style: `fill: ${c}; stroke: none` }));
-    g.append(sv('text', { class: 'ft', x: n.x + 14, y: n.y + 27 }, n.t));
-    g.append(sv('text', { class: 'fs', x: n.x + 14, y: n.y + 47 }, n.s));
-    const on = v => edges.forEach(e => { if (e.a === n.id || e.b === n.id) e.g.classList.toggle('on', v); });
+    g.append(sv('rect', { x: n.x, y: n.y, width: n.w, height: n.h, rx: n.small ? 8 : 10, style: `fill: ${fill}; stroke: ${c}` }));
+    if (!n.root) g.append(sv('rect', { x: n.x, y: n.y + (n.small ? 8 : 10), width: 4, height: n.h - (n.small ? 16 : 20), rx: 2, style: `fill: ${c}; stroke: none` }));
+    g.append(sv('text', { class: 'ft', x: n.x + 14, y: n.y + (n.small ? 17 : 27) }, n.t));
+    g.append(sv('text', { class: 'fs', x: n.x + 14, y: n.y + (n.small ? 33 : 47) }, n.s));
+    (n.lines || []).forEach((t, i) => g.append(sv('text', { class: 'fl', x: n.x + 14, y: n.y + 67 + i * 17 }, t)));
+    const on = v => edges.forEach(e => { if (e.a === n.id || e.b === n.id) { e.g.classList.toggle('on', v); if (e.g._label) e.g._label.classList.toggle('on', v); } });
     g.addEventListener('mouseenter', () => on(true));
     g.addEventListener('mouseleave', () => on(false));
     g.addEventListener('focus', () => on(true));
     g.addEventListener('blur', () => on(false));
-    g.addEventListener('click', () => setFocus(n.id));
-    g.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); setFocus(n.id); } });
+    g.addEventListener('click', () => setFocus(n.go || n.id));
+    g.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); setFocus(n.go || n.id); } });
     svg.append(g);
   });
+  liftLabels(svg, labels);
 }
 
-function buildMatrix() {
-  const tb = document.getElementById('matrix');
-  const head = el('tr');
-  [['Kênh', 2], ['Nơi tạo đơn', 0], ['Loại đơn / dịch vụ', 0], ['Hợp đồng', 3], ['Khoản thu', 4], ['Phiếu triển khai', 5]].forEach(([h, c]) => {
-    const th = el('th');
-    if (c) { th.style.setProperty('--br', 'var(--b' + c + ')'); th.append(el('span', 'dot')); }
-    th.append(h);
-    head.append(th);
-  });
-  const thead = el('thead'); thead.append(head); tb.append(thead);
-  const body = el('tbody');
-  const cell = v => {
-    const td = el('td');
-    if (v === NA) { td.className = 'na'; td.textContent = v; }
-    else if (v.startsWith('!')) { td.className = 'no'; td.textContent = v.slice(1); }
-    else td.textContent = v;
-    return td;
-  };
-  MX.forEach(r => {
-    const tr = el('tr');
-    if (r.g) { tr.className = 'grp'; const td = el('td', null, 'Nhóm ' + r.g); td.colSpan = 6; tr.append(td); body.append(tr); return; }
-    const td = el('td');
-    const b = el('button', 'jump', r.k); b.type = 'button';
-    b.addEventListener('click', () => setFocus(r.id));
-    td.append(b);
-    tr.append(td, cell(r.n), cell(r.o), cell(r.h), cell(r.r), cell(r.p));
-    body.append(tr);
-  });
-  tb.append(body);
+function liftLabels(svg, labels) {
+  labels.forEach(([g, tx]) => { const o = sv('g', { class: g.getAttribute('class') }); o.append(tx); svg.append(o); g._label = o; });
 }
 
 buildStats();
 buildFlow();
-buildMatrix();
 
 document.getElementById('expand').onclick = () => applyDepth(99);
 document.getElementById('collapse').onclick = () => applyDepth(0);
@@ -793,6 +1028,8 @@ function search() {
   const found = [...tree.querySelectorAll('.card')].filter(c => c.dataset.text.includes(term));
   found.forEach(c => {
     c.classList.add('hit');
+    const det = c.querySelector('details.steps');
+    if (det && norm(det.textContent).includes(term)) det.open = true;
     let p = c.closest('li').parentElement.closest('li');
     while (p) { setCollapsed(p, false); p = p.parentElement.closest('li'); }
   });
@@ -801,6 +1038,179 @@ function search() {
 }
 q.addEventListener('input', search);
 
+/* ---------- Kiểu xem: Danh sách · Cây ngang · Cột · Bảng · Thẻ · Sơ đồ ---------- */
+const canvas = document.getElementById('canvas');
+const altBox = document.getElementById('alt');
+const viewSel = document.getElementById('view');
+const toolbarEl = document.querySelector('.toolbar');
+const setBr = (e, col) => { if (col) e.style.setProperty('--br', 'var(--b' + col + ')'); };
+function colOf(n, fb) {
+  if (PARENT.has(n)) return topCol(n) ?? fb;
+  if (n.id && NODES[n.id]) return topCol(NODES[n.id]) ?? fb;
+  if (n.go && NODES[n.go]) return topCol(NODES[n.go]) ?? fb;
+  return n.col ?? fb;
+}
+const cut = (t, k) => t.length > k ? t.slice(0, k - 1) + '…' : t;
+// Thẻ chi tiết của 1 mục (không kèm mục con)
+function detailCard(n, col) {
+  const ul = el('ul', 'tree');
+  setBr(ul, col);
+  ul.append(build({ ...n, c: undefined }, 2, col, false));
+  return ul;
+}
+
+function setView(v) {
+  if (!['outline', 'tree', ...ALT_VIEWS].includes(v)) v = 'outline';
+  currentView = v;
+  const alt = ALT_VIEWS.includes(v);
+  canvas.hidden = alt; altBox.hidden = !alt; toolbarEl.hidden = alt;
+  canvas.classList.toggle('outline', v === 'outline');
+  viewSel.value = v;
+  try { localStorage.setItem('mindmap-view', v); } catch (e) {}
+  if (alt) renderAlt();
+}
+function renderAlt() {
+  if (!VIEW) return;
+  altBox.replaceChildren();
+  ({ columns: renderColumns, table: renderTable, cards: renderCards })[currentView](altBox);
+}
+function rootHeader(box) {
+  if (VIEW.node === DATA) return;
+  box.append(detailCard(VIEW.root, VIEW.col));
+  box.lastChild.style.marginBottom = '12px';
+}
+
+/* Cột lồng nhau: bấm mục ở cột trái → cột phải hiện mục con, cuối cùng là chi tiết */
+function renderColumns(box) {
+  box.append(el('p', 'note', 'Bấm một mục để mở mục con ở cột bên phải. Mục đang chọn hiện đầy đủ ở khung chi tiết cuối.'));
+  rootHeader(box);
+  const wrap = el('div', 'mcols');
+  let parent = VIEW.root;
+  for (let i = 0; ; i++) {
+    const items = parent.c || [];
+    if (!items.length) break;
+    const col = el('div', 'mcol');
+    col.append(el('h3', null, parent.t));
+    items.forEach(it => {
+      const b = el('button', 'mitem'); b.type = 'button';
+      setBr(b, colOf(it, VIEW.col));
+      b.append(el('span', 'l', it.t));
+      if (it.c && it.c.length) b.append(el('span', 'c', it.c.length + ' ›'));
+      b.setAttribute('aria-current', String(MPATH[i] === it));
+      b.addEventListener('click', () => { MPATH = MPATH.slice(0, i).concat(it); renderAlt(); });
+      col.append(b);
+    });
+    wrap.append(col);
+    const picked = MPATH[i];
+    if (!picked || !picked.c || !picked.c.length) break;
+    parent = picked;
+  }
+  const det = el('div', 'mdetail');
+  const last = MPATH[MPATH.length - 1];
+  if (last) det.append(detailCard(last, colOf(last, VIEW.col)));
+  else det.append(el('p', 'note', 'Chọn một mục để xem chi tiết.'));
+  wrap.append(det);
+  box.append(wrap);
+  requestAnimationFrame(() => { wrap.scrollLeft = wrap.scrollWidth; });
+}
+
+/* Bảng tra cứu: mỗi mục 1 dòng, lọc theo chủ đề và từ khóa */
+let TQ = '';
+function renderTable(box) {
+  const rows = [];
+  (function walk(list, path) {
+    (list || []).forEach(n => { rows.push({ n, path, col: colOf(n, VIEW.col) }); walk(n.c, path.concat(n.t)); });
+  })(VIEW.root.c, []);
+  const bar = el('div', 'tfilter');
+  const selB = el('select'); selB.setAttribute('aria-label', 'Lọc theo nhánh');
+  selB.append(new Option('Tất cả nhánh', ''));
+  (VIEW.root.c || []).forEach(n => selB.append(new Option(n.t, n.t)));
+  const inp = el('input'); inp.type = 'search'; inp.placeholder = 'Lọc theo từ khóa…'; inp.value = TQ; inp.setAttribute('aria-label', 'Lọc theo từ khóa');
+  const cnt = el('span', 'count-hit');
+  bar.append(selB, inp, cnt);
+  const wrap = el('div', 'twrap');
+  const table = el('table', 'ttable');
+  const head = el('tr');
+  ['Nhánh › đường dẫn', 'Mục', 'Nội dung', 'Liên kết'].forEach(h => head.append(el('th', null, h)));
+  const thead = el('thead'); thead.append(head);
+  const tbody = el('tbody');
+  table.append(thead, tbody); wrap.append(table);
+  function fill() {
+    const q = norm(inp.value.trim()), br = selB.value;
+    TQ = inp.value;
+    tbody.replaceChildren();
+    let k = 0;
+    rows.forEach(r => {
+      const top = r.path[0] || r.n.t;
+      if (br && top !== br) return;
+      const text = norm([r.path.join(' '), r.n.t, r.n.tag, r.n.n, (r.n.steps || []).join(' '), r.n.url].filter(Boolean).join(' '));
+      if (q && !text.includes(q)) return;
+      k++;
+      const tr = el('tr');
+      const tdP = el('td', 'path', r.path.join(' › ') || '—'); setBr(tdP, r.col);
+      const tdI = el('td', 'tit', r.n.t);
+      if (r.n.tag) { tdI.append(' '); const tg = el('span', 'tag', r.n.tag); setBr(tg, r.col); tdI.append(tg); }
+      const tdC = el('td');
+      if (r.n.n) tdC.append(el('div', null, r.n.n));
+      if (r.n.steps) { const ol = el('ol'); r.n.steps.forEach(x => ol.append(el('li', null, x))); tdC.append(ol); }
+      if (r.n.url) { const a = el('a', null, r.n.url); a.href = r.n.url; a.target = '_blank'; a.rel = 'noopener'; tdC.append(a); }
+      const tdL = el('td'); const lk = makeLinks(r.n); if (lk) tdL.append(lk);
+      tr.append(tdP, tdI, tdC, tdL);
+      tbody.append(tr);
+    });
+    cnt.textContent = k + ' / ' + rows.length + ' mục';
+  }
+  selB.addEventListener('change', fill);
+  inp.addEventListener('input', fill);
+  box.append(el('p', 'note', 'Mỗi mục là một dòng. Lọc theo nhánh hoặc gõ từ khóa để tra nhanh.'));
+  rootHeader(box);
+  box.append(bar, wrap);
+  fill();
+}
+
+/* Bảng thẻ: mỗi chủ đề 1 ô, mục con mở/thu tại chỗ */
+function detailsNode(n, col) {
+  const d = el('details');
+  const sm = el('summary');
+  sm.append(el('span', 'lbl', n.t));
+  if (n.tag) { const tg = el('span', 'tag', n.tag); sm.append(tg); }
+  if (n.c && n.c.length) sm.append(el('span', 'cnt', '+' + n.c.length));
+  d.append(sm);
+  const body = el('div', 'body');
+  if (n.crumb) body.append(el('div', null, n.crumb));
+  if (n.n) body.append(el('div', null, n.n));
+  if (n.steps) { const ol = el('ol'); n.steps.forEach(x => ol.append(el('li', null, x))); body.append(ol); }
+  if (n.url) { const a = el('a', null, n.url); a.href = n.url; a.target = '_blank'; a.rel = 'noopener'; body.append(a); }
+  const lk = makeLinks(n); if (lk) body.append(lk);
+  if (body.childElementCount) d.append(body);
+  (n.c || []).forEach(ch => d.append(detailsNode(ch, col)));
+  return d;
+}
+function renderCards(box) {
+  box.append(el('p', 'note', 'Mỗi ô là một nhánh. Bấm vào mục để mở xem nội dung và mục con.'));
+  rootHeader(box);
+  const board = el('div', 'board');
+  (VIEW.root.c || []).forEach(n => {
+    const col = colOf(n, VIEW.col);
+    const c = el('section', 'bcard'); setBr(c, col);
+    const h = el('h3'); h.append(el('span', 'lbl', n.t));
+    if (n.tag) h.append(el('span', 'tag', n.tag));
+    c.append(h);
+    if (n.n) c.append(el('div', 'n', n.n));
+    if (n.steps) { const ol = el('ol'); ol.style.cssText = 'margin:0 0 6px;padding-left:18px;font-size:12.5px'; n.steps.forEach(x => ol.append(el('li', null, x))); c.append(ol); }
+    if (n.url) { const a = el('a', null, n.url); a.href = n.url; a.target = '_blank'; a.rel = 'noopener'; a.style.cssText = 'font-family:var(--font-mono);font-size:11.5px;word-break:break-all'; c.append(a); }
+    const lk = makeLinks(n); if (lk) c.append(lk);
+    (n.c || []).forEach(ch => c.append(detailsNode(ch, col)));
+    board.append(c);
+  });
+  box.append(board);
+}
+
+viewSel.addEventListener('change', () => setView(viewSel.value));
+let savedView = 'outline';
+try { savedView = localStorage.getItem('mindmap-view') || 'outline'; } catch (e) {}
+
 render(location.hash.slice(1) || 'order');
+setView(savedView);
 </script>
 </html>
