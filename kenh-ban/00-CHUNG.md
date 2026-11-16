@@ -107,13 +107,13 @@ Liên quan xuất hóa đơn (`RULE-XHD.md`): hợp đồng tạm ngưng / đã 
 
 > Tổng hợp từ §4.1, §4.2, §4.4 và rule từng kênh. BBĐT là **thực thể riêng**, không phụ thuộc phiếu thi công.
 >
-> **Ký BBĐT theo loại đơn:** Shopee/TikTok → có BBĐT, gen sau khi tạo đơn thành công · đơn quầy → FPT Camera Combo phải ký, Sản phẩm khác và FPT Camera Only tự động ký · Vendor → tự động ký · kênh FPL, Ultra Fast SA, FPT Play SA, HyperFast SA → auto ký.
+> **Loại BBĐT** (nguồn: user cung cấp 11/11/2026): **Không auto ký** (phải ký trên SPF Web admin) → Internet, FPT Camera B2B, FPT Camera Combo, Tổng đài Oncall, Ultra Fast, FPT Play · **Auto ký** → các dịch vụ còn lại: FPT Camera Only, FPT Play Stands Alone, Sản phẩm khác, FPT Smart Home, Ultra Fast Stand Alone, FPro, FSafe Go, VioEdu Stand Alone, VIP 247, SIM data, Pay Wifi, HyperFast, FPT AI Wi-Fi · Vendor → tự động ký · Shopee/TikTok → có BBĐT, gen sau khi tạo đơn thành công.
 
 | Trường hợp | Áp dụng | Khoản thu | Phiếu triển khai | BBĐT |
 |---|---|---|---|---|
 | 1. Cả 3 cùng lúc | PTTT = Thanh toán khi triển khai (mọi kênh có khoản thu) | Sau khi tạo đơn, Chưa thanh toán | **Phiếu thi công:** sau khi tạo đơn (không chờ thanh toán) | Sau khi tạo đơn |
 | 2. Khoản thu trước | Desktop / Mobile, PTTT Online | Ngay khi tạo đơn, Chưa thanh toán | Sau khi KH thanh toán khoản thu | Sau khi KH thanh toán khoản thu |
-| 3. KH trả trước | DKOL, PTTT Online | Khi tạo đơn, trạng thái **Đã thanh toán** | Sau khi tạo đơn | Sau khi tạo đơn |
+| 3. PTTT Online: KH thanh toán trước, rồi mới tạo đơn, khoản thu, phiếu thi công, BBĐT | DKOL, PTTT Online | Khi tạo đơn, trạng thái **Đã thanh toán** | Sau khi tạo đơn | Sau khi tạo đơn |
 | 4. Không có khoản thu | Shopee / TikTok | Không có — dùng Order Transaction | **PTC tạo sau khi tạo đơn hàng thành công** (hoàn tất trước khi xuất HĐ) | **Sau khi tạo đơn hàng thành công** |
 | 5. Không tạo khoản thu | VNTT | Không tạo | **Chưa rõ** | **Chưa rõ** |
 | 6. Không có phiếu, BBĐT auto ký | **Kênh:** FPL (cả kênh) · **Dịch vụ:** Ultra Fast SA, FPT Play SA, HyperFast SA | Theo PTTT | Không có phiếu | **Có, auto ký** |
@@ -285,7 +285,7 @@ Cả 2 tool, sau khi **đề nghị tạm ứng**, đều sang **tool kho SCM** 
 
 > Nguồn: thông tin user cung cấp ngày 04/11/2026.
 
-- **Nơi hủy:** Inside › tool **Quản lý hợp đồng › Hợp đồng NOT OK V3 › tab Trước sử dụng**.
+- **Tool hủy đơn hàng:** Inside › tool **Quản lý hợp đồng › Hợp đồng NOT OK V3 › tab Trước sử dụng**.
 
 | Trường hợp | Hệ thống xử lý |
 |---|---|

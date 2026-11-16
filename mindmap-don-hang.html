@@ -316,7 +316,7 @@ const DATA = {
   c: [
     { id: 'policy', col: 1, t: 'Chính sách bán hàng', tag: 'Tool BP', c: [
       { t: 'Tool chính sách STG', tag: 'Cần host', url: 'http://bp-stag.fpt.net/' },
-      { t: 'Luồng dữ liệu QLCS', tag: 'Vật tư → QLCS → SPF → hóa đơn', n: 'Quản lý chính sách (QLCS) lấy dữ liệu từ Quản lý vật tư, trả ra SPF, rồi thông tin dịch vụ, thiết bị được load lên hóa đơn', steps: ['QLCS lấy dữ liệu từ Quản lý vật tư', 'QLCS trả dữ liệu ra SPF (Web admin)', 'Load thông tin dịch vụ, thiết bị lên hóa đơn'], see: ['material', 'order-info', 'invoice'] },
+      { t: 'Luồng dữ liệu QLCS', tag: 'Vật tư → QLCS → SPF → hóa đơn', n: 'Quản lý chính sách (QLCS) lấy dữ liệu từ Quản lý vật tư, trả ra SPF, rồi thông tin dịch vụ, thiết bị được load lên hóa đơn', steps: ['QLCS lấy dữ liệu từ Quản lý vật tư', 'QLCS trả dữ liệu ra SPF (Web admin)', 'Load thông tin dịch vụ, thiết bị lên hóa đơn'], see: ['mat-ptc', 'order-info', 'invoice'] },
       { t: 'Cách tạo chính sách', steps: ['Tìm chính sách có sẵn của dịch vụ muốn bán', 'Sao chép', 'Sửa → nhập thông tin → Lưu', 'Trở về → Gửi đề xuất', 'Menu Bán hàng › tab Bán hàng', 'Tìm mã vừa đề xuất → tích chọn → Tạo quyết định', 'Nhập thông tin hợp lệ → Lưu'] },
       { t: 'Chính sách quyết định', c: [
         { t: 'Giá bán · Gói bán', n: 'Giá bán của SPDV và các gói bán của dịch vụ' },
@@ -567,12 +567,20 @@ const DATA = {
       { t: 'Ảnh hưởng xuất hóa đơn', n: 'Hủy đơn là 1 trong 2 sự kiện SPF gửi về INVOICE (BR-DB-01). Đơn bị hủy không được xuất hóa đơn (BR-XHD-10)', see: ['invoice'] },
     ]},
 
-    { id: 'material', col: 11, t: 'Vật tư & kho SCM', tag: 'Tạm ứng vật tư', n: 'Kho SCM tạm ứng vật tư cho tool vật tư → phiếu triển khai load vật tư từ tool vật tư', c: [
-      { t: 'Cung cấp dữ liệu cho QLCS', n: 'Quản lý chính sách lấy dữ liệu từ Quản lý vật tư → trả ra SPF (Web admin) → load thông tin dịch vụ, thiết bị lên hóa đơn', see: ['policy', 'invoice'] },
-      { t: 'Luồng vật tư', steps: ['Tool vật tư đề nghị tạm ứng', 'Kho SCM tạo phiếu nhập hàng hóa và xác nhận tạm ứng', 'Vật tư được tạm ứng về tool vật tư', 'Phiếu triển khai load vật tư từ tool vật tư'] },
-      { id: 'mat-counter', t: 'Tool Quản lý vật tư quầy', tag: 'Inside', n: 'Vật tư ở quầy. Phiếu giao dịch thiết bị tại quầy load vật tư từ tool này', see: ['counter', 'scm'], steps: ['Tạm ứng vật tư', 'Đề nghị tạm ứng', 'Chọn đối tác, tổ, vật tư', 'Tạo phiếu → nhập số lượng → Xác nhận'] },
-      { id: 'mat-ptc', t: 'Tool Quản lý vật tư', tag: 'Inside', n: 'Vật tư cho phiếu thi công TIN/PNC. PTC load vật tư từ tool này. Tạm ứng từ kho SCM (chưa có các bước chi tiết)', see: ['ptc', 'scm'] },
-      { id: 'scm', t: 'Kho SCM', tag: 'Cần host', n: 'Nguồn tạm ứng vật tư cho cả 2 tool vật tư', steps: ['Quản lý kho › Nhập kho › Tạo phiếu nhập hàng hóa (kho KTN test MAC)', 'Quản lý kho › Xác nhận tạm ứng từ Inside'], url: 'https://ftelscm-uat.fpt.net', see: ['mat-counter', 'mat-ptc'] }
+    { id: 'mat-ptc', col: 11, t: 'Tool Quản lý vật tư', tag: 'Inside · TIN/PNC', n: 'Cung cấp vật tư cho TIN/PNC. Phiếu thi công load vật tư từ tool này. Vật tư được tạm ứng từ Tool SCM', see: ['ptc', 'scm'], c: [
+      { t: 'Luồng vật tư', steps: ['Tool Quản lý vật tư đề nghị tạm ứng', 'Tool SCM tạo phiếu nhập hàng hóa và xác nhận tạm ứng', 'Vật tư được tạm ứng về Tool Quản lý vật tư', 'Phiếu thi công load vật tư từ tool'], see: ['scm', 'ptc'] },
+      { t: 'Tạm ứng vật tư', tag: 'Chưa có thông tin', n: 'Chưa có các bước chi tiết' },
+      { t: 'Cung cấp dữ liệu cho QLCS', n: 'Quản lý chính sách lấy dữ liệu từ Quản lý vật tư → trả ra SPF (Web admin) → load thông tin dịch vụ, thiết bị lên hóa đơn', see: ['policy', 'invoice'] }
+    ]},
+
+    { id: 'mat-counter', col: 11, t: 'Tool Quản lý vật tư quầy', tag: 'Inside · Quầy', n: 'Cung cấp vật tư quầy. Phiếu giao dịch thiết bị tại quầy load vật tư từ tool này. Vật tư được tạm ứng từ Tool SCM', see: ['counter', 'scm'], c: [
+      { t: 'Luồng vật tư', steps: ['Tool Quản lý vật tư quầy đề nghị tạm ứng', 'Tool SCM tạo phiếu nhập hàng hóa và xác nhận tạm ứng', 'Vật tư được tạm ứng về Tool Quản lý vật tư quầy', 'Phiếu giao dịch thiết bị tại quầy load vật tư từ tool'], see: ['scm', 'counter'] },
+      { t: 'Tạm ứng vật tư', steps: ['Tạm ứng vật tư', 'Đề nghị tạm ứng', 'Chọn đối tác, tổ, vật tư', 'Tạo phiếu → nhập số lượng → Xác nhận'] }
+    ]},
+
+    { id: 'scm', col: 11, t: 'Tool SCM', tag: 'Cần host', n: 'Kho SCM: nguồn tạm ứng vật tư cho Tool Quản lý vật tư và Tool Quản lý vật tư quầy', see: ['mat-ptc', 'mat-counter'], c: [
+      { t: 'Web SCM', tag: 'Cần host', url: 'https://ftelscm-uat.fpt.net' },
+      { t: 'Nhập kho và xác nhận tạm ứng', steps: ['Quản lý kho › Nhập kho › Tạo phiếu nhập hàng hóa (kho KTN test MAC)', 'Quản lý kho › Xác nhận tạm ứng từ Inside'] }
     ]},
 
     { id: 'invoice', col: 7, t: 'Xuất hóa đơn', tag: 'BR-XHD', c: [
@@ -602,7 +610,7 @@ const DATA = {
         { t: 'Billing System', n: 'Ghi BillNumber và BillDate (= ngày phát hành thực tế)' },
         { t: 'Chi nhánh', n: 'Chi nhánh quản lý hợp đồng', see: ['contract'] },
         { t: 'Nội dung', n: 'Tên dịch vụ + số tháng sử dụng' },
-        { t: 'Thông tin dịch vụ, thiết bị trên hóa đơn', n: 'Load từ SPF (Web admin). SPF nhận dữ liệu từ QLCS, QLCS lấy dữ liệu từ Quản lý vật tư', see: ['policy', 'order-info', 'material'] },
+        { t: 'Thông tin dịch vụ, thiết bị trên hóa đơn', n: 'Load từ SPF (Web admin). SPF nhận dữ liệu từ QLCS, QLCS lấy dữ liệu từ Quản lý vật tư', see: ['policy', 'order-info', 'mat-ptc'] },
         { t: 'Một đơn nhiều hóa đơn', n: 'DV và TB xuất ở các đợt khác nhau' },
         { t: 'Invoice Event', n: 'Gửi sau phát hành → gạch nợ và hậu kỳ', see: ['postproc'] }
       ]}
@@ -647,7 +655,7 @@ const STATS = [
 
 /* ---------- Sơ đồ liên kết ---------- */
 const W = 210, H = 64;
-// Sơ đồ rút gọn: kênh (SOP, TMĐT gom thành 1 ô nhóm) → Đơn hàng → 4 đầu ra → Xuất hóa đơn → Gạch nợ; ô phụ (chính sách, hủy, vật tư) chỉ 1 đường nối
+// Sơ đồ rút gọn: kênh (SOP, TMĐT gom thành 1 ô nhóm) → Đơn hàng → 4 đầu ra → Xuất hóa đơn → Gạch nợ; ô phụ (chính sách, hủy, 3 tool vật tư)
 // Chữ trên đường nối chỉ hiện khi rê chuột vào ô. Mỗi ô kênh ghi rule chính của kênh
 const FCH = [
   ['grp-sop',    'SOP · Desktop, Mobile', 'Web/App SOP · thu trước, phiếu sau'],
@@ -671,12 +679,14 @@ const FN = [
   { id: 'invoice',  x: 920,  y: 210, col: 7, t: 'Xuất hóa đơn',       s: 'Billing · DV, TB độc lập' },
   { id: 'postproc', x: 1170, y: 210, col: 8, t: 'Gạch nợ & hậu kỳ',   s: 'HĐĐT · tiền trả trước' },
   { id: 'cancel',   x: 300,  y: 470, col: 9, t: 'Hủy đơn hàng',       s: 'Hủy PTC, khoản thu · Đã hủy', minor: 1 },
-  { id: 'material', x: 920,  y: 470, col: 11, t: 'Vật tư & kho SCM',  s: 'Kho SCM → tool vật tư', minor: 1 }
+  { id: 'mat-ptc',  x: 920,  y: 350, col: 11, t: 'Quản lý vật tư',    s: 'Vật tư cho TIN/PNC', minor: 1 },
+  { id: 'mat-counter', x: 920, y: 470, col: 11, t: 'Quản lý vật tư quầy', s: 'Vật tư quầy', minor: 1 },
+  { id: 'scm',      x: 1170, y: 410, col: 11, t: 'Tool SCM',          s: 'Kho · tạm ứng vật tư', minor: 1 }
 ];
 const FE = [
   ...FCH.map(c => ({ a: c.id, b: 'order' })),
   { a: 'policy', b: 'order', l: 'Giá · PTTT · HT TK · DV/TB → SPF' },
-  { a: 'material', b: 'policy', l: 'QLCS lấy dữ liệu từ Quản lý vật tư', back: 1 },
+  { a: 'mat-ptc', b: 'policy', l: 'QLCS lấy dữ liệu từ Quản lý vật tư', back: 1 },
   { a: 'order', b: 'contract' },
   { a: 'order', b: 'receipt' },
   { a: 'order', b: 'deploy' },
@@ -686,7 +696,10 @@ const FE = [
   { a: 'receipt', b: 'invoice', l: 'Đã TT → xuất DV' },
   { a: 'deploy', b: 'invoice', l: 'Giao xong → xuất TB' },
   { a: 'invoice', b: 'postproc', l: 'Invoice Event' },
-  { a: 'deploy', b: 'material', l: 'Load vật tư từ' }
+  { a: 'deploy', b: 'mat-ptc', l: 'PTC load vật tư' },
+  { a: 'deploy', b: 'mat-counter', l: 'Phiếu quầy load vật tư' },
+  { a: 'mat-ptc', b: 'scm', l: 'Tạm ứng' },
+  { a: 'mat-counter', b: 'scm', l: 'Tạm ứng' }
 ];
 
 /* ---------- Ma trận kênh × đầu ra ---------- */
@@ -756,8 +769,8 @@ const ancestors = n => { const a = []; let p = PARENT.get(n); while (p) { a.unsh
 const nearestId = n => { while (n && !n.id) n = PARENT.get(n); return n ? n.id : 'order'; };
 // Thực thể = đối tượng nghiệp vụ. Nhánh Liên kết chỉ hiện thực thể (không hiện kênh bán)
 // Bảng thời điểm sinh và ma trận kênh × đầu ra nằm trong thực thể Đơn hàng (order-entity)
-// Phiếu thi công / phiếu quầy / Vendor quy về Phiếu triển khai; các tool vật tư quy về Vật tư & kho SCM
-const ENTITY = new Set(['order-entity', 'policy', 'contract', 'receipt', 'deploy', 'minutes', 'material', 'cancel', 'invoice', 'postproc']);
+// Phiếu thi công / phiếu quầy / Vendor quy về Phiếu triển khai; 3 tool vật tư (Quản lý vật tư, Quản lý vật tư quầy, SCM) là 3 thực thể riêng
+const ENTITY = new Set(['order-entity', 'policy', 'contract', 'receipt', 'deploy', 'minutes', 'mat-ptc', 'mat-counter', 'scm', 'cancel', 'invoice', 'postproc']);
 const entityOf = n => { while (n && !(n.id && ENTITY.has(n.id))) n = PARENT.get(n); return n ? n.id : null; };
 const topCol = n => { if (n === DATA) return undefined; while (PARENT.get(n) !== DATA) n = PARENT.get(n); return n.col; };
 let focusId = 'order', VIEW = null, currentView = 'outline', MPATH = [];
