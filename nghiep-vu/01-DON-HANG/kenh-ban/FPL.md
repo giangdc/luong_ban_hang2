@@ -12,6 +12,9 @@
 
 ## Rule xuất hóa đơn riêng (theo `RULE-XHD.md`)
 - **Thông tin khách (BR-DB-03):** khách chọn có lấy hóa đơn không; nếu có thì tự nhập 7 trường (tên, email, SĐT, MST, mã định danh, mã quan hệ ngân sách, số hộ chiếu) trong **tối đa 2 giờ**. Không lấy / quá 2 giờ ⇒ phát hành theo thông tin hợp đồng; quá 2 giờ thì ẩn nút Xuất hóa đơn.
+- **Nơi nhập thông tin xuất hóa đơn** (nguồn: user cung cấp 20/11/2026) — 2 cách:
+  1. Tạo đơn thành công ⇒ hiển thị thông báo có nút **Xuất hóa đơn** ⇒ khách nhấn nút để nhập.
+  2. Vào **Tài khoản & cài đặt › Quản lý thanh toán và gói › Xuất hóa đơn** ⇒ nhập thông tin xuất hóa đơn khách muốn.
 - **Điều kiện (BR-XHD-03):** delay **2 giờ** từ lúc tạo đơn, áp cả DV và TB.
 - **Lịch (BR-XHD-01):** worker **2 giờ/lần** (0h–2h, 2h–4h, …) + mốc **22:05** chốt dữ liệu 0h–22h.
 - **Phân luồng (BR-XHD-02):** tín hiệu sau **22h** ⇒ realtime.

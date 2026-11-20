@@ -27,6 +27,6 @@ Riêng **Đơn hàng** (`01-DON-HANG`) có thêm thư mục `kenh-ban/`: rule ch
 
 Mỗi file gốc chỉ để ở 1 chủ thể; chủ thể khác dùng chung thì `input/README.md` trỏ tới.
 
-> ⚠️ File gốc là tài liệu nội bộ, repo GitHub đang công khai: `.gitignore` chặn `*.docx`, `*.xlsx`, `*.pdf` trong `chu-the/**/input/`.
+> ⚠️ File gốc là tài liệu nội bộ, repo GitHub đang công khai: `.gitignore` chặn `*.docx`, `*.xlsx`, `*.pdf` trong `nghiep-vu/**/input/`.
 
 Sửa `quy-trinh-nghiep-vu.md` xong thì chạy `python3 scripts/embed-docs.py` để cập nhật mindmap, rồi đăng lại artifact.

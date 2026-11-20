@@ -10,7 +10,7 @@ Rule riêng từng kênh tạo đơn: thư mục [`kenh-ban/`](kenh-ban/) ngay t
 ## 3. Sau khi tạo đơn hàng (mọi kênh)
 
 - **Xem thông tin đơn hàng:** vào **SPF Web admin** — http://saleplatform-stag.fpt.net/web-admin/Account/Login (nguồn: user cung cấp 04/11/2026).
-- Tạo đơn hàng xong sẽ có **thông tin hợp đồng**. Riêng **SOP (Desktop, Mobile)**: tạo báo giá xong mới có đơn hàng, phải bấm **Tạo hợp đồng** mới có hợp đồng (xem mục Báo giá SOP bên dưới).
+- Tạo đơn hàng xong sẽ có **thông tin hợp đồng**. Riêng **SOP (Desktop, Mobile)**: **bán mới** tạo báo giá xong mới có đơn hàng, phải bấm **Tạo hợp đồng** mới có hợp đồng (xem mục Báo giá SOP bên dưới). **Bán thêm** không qua báo giá: chọn dịch vụ → màn Tạo đơn (có sẵn số hợp đồng) → nhấn **Tạo đơn hàng** ⇒ sang màn Chi tiết đơn hàng, cập nhật đơn nếu có → nhấn **Gen BBĐT/PLHD** ⇒ gen xong mới có **khoản thu** và **BBĐT**; phiếu triển khai theo PTTT: **Thanh toán khi triển khai** ⇒ **ký BBĐT xong** mới có thông tin triển khai, **Online** ⇒ **thanh toán xong** mới có phiếu triển khai (nguồn: user cung cấp 20/11/2026).
 - Kiểm tra thông tin hợp đồng ở **tool Tình trạng** trên **Inside** (vd: hợp đồng con có thông tin hợp đồng cha cũng xem ở đây).
 - Hợp đồng được dùng khi xuất hóa đơn: thông tin khách, hiệu lực hợp đồng, chi nhánh quản lý, mã tỉnh theo địa chỉ hợp đồng; các loại hợp đồng tổ chức / con / SST / nghiệp vụ có rule riêng (xem `RULE-XHD.md` §4, §6, §7).
 
@@ -28,7 +28,7 @@ Rule riêng từng kênh tạo đơn: thư mục [`kenh-ban/`](kenh-ban/) ngay t
 4. **Trạng thái báo giá:** Đã tạo báo giá · Yêu cầu điều chỉnh · Đang thanh toán · Đã thanh toán (có mã HĐ) · Vô hiệu hóa (sale thu hồi link, hoặc cùng SĐT đã thanh toán ở link khác).
 
 **Điểm cần hỏi BA:**
-- BA-1: URD chỉ nêu phạm vi báo giá **mua mới**; Web SOP và luồng bán thêm cũng có bước Tạo báo giá → Tạo hợp đồng — KH tự thanh toán qua link có áp dụng cho bán thêm không?
+- ~~BA-1: báo giá có áp dụng cho bán thêm không?~~ Đã rõ: bán thêm SOP **không qua báo giá**, tạo đơn rồi Gen BBĐT/PLHD (nguồn: user cung cấp 20/11/2026).
 - BA-2: URD không nêu thời điểm có mã đơn hàng (chỉ nêu mã đơn ở màn Hoàn tất sau thanh toán); thực tế: bấm Tạo báo giá là có mã đơn (user xác nhận 19/11/2026).
 
 ---

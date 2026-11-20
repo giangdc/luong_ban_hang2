@@ -34,16 +34,20 @@ Internet, FPT Camera Only, FPT Camera Combo, FPT Play Stands Alone, Sản phẩm
 10. Chọn **Tạo hợp đồng**
 11. Có thể cập nhật hợp đồng nếu muốn
 
-### Bán thêm
+### Bán thêm (nguồn: user cung cấp 20/11/2026)
+Bán thêm **không qua báo giá**.
 1. Chọn **+** ở bán thêm
 2. Tìm kiếm hợp đồng → chọn HĐ bán thêm
 3. Nhấn icon **+**
 4. Chọn dịch vụ cần mua
-5. Nhấn **Chi tiết giỏ hàng** → chọn **Xác nhận**
-6. Cập nhật thông tin khách hàng (nếu muốn)
-7. Chọn **Tạo báo giá**
-8. Chọn **Tạo hợp đồng**
-9. Có thể cập nhật hợp đồng nếu muốn
+5. Sang màn hình **Tạo đơn** — có sẵn **số hợp đồng**
+6. Nhấn **Tạo đơn hàng** ⇒ hệ thống tạo đơn hàng, chuyển sang màn hình **Chi tiết đơn hàng**
+7. Cập nhật đơn hàng (nếu có)
+8. Nhấn **Gen BBĐT/PLHD** ⇒ gen xong mới có **khoản thu** và **BBĐT**
+
+Phiếu triển khai của đơn bán thêm (theo PTTT):
+- **Thanh toán khi triển khai:** **ký BBĐT xong** mới có thông tin triển khai.
+- **Online:** **thanh toán xong** mới có phiếu triển khai.
 
 ## Hình thức triển khai
 Theo chính sách khai báo trên tool BP — xem bảng [00-CHUNG.md §2](00-CHUNG.md#2-quy-tắc-hình-thức-triển-khai-thiết-bị). Cách hoàn tất phiếu: [00-CHUNG.md §5](00-CHUNG.md#5-cách-hoàn-tất-phiếu-giao-hàng--triển-khai-stg).
