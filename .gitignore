@@ -1,0 +1,5 @@
+# Tài liệu gốc nội bộ: không đưa lên repo công khai
+chu-the/**/input/*.docx
+chu-the/**/input/*.xlsx
+chu-the/**/input/*.pdf
+chu-the/**/*.png

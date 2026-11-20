@@ -1,0 +1,32 @@
+# Chủ thể
+
+Mỗi thư mục là 1 chủ thể của mindmap, gồm 2 thành phần:
+
+| Thành phần | Nội dung |
+|---|---|
+| `input/` | Tài liệu đầu vào: file gốc (URD, PRD, Excel) nếu có, và `README.md` liệt kê mọi nguồn (gồm cả thông tin bạn cung cấp theo ngày) |
+| `quy-trinh-nghiep-vu.md` | Quy trình nghiệp vụ / rule của chủ thể. Mindmap v2 hiện file này ở nút **📄 Tài liệu** trong popup chủ thể |
+
+Riêng **Đơn hàng** (`01-DON-HANG`) có thêm thư mục `kenh-ban/`: rule chung mọi kênh (`00-CHUNG.md`) và 1 file rule / kênh bán, vì kênh bán là nơi tạo đơn. **Phiếu triển khai** (`05`) tách 3 thư mục con theo loại triển khai, mỗi thư mục cũng có `input/` + `quy-trinh-nghiep-vu.md`.
+
+| Thư mục | Chủ thể | File gốc trong `input/` |
+|---|---|---|
+| `01-DON-HANG` | Đơn hàng (+ `kenh-ban/`) | — |
+| `02-QUAN-LY-CHINH-SACH` | Quản lý chính sách (Tool BP) | — (dùng file Excel ở `05`) |
+| `03-HOP-DONG` | Hợp đồng | — (dùng URD ở `07`) |
+| `04-KHOAN-THU` | Khoản thu | — |
+| `05-PHIEU-TRIEN-KHAI` | Phiếu triển khai (tổng quan) + 3 thư mục con, mỗi thư mục 1 loại triển khai: `01-PHIEU-THI-CONG`, `02-PHIEU-GIAO-DICH-THIET-BI-TAI-QUAY`, `03-DON-DAT-HANG-VENDOR` | `AnhNQ75-List HT Triển khai.xlsx` · 02: `QC-ISC_Resource-Equipment_v2.2_URD_v1.0.docx` · 03: `ISC_INSIDE-M-VendorCooperation_V1.1_URD_V1.0.docx` |
+| `06-BIEN-BAN-DIEN-TU` | Biên bản điện tử | — |
+| `07-XUAT-HOA-DON` | Xuất hóa đơn | `Invoice_Issuance_Architecture_v2_2_URD_v2_0.docx` |
+| `08-GACH-NO-HAU-KY` | Gạch nợ & hậu kỳ | — (dùng URD ở `07`) |
+| `09-HUY-DON-HANG` | Hủy đơn hàng | — |
+| `10-QUAN-LY-VAT-TU` | Tool Quản lý vật tư | — |
+| `11-QUAN-LY-VAT-TU-QUAY` | Tool Quản lý vật tư quầy | — |
+| `12-TOOL-SCM` | Tool SCM | — |
+| `13-PHAN-BO-DOANH-THU` | Phân bổ doanh thu | `Phan_bo_doanh_thu_v1_0_PRD_v1_1.docx` |
+
+Mỗi file gốc chỉ để ở 1 chủ thể; chủ thể khác dùng chung thì `input/README.md` trỏ tới.
+
+> ⚠️ File gốc là tài liệu nội bộ, repo GitHub đang công khai: `.gitignore` chặn `*.docx`, `*.xlsx`, `*.pdf` trong `chu-the/**/input/`.
+
+Sửa `quy-trinh-nghiep-vu.md` xong thì chạy `python3 scripts/embed-docs.py` để cập nhật mindmap, rồi đăng lại artifact.
