@@ -18,7 +18,7 @@ Rule riêng từng kênh tạo đơn: thư mục [`kenh-ban/`](kenh-ban/) ngay t
 
 ## Báo giá SOP (Desktop, Mobile) — quy trình tổng quan
 
-> Nguồn: `input/URD_BaoGia_v1.0_22 Apr 2026_KieuPTP5.docx` — B. Quy trình nghiệp vụ, mục I (Sơ đồ tổng quan) và II (Flow A–D), mục III.1 (Trạng thái báo giá); kèm thông tin user xác nhận 19/11/2026 (áp dụng cả App và Desktop; bấm Tạo báo giá là có mã đơn hàng; SOP Online phải bấm Tạo hợp đồng mới có khoản thu).
+> Nguồn: `kenh-ban/SOP/input/URD_BaoGia_v1.0_22 Apr 2026_KieuPTP5.docx` — B. Quy trình nghiệp vụ, mục I (Sơ đồ tổng quan) và II (Flow A–D), mục III.1 (Trạng thái báo giá); kèm thông tin user xác nhận 19/11/2026 (áp dụng cả App và Desktop; bấm Tạo báo giá là có mã đơn hàng; SOP Online phải bấm Tạo hợp đồng mới có khoản thu).
 
 1. **Sale tạo báo giá** (Flow A): nhập địa chỉ → chọn đối tượng KH → chọn dịch vụ → nhập họ tên, SĐT → áp voucher (nếu có) → chọn **PTTT** (chọn ở bước này, trước khi tạo báo giá — user xác nhận 19/11/2026; đơn đi nhánh nào sau khi tạo hợp đồng là theo PTTT này) → bấm **Tạo báo giá** ⇒ có **mã đơn hàng** và **link báo giá**; sale gửi link cho KH (Zalo, SMS…).
 2. **KH xem báo giá** trên fpt.vn (Flow B), chỉ xem: chọn **Thanh toán** hoặc **Gửi yêu cầu chỉnh sửa** (sale sửa ngay trên link cũ rồi tự gửi lại cho KH).

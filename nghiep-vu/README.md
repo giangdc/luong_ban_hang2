@@ -7,11 +7,11 @@ Mỗi thư mục là 1 chủ thể của mindmap, gồm 2 thành phần:
 | `input/` | Tài liệu đầu vào: file gốc (URD, PRD, Excel) nếu có, và `README.md` liệt kê mọi nguồn (gồm cả thông tin bạn cung cấp theo ngày) |
 | `quy-trinh-nghiep-vu.md` | Quy trình nghiệp vụ / rule của chủ thể. Mindmap v2 hiện file này ở nút **📄 Tài liệu** trong popup chủ thể |
 
-Riêng **Đơn hàng** (`01-DON-HANG`) có thêm thư mục `kenh-ban/`: rule chung mọi kênh (`00-CHUNG.md`) và 1 file rule / kênh bán, vì kênh bán là nơi tạo đơn. **Phiếu triển khai** (`05`) tách 3 thư mục con theo loại triển khai, mỗi thư mục cũng có `input/` + `quy-trinh-nghiep-vu.md`.
+Riêng **Đơn hàng** (`01-DON-HANG`) **không có `input/` chung** (nguồn chung ghi ngay trong `quy-trinh-nghiep-vu.md`), thay bằng thư mục `kenh-ban/`: rule chung mọi kênh (`00-CHUNG.md`) và 1 thư mục / kênh bán (`kenh-ban/<KÊNH>/` gồm `<KÊNH>.md` + `input/` riêng, không dùng chung; Desktop + Mobile chung thư mục `SOP/`), vì kênh bán là nơi tạo đơn. **Phiếu triển khai** (`05`) tách 3 thư mục con theo loại triển khai, mỗi thư mục cũng có `input/` + `quy-trinh-nghiep-vu.md`.
 
 | Thư mục | Chủ thể | File gốc trong `input/` |
 |---|---|---|
-| `01-DON-HANG` | Đơn hàng (+ `kenh-ban/`) | — |
+| `01-DON-HANG` | Đơn hàng (+ `kenh-ban/`) | — · `kenh-ban/SOP/input/`: `URD_BaoGia_v1.0_22 Apr 2026_KieuPTP5.docx` |
 | `02-QUAN-LY-CHINH-SACH` | Quản lý chính sách (Tool BP) | — (dùng file Excel ở `05`) |
 | `03-HOP-DONG` | Hợp đồng | — (dùng URD ở `07`) |
 | `04-KHOAN-THU` | Khoản thu | — |
@@ -25,7 +25,7 @@ Riêng **Đơn hàng** (`01-DON-HANG`) có thêm thư mục `kenh-ban/`: rule ch
 | `12-TOOL-SCM` | Tool SCM | — |
 | `13-PHAN-BO-DOANH-THU` | Phân bổ doanh thu | `Phan_bo_doanh_thu_v1_0_PRD_v1_1.docx` |
 
-Mỗi file gốc chỉ để ở 1 chủ thể; chủ thể khác dùng chung thì `input/README.md` trỏ tới.
+Mỗi file gốc chỉ để ở 1 chủ thể; chủ thể khác dùng chung thì `input/README.md` trỏ tới. Riêng kênh bán: mỗi kênh giữ bản riêng trong `input/` của kênh; Desktop + Mobile gom chung thư mục `kenh-ban/SOP/` (1 `input/`).
 
 > ⚠️ File gốc là tài liệu nội bộ, repo GitHub đang công khai: `.gitignore` chặn `*.docx`, `*.xlsx`, `*.pdf` trong `nghiep-vu/**/input/`.
 

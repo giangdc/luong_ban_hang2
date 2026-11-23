@@ -37,6 +37,8 @@ Phiếu triển khai là đầu ra của đơn hàng cho phần **thiết bị**
 | BR-PTK-04 | Mỗi loại phiếu hoàn tất trên **tool của phiếu đó**: phiếu thi công trên SPF Web admin / MobiX; phiếu giao tại quầy trên Tool quầy / QLVT; đơn Vendor trên M-Vendor | Thông tin bạn cung cấp 17/11/2026 |
 | BR-PTK-05 | Hoàn tất PTC **không** còn điều kiện "đã ký BBĐT + khoản thu đã thanh toán" (bỏ rule cũ) | Thông tin bạn cung cấp 17/11/2026 |
 | BR-PTK-06 | Tín hiệu giao hàng hoàn tất đi thẳng về INVOICE, map theo khóa **mã đơn + ServiceCode + SubserviceType + phương thức triển khai**; chỉ xuất hóa đơn thiết bị có trong tín hiệu | URD XHD BR-DB-02, BR-DB-07 |
+| BR-PTK-07 | Luồng **không bán Smart TV** ⇒ **không có nhánh Vendor** (vd DKOL F-citizen, AM, Tri ân CAND) | Thông tin bạn cung cấp 23/11/2026 |
+| BR-PTK-08 | Bán **combo Internet–truyền hình, Triple Internet–truyền hình–Camera** ⇒ **chỉ có phiếu thi công (TIN/PNC)**: không có Vendor, phiếu giao tại quầy, không phiếu (vd DKOL Tri ân CAND) | Thông tin bạn cung cấp 23/11/2026 |
 
 ---
 

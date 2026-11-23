@@ -1,6 +1,6 @@
 # KÊNH TIKTOK (SaleChannelID 21)
 
-> Tách từ `RULE-CHINH-SACH-KENH-BAN.md` (nguồn: user cung cấp 03/11/2026). Rule chung: [00-CHUNG.md](00-CHUNG.md) · Rule XHD: [`../../../RULE-XHD.md`](../../../RULE-XHD.md). Kênh cùng luồng: [SHOPEE.md](SHOPEE.md).
+> Tách từ `RULE-CHINH-SACH-KENH-BAN.md` (nguồn: user cung cấp 03/11/2026). Rule chung: [00-CHUNG.md](../00-CHUNG.md) · Rule XHD: [`../../../../RULE-XHD.md`](../../../../RULE-XHD.md). Kênh cùng luồng: [SHOPEE.md](../SHOPEE/SHOPEE.md).
 
 ## Thông tin chung
 
@@ -30,7 +30,7 @@ Internet, FPT Camera Only, FPT Play Stands Alone, FPT Play, Sản phẩm khác, 
 9. Nhấn **Submit**.
 
 ## Hình thức triển khai
-**Quầy** (có chính sách shipper giao hàng) và **TIN/PNC**. Cách hoàn tất phiếu: [00-CHUNG.md §5.1, §5.2](00-CHUNG.md#5-cách-hoàn-tất-phiếu-giao-hàng--triển-khai-stg).
+**Quầy** (có chính sách shipper giao hàng) và **TIN/PNC**. Cách hoàn tất phiếu: [00-CHUNG.md §5.1, §5.2](../00-CHUNG.md#5-cách-hoàn-tất-phiếu-giao-hàng--triển-khai-stg).
 
 ## Thanh toán — không có khoản thu
 

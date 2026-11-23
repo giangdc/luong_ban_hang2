@@ -146,10 +146,10 @@ Ngay **sau khi tạo đơn** (không chờ thanh toán), hệ thống gen **đ�
 
 | Kênh | Luồng | Chi tiết |
 |---|---|---|
-| DKOL | KH thanh toán xong mới tạo đơn ⇒ đơn và khoản thu **Đã thanh toán** ⇒ gen phiếu thi công, biên bản điện tử | [DKOL.md](DKOL.md) |
-| Desktop / Mobile | Tạo báo giá (có mã đơn) ⇒ bấm **Tạo hợp đồng** ⇒ khoản thu **Chưa thanh toán** và biên bản điện tử (chưa thanh toán đã có BBĐT — user xác nhận 19/11/2026) ⇒ KH thanh toán ⇒ gen phiếu thi công | [DESKTOP.md](DESKTOP.md), [MOBILE.md](MOBILE.md) |
-| Shopee / TikTok | **Không có khoản thu**, dùng Order Transaction (2 lần) | [SHOPEE.md](SHOPEE.md), [TIKTOK.md](TIKTOK.md) |
-| VNTT | Chỉ ghi nhận HĐ, **không tạo khoản thu** | [VNTT.md](VNTT.md) |
+| DKOL | KH thanh toán xong mới tạo đơn ⇒ đơn và khoản thu **Đã thanh toán** ⇒ gen phiếu thi công, biên bản điện tử | [DKOL.md](DKOL/DKOL.md) |
+| Desktop / Mobile | Tạo báo giá (có mã đơn) ⇒ bấm **Tạo hợp đồng** ⇒ khoản thu **Chưa thanh toán** và biên bản điện tử (chưa thanh toán đã có BBĐT — user xác nhận 19/11/2026) ⇒ KH thanh toán ⇒ gen phiếu thi công | [DESKTOP.md](SOP/DESKTOP.md), [MOBILE.md](SOP/MOBILE.md) |
+| Shopee / TikTok | **Không có khoản thu**, dùng Order Transaction (2 lần) | [SHOPEE.md](SHOPEE/SHOPEE.md), [TIKTOK.md](TIKTOK/TIKTOK.md) |
+| VNTT | Chỉ ghi nhận HĐ, **không tạo khoản thu** | [VNTT.md](VNTT/VNTT.md) |
 
 ### 4.3 Sau khi thanh toán khoản thu
 - Khoản thu phải chuyển sang **Đã thanh toán**.

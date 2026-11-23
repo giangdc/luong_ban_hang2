@@ -1,6 +1,6 @@
 # KÊNH DESKTOP (SaleChannelID 2)
 
-> Tách từ `RULE-CHINH-SACH-KENH-BAN.md` (nguồn: user cung cấp 03/11/2026). Rule chung: [00-CHUNG.md](00-CHUNG.md) · Rule XHD: [`../../../RULE-XHD.md`](../../../RULE-XHD.md).
+> Tách từ `RULE-CHINH-SACH-KENH-BAN.md` (nguồn: user cung cấp 03/11/2026). Rule chung: [00-CHUNG.md](../00-CHUNG.md) · Rule XHD: [`../../../../RULE-XHD.md`](../../../../RULE-XHD.md).
 
 ## Thông tin chung
 
@@ -51,16 +51,16 @@ Phiếu triển khai của đơn bán thêm (theo PTTT — user cung cấp 20/11
 - Phần sau (hoàn tất phiếu, hóa đơn, gạch nợ theo cọc, add tiền trả trước) **giống bán mới**.
 
 ## Hình thức triển khai
-Theo chính sách khai báo trên tool BP — xem bảng [00-CHUNG.md §2](00-CHUNG.md#2-quy-tắc-hình-thức-triển-khai-thiết-bị). Cách hoàn tất phiếu: [00-CHUNG.md §5](00-CHUNG.md#5-cách-hoàn-tất-phiếu-giao-hàng--triển-khai-stg).
+Theo chính sách khai báo trên tool BP — xem bảng [00-CHUNG.md §2](../00-CHUNG.md#2-quy-tắc-hình-thức-triển-khai-thiết-bị). Cách hoàn tất phiếu: [00-CHUNG.md §5](../00-CHUNG.md#5-cách-hoàn-tất-phiếu-giao-hàng--triển-khai-stg).
 
 ## Thanh toán & khoản thu
 - **PTTT = Thanh toán khi triển khai:** gen đồng thời khoản thu, phiếu thi công, biên bản điện tử; đơn = **Chưa thanh toán**.
 - **PTTT Online:** tạo báo giá (có mã đơn, **Chưa thanh toán**) ⇒ bấm **Tạo hợp đồng** mới có khoản thu **Chưa thanh toán** và **biên bản điện tử** (chưa thanh toán đã có BBĐT — user xác nhận 19/11/2026) ⇒ khách thanh toán xong ⇒ mới gen **phiếu thi công**.
 - Sau khi thanh toán: khoản thu **Đã thanh toán**, tiền **đẩy vào cọc**. Kiểm tra: Inside › Foxpay › Thanh toán online › Đối soát khoản thu online.
-- **Thanh toán → cọc → hóa đơn → gạch nợ** (nguồn: user cung cấp 17/11/2026): giống DKOL — khoản thu **Đã thanh toán** ⇒ **nhập cọc** ⇒ nhận tín hiệu thì xuất hóa đơn ⇒ có cọc thì **gạch nợ**, hóa đơn **Đã thanh toán** ⇒ dịch vụ **trả trước** thì **add tiền trả trước**. Chi tiết: [00-CHUNG.md §4.3](00-CHUNG.md#43-sau-khi-thanh-toán-khoản-thu).
+- **Thanh toán → cọc → hóa đơn → gạch nợ** (nguồn: user cung cấp 17/11/2026): giống DKOL — khoản thu **Đã thanh toán** ⇒ **nhập cọc** ⇒ nhận tín hiệu thì xuất hóa đơn ⇒ có cọc thì **gạch nợ**, hóa đơn **Đã thanh toán** ⇒ dịch vụ **trả trước** thì **add tiền trả trước**. Chi tiết: [00-CHUNG.md §4.3](../00-CHUNG.md#43-sau-khi-thanh-toán-khoản-thu).
 
 ## Phạm vi test XHD
 Bán mới + bán thêm, 19 nhóm (trừ nhóm 25 Prepaid 3) — `RULE-XHD.md` §1.1.
 
 ## Báo giá
-PTTT chọn trước khi bấm Tạo báo giá (user xác nhận 19/11/2026). Bấm **Tạo báo giá** là có mã đơn hàng; phải bấm **Tạo hợp đồng** mới có hợp đồng (và khoản thu với PTTT Online) — user xác nhận 19/11/2026. Quy trình tổng quan: [`../quy-trinh-nghiep-vu.md`](../quy-trinh-nghiep-vu.md) mục Báo giá SOP (nguồn URD Báo giá v1.0).
+PTTT chọn trước khi bấm Tạo báo giá (user xác nhận 19/11/2026). Bấm **Tạo báo giá** là có mã đơn hàng; phải bấm **Tạo hợp đồng** mới có hợp đồng (và khoản thu với PTTT Online) — user xác nhận 19/11/2026. Quy trình tổng quan: [`../quy-trinh-nghiep-vu.md`](../../quy-trinh-nghiep-vu.md) mục Báo giá SOP (nguồn URD Báo giá v1.0).

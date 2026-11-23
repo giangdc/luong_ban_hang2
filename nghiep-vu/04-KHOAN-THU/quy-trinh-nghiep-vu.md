@@ -29,10 +29,10 @@ Ngay **sau khi tạo đơn** (không chờ thanh toán), hệ thống gen **đ�
 
 | Kênh | Luồng | Chi tiết |
 |---|---|---|
-| DKOL | KH thanh toán xong mới tạo đơn ⇒ đơn và khoản thu **Đã thanh toán** ⇒ gen phiếu thi công, biên bản điện tử | [DKOL.md](../01-DON-HANG/kenh-ban/DKOL.md) |
-| Desktop / Mobile | Tạo báo giá (có mã đơn) ⇒ bấm **Tạo hợp đồng** ⇒ khoản thu **Chưa thanh toán** và biên bản điện tử (chưa thanh toán đã có BBĐT — user xác nhận 19/11/2026) ⇒ KH thanh toán ⇒ gen phiếu thi công | [DESKTOP.md](../01-DON-HANG/kenh-ban/DESKTOP.md), [MOBILE.md](../01-DON-HANG/kenh-ban/MOBILE.md) |
-| Shopee / TikTok | **Không có khoản thu**, dùng Order Transaction (2 lần) | [SHOPEE.md](../01-DON-HANG/kenh-ban/SHOPEE.md), [TIKTOK.md](../01-DON-HANG/kenh-ban/TIKTOK.md) |
-| VNTT | Chỉ ghi nhận HĐ, **không tạo khoản thu** | [VNTT.md](../01-DON-HANG/kenh-ban/VNTT.md) |
+| DKOL | KH thanh toán xong mới tạo đơn ⇒ đơn và khoản thu **Đã thanh toán** ⇒ gen phiếu thi công, biên bản điện tử | [DKOL.md](../01-DON-HANG/kenh-ban/DKOL/DKOL.md) |
+| Desktop / Mobile | Tạo báo giá (có mã đơn) ⇒ bấm **Tạo hợp đồng** ⇒ khoản thu **Chưa thanh toán** và biên bản điện tử (chưa thanh toán đã có BBĐT — user xác nhận 19/11/2026) ⇒ KH thanh toán ⇒ gen phiếu thi công | [DESKTOP.md](../01-DON-HANG/kenh-ban/SOP/DESKTOP.md), [MOBILE.md](../01-DON-HANG/kenh-ban/SOP/MOBILE.md) |
+| Shopee / TikTok | **Không có khoản thu**, dùng Order Transaction (2 lần) | [SHOPEE.md](../01-DON-HANG/kenh-ban/SHOPEE/SHOPEE.md), [TIKTOK.md](../01-DON-HANG/kenh-ban/TIKTOK/TIKTOK.md) |
+| VNTT | Chỉ ghi nhận HĐ, **không tạo khoản thu** | [VNTT.md](../01-DON-HANG/kenh-ban/VNTT/VNTT.md) |
 
 ### 4.3 Sau khi thanh toán khoản thu
 - Khoản thu phải chuyển sang **Đã thanh toán**.

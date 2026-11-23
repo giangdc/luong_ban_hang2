@@ -7,7 +7,7 @@
 | API | 7 | Gồm TGDD và F-Retail, **chưa tách** |
 | F-Retail | 15 | Đang có issue 3-2 cấp |
 | TGDD | 14 | Đang có issue 3-2 cấp |
-| HiFPT | 19 | Đã **move sang DKOL** — xem [DKOL.md](DKOL.md) |
+| HiFPT | 19 | Đã **move sang DKOL** — xem [DKOL.md](DKOL/DKOL.md) |
 | MBBank | 12 | Chưa có trên PRO do vướng chính sách hợp tác 2 bên |
 | SR-KPDV | 18 | Chưa có thông tin · không test XHD |
 | App Partner | — | Chưa có thông tin |
